@@ -54,4 +54,15 @@ public class Encomenda {
    public Encomenda clone(){
       return new Encomenda(this);
    }
+
+   public void addLinhaEncomenda(LinhadeEncomenda le)
+   {
+      this.encomendas.add(le);
+   }
+
+   public void addLinhaEncomenda(String codProd, String descricao, int quant, String voluntarios)
+   {
+      LinhadeEncomenda l = new LinhadeEncomenda(codProd, descricao, quant, voluntarios);
+      this.encomendas.add(l);
+   }
 }

@@ -1,23 +1,26 @@
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
 
 public class Utilizadores {
-    private ArrayList<Utilizador> utilizadores;
+    private HashMap<String,Utilizador> utilizadores;
 
     public Utilizadores(){
-        this.utilizadores =new ArrayList<>();
+        this.utilizadores =new HashMap<>();
     }
 
-    public Utilizadores(ArrayList<Utilizador> utilizadores){
-        this.utilizadores=new ArrayList<>();
-        for(Utilizador l: utilizadores)
-            this.utilizadores.add(l.clone());
+    public Utilizadores(Map<String,Utilizador> utilizadores){
+        this.utilizadores =new HashMap<>();
+        for(Utilizador l: utilizadores.values())
+            this.utilizadores.put(l.clone().getIduser(),l.clone());
     }
 
     public Utilizadores (Utilizadores u){
-        this.utilizadores = getUtilizadores();
+        this.utilizadores = u.getUtilizadores();
     }    
       
-    public ArrayList<Utilizador> getUtilizadores() {
+    public HashMap<String,Utilizador> getUtilizadores() {
         return this.utilizadores;
     }
 

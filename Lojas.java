@@ -17,11 +17,23 @@ public class Lojas {
         return this.lojas;
     }
 
-    public Lojas(Lojas l){
+    public Lojas (Lojas l){
         this.lojas=l.getLojas();
     }
 
     public Lojas clone(){
         return new Lojas(this);
     }
+
+    public void addLoja(Loja loja)
+    {
+        this.lojas.add(loja);
+    } 
+
+    public void addLoja(String codigoL, String nomeL, String emailL, String passL)
+    {
+        Loja l = new Loja( codigoL,  nomeL,  emailL,  passL);
+        this.lojas.add(l);
+    }
+
 }
