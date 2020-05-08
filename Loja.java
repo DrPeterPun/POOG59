@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class Loja {
     private String codigoL;
@@ -45,5 +45,26 @@ public class Loja {
 
     public Loja clone(){
         return new Loja(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Loja)) return false;
+        Loja loja = (Loja) o;
+        return Objects.equals(getCodigoL(), loja.getCodigoL()) &&
+                Objects.equals(getNomeL(), loja.getNomeL()) &&
+                Objects.equals(getEmailL(), loja.getEmailL()) &&
+                Objects.equals(getPassL(), loja.getPassL());
+    }
+
+    @Override
+    public String toString() {
+        return "Loja{" +
+                "codigoL='" + codigoL + '\'' +
+                ", nomeL='" + nomeL + '\'' +
+                ", emailL='" + emailL + '\'' +
+                ", passL='" + passL + '\'' +
+                '}';
     }
 }

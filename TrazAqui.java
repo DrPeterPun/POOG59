@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class TrazAqui {
     public static void main(String[] args) {
-        System.out.println("Bem-vindo ao Traz-Aqui");
+    /*    System.out.println("Bem-vindo ao Traz-Aqui");
         System.out.println("Deseja \n (1)Registar-se \n (2)Fazer login");
         int c;
         Scanner entrada = new Scanner(System.in);
@@ -31,7 +31,7 @@ public class TrazAqui {
                 
 
                 String userName2 = d.nextLine();
-                System.out.println("Username is: " + userName);
+                System.out.println("Username is: " + userName2);
                 // verificar se existe o usernadme?
 
                 Scanner e = new Scanner(System.in);
@@ -42,18 +42,33 @@ public class TrazAqui {
             default:
                 System.out.println("Invalid");
                 break;        
-        }   
-        Voluntarios listaV = new Voluntarios();
+        }   */
+        Utilizadores listaV = new Utilizadores();
         // criacao de voluntarios individuais e insercao em "Voluntarios" 
 
-        //Voluntario w = new Voluntario("1234","catarina","dfjjd",0,0,0);
-        //Voluntario g = new Voluntario(w);
-        //Voluntario l = new Voluntario("586",userName,password,0,0,0);
+        Utilizador w = new Utilizador("1","catarina","skjne","kknjej",0,0);
+        Utilizador g = new Utilizador("2","Pedro","dfggrr","kijsbehe",4,5);
+        Utilizador l = new Utilizador("3","Joao","jfrnfir","dlkmfkn",7,8);
 
-        //listaV.registo(w);
-        //listaV.registo(g);
-        //listaV.registo(l);
-        
+        listaV.addUtilizadores(w);
+        listaV.addUtilizadores(g);
+        listaV.addUtilizadores(l);
+
+       // System.out.println("Lista:" + listaV);
+
+        Scanner a = new Scanner(System.in);
+        System.out.println("Enter username");
+        String userName = a.nextLine();
+
+        Scanner b = new Scanner(System.in);
+        System.out.println("Enter password");
+        String password = b.nextLine();
+
+        if(!(listaV.loginUV(userName,password)))
+        System.out.println("email ou pass incorretos");
+        else System.out.println("bem-vindo");
+
+
 
         // criacao de uma encomenda
         Encomenda enc = new Encomenda();

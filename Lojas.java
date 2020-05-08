@@ -1,19 +1,20 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class Lojas {
-    private ArrayList<Loja> lojas;
+    private Map<String,Loja> lojas;
 
+    //Resolvi usar um TreeMap devido à ordem
     public Lojas(){
-        this.lojas=new ArrayList<>();
+        this.lojas=new TreeMap<>();
     }
 
-    public Lojas(ArrayList<Loja> lojas){
-        this.lojas=new ArrayList<>();
-        for(Loja l: lojas)
-            this.lojas.add(l.clone());
+    public Lojas(Map<String,Loja> lojas){
+        this.lojas=new TreeMap<>();
+        for(Loja l: lojas.values())
+            this.lojas.put(l.clone().getCodigoL(),l.clone());
     }
 
-    public ArrayList<Loja> getLojas() {
+    public Map<String,Loja> getLojas() {
         return this.lojas;
     }
 
@@ -25,15 +26,36 @@ public class Lojas {
         return new Lojas(this);
     }
 
-    public void addLoja(Loja loja)
-    {
-        this.lojas.add(loja);
-    } 
-
-    public void addLoja(String codigoL, String nomeL, String emailL, String passL)
-    {
-        Loja l = new Loja( codigoL,  nomeL,  emailL,  passL);
-        this.lojas.add(l);
+    // estes dois métodos permitem adicionar uma loja caso ele não exista no sistema
+    // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
+    public void addLoja(Loja l) {
+        if(!(existeLoja(l.getCodigoL())))
+        this.lojas.put(l.getCodigoL(),new Loja(l.getCodigoL(),l.getNomeL(),l.getEmailL(),l.getPassL()));
     }
 
+    public boolean existeLoja(String cod){
+        boolean r=false;
+        if(this.lojas.containsKey(cod)) r=true;
+        return r;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Lojas)) return false;
+        Lojas lojas1 = (Lojas) o;
+        return Objects.equals(getLojas(), lojas1.getLojas());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLojas());
+    }
+
+    @Override
+    public String toString() {
+        return "Lojas{" +
+                "lojas=" + lojas +
+                '}';
+    }
 }

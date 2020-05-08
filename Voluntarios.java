@@ -1,23 +1,20 @@
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class Voluntarios {
-    private ArrayList<Voluntario> voluntarios;
+    private Map<String,Voluntario> voluntarios;
 
+    //Resolvi usar um TreeMap devido à ordem
     public Voluntarios (){
-        this.voluntarios=new ArrayList<>();
+        this.voluntarios=new TreeMap<>();
     }
 
-    public Voluntarios(ArrayList<Voluntario> voluntarios){
-        this.voluntarios=new ArrayList<>();
-        if(voluntarios!=null)
-        {
-            for(Voluntario l: voluntarios)
-                this.voluntarios.add(l.clone());
-        }
+    public Voluntarios(TreeMap<String,Voluntario> voluntarios){
+        this.voluntarios=new TreeMap<>();
+            for(Voluntario l: voluntarios.values())
+                this.voluntarios.put(l.clone().getId(),l.clone());
     }
 
-    public ArrayList<Voluntario> getVoluntarios(){
+    public Map<String,Voluntario> getVoluntarios(){
         return this.voluntarios;
     }
 
@@ -29,26 +26,6 @@ public class Voluntarios {
         return new Voluntarios(this);
     }
 
-    // estes dois metodos permitem introduzir um voluntario diretamente na lista, é preciso fazer metodos analogos para as outras classes
-    public void addVoluntario(String id, String email,String pass, double gpsx,double gpsy, float raio)
-    {
-        Voluntario v = new Voluntario(id, email, pass, gpsx, gpsy, raio);
-        this.voluntarios.add(v);
-    }
-
-    public void addVoluntario(Voluntario v)
-    {
-        this.voluntarios.add(v);
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Voluntarios{ voluntarios=" + voluntarios +
-                "}";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,7 +34,30 @@ public class Voluntarios {
         return Objects.equals(getVoluntarios(), that.getVoluntarios());
     }
 
-    public void registo(Voluntario v){
-        this.voluntarios.add(v);
+    @Override
+    public int hashCode() {
+        return Objects.hash(getVoluntarios());
     }
+
+    @Override
+    public String toString() {
+        return "Voluntarios{" +
+                "voluntarios=" + voluntarios +
+                '}';
+    }
+
+    // estes dois métodos permitem adicionar um voluntario caso ele não exista no sistema
+    // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
+    public void addVoluntario(Voluntario v) {
+        if(!(existeV(v.getId())))
+        this.voluntarios.put(v.getId(),new Voluntario(v.getId(),v.getEmail(),v.getPass(),v.getGpsx(),v.getGpsy(),v.getRaio()));
+    }
+
+    public boolean existeV(String cod){
+        boolean r=false;
+        if(this.voluntarios.containsKey(cod))r=true;
+        return r;
+    }
+
+
 }
