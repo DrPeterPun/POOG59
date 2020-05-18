@@ -1,21 +1,21 @@
 public class LinhadeEncomenda {
    private String codProd;
    private String descricao;
-   private int quant;
-   private String voluntarios;
+   private double quant;
+   private double valorUnit;
 
    public LinhadeEncomenda(){
       this.codProd=" ";
       this.descricao=" ";
       this.quant=0;
-      this.voluntarios=" ";
+      this.valorUnit=0;
    }
 
-   public LinhadeEncomenda(String codProd, String descricao, int quant, String voluntarios){
+   public LinhadeEncomenda(String codProd, String descricao, double quant, double valorUnit){
       this.codProd=codProd;
       this.descricao=descricao;
       this.quant=quant;
-      this.voluntarios=voluntarios;
+      this.valorUnit=valorUnit;
    }
    public String getCodProd() {
       return codProd;
@@ -25,18 +25,28 @@ public class LinhadeEncomenda {
       return descricao;
    }
 
-   public int getQuant() {
+   public double getQuant() {
       return quant;
    }
 
-   public String getVoluntarios() {
-      return voluntarios;
+   public double getValorUnit() {
+      return valorUnit;
+   }
+   
+   @Override
+   public String toString() {
+       return "LinhadeEncomenda{" +
+               "codProd=" + this.codProd+
+               " descricao=" + this.descricao+
+               " quant=" + this.quant+
+               " valorUnit=" + this.valorUnit +
+               '}';
    }
 
    public LinhadeEncomenda(LinhadeEncomenda l){
       this.codProd=l.getCodProd();
       this.descricao=l.getDescricao();
       this.quant=l.getQuant();
-      this.voluntarios=l.getVoluntarios();
+      this.valorUnit=l.getValorUnit();
    }
 }

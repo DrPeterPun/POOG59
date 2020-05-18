@@ -30,7 +30,7 @@ public class Lojas {
     // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
     public void addLoja(Loja l) {
         if(!(existeLoja(l.getCodigoL())))
-        this.lojas.put(l.getCodigoL(),new Loja(l.getCodigoL(),l.getNomeL(),l.getEmailL(),l.getPassL()));
+        this.lojas.put(l.getCodigoL(),new Loja(l.getCodigoL(),l.getNomeL() ));
     }
 
     public boolean existeLoja(String cod){

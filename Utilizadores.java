@@ -2,11 +2,11 @@ import java.util.*;
 
 
 public class Utilizadores {
-    private Map<String,Utilizador> utilizadores;
+    private Map<String,Utilizador> utilizadores; // mapa <idUser, utilizador>
 
     //Resolvi usar um TreeMap devido à ordem
     public Utilizadores(){
-        this.utilizadores =new TreeMap<>();
+        this.utilizadores =new TreeMap<>(); 
     }
 
     public Utilizadores(Map<String,Utilizador> utilizadores){
@@ -47,18 +47,19 @@ public class Utilizadores {
                 '}';
     }
 
-    // estes dois métodos permitem adicionar um utilizador caso ele não exista no sistema
-    // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
-    public void addUtilizadores(Utilizador u){
-        if(!(existeUser(u.getIduser())))
-        this.utilizadores.put(u.getIduser(),new Utilizador(u.getIduser(),u.getName(),u.getPassU(),u.getEmailU(),u.getGpsxuser(),u.getGpsyuser()));
-    }
+   // estes dois métodos permitem adicionar um utilizador caso ele não exista no sistema
+   // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
+    public void addUtilizador(Utilizador u){
+        if(!(existeUser( u.getIduser() ) ) )
+        	this.utilizadores.put(u.getIduser(),new Utilizador(u));
+   }
 
     public boolean existeUser(String cod){
         boolean r=false;
         if(this.utilizadores.containsKey(cod)) r= true;
         return r;
     }
+
 /*
     public boolean loginUV (String email, String pass){
         boolean r=false;
@@ -66,8 +67,9 @@ public class Utilizadores {
         r = (this.utilizadores.containsValue(email)&&this.utilizadores.containsValue(pass));
         return r;
     }
-*/
+
     public boolean loginUV (String email, String pass){
         return (this.utilizadores.containsValue(email)&&this.utilizadores.containsValue(pass));
     }
+*/
 }

@@ -42,34 +42,29 @@ public class TrazAqui {
             default:
                 System.out.println("Invalid");
                 break;        
-        }   */
+        }
+       */
+    	/*
         Utilizadores listaV = new Utilizadores();
         // criacao de voluntarios individuais e insercao em "Voluntarios" 
 
-        Utilizador w = new Utilizador("1","catarina","skjne","kknjej",0,0);
-        Utilizador g = new Utilizador("2","Pedro","dfggrr","kijsbehe",4,5);
-        Utilizador l = new Utilizador("3","Joao","jfrnfir","dlkmfkn",7,8);
-
-        listaV.addUtilizadores(w);
-        listaV.addUtilizadores(g);
-        listaV.addUtilizadores(l);
+        //listaV.addUtilizadores(w);
+        //listaV.addUtilizadores(g);
+        //listaV.addUtilizadores(l);
 
        // System.out.println("Lista:" + listaV);
 
         Scanner a = new Scanner(System.in);
         System.out.println("Enter username");
         String userName = a.nextLine();
-
+        System.out.println("username is" + userName);
+        
+        
         Scanner b = new Scanner(System.in);
         System.out.println("Enter password");
         String password = b.nextLine();
 
-        if(!(listaV.loginUV(userName,password)))
-        System.out.println("email ou pass incorretos");
-        else System.out.println("bem-vindo");
-
-
-
+        
         // criacao de uma encomenda
         Encomenda enc = new Encomenda();
 
@@ -81,5 +76,9 @@ public class TrazAqui {
 
         // criaccao da lista de empresas
         EmpresasT transp = new EmpresasT();
+        */
+    	Parser parser = new Parser();
+    	parser.parse();
+    	
     }
 }

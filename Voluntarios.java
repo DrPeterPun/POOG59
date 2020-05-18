@@ -11,7 +11,7 @@ public class Voluntarios {
     public Voluntarios(TreeMap<String,Voluntario> voluntarios){
         this.voluntarios=new TreeMap<>();
             for(Voluntario l: voluntarios.values())
-                this.voluntarios.put(l.clone().getId(),l.clone());
+                this.voluntarios.put(l.clone().getCodVol(),l.clone());
     }
 
     public Map<String,Voluntario> getVoluntarios(){
@@ -49,8 +49,8 @@ public class Voluntarios {
     // estes dois métodos permitem adicionar um voluntario caso ele não exista no sistema
     // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
     public void addVoluntario(Voluntario v) {
-        if(!(existeV(v.getId())))
-        this.voluntarios.put(v.getId(),new Voluntario(v.getId(),v.getEmail(),v.getPass(),v.getGpsx(),v.getGpsy(),v.getRaio()));
+        if(!(existeV(v.getCodVol())))
+        this.voluntarios.put(v.getCodVol(),new Voluntario(v.getCodVol(),v.getNome(),v.getGpsx(),v.getGpsy(),v.getRaio()));
     }
 
     public boolean existeV(String cod){

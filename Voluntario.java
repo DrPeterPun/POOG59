@@ -1,41 +1,34 @@
 import java.util.Objects;
 
 public class Voluntario {
-    private String id;
-    private String email;
-    private String pass;
+    private String codVol;
+    private String nome;
     private double gpsx;
     private double gpsy;
-    private float raio;
+    private double raio;
 
     public Voluntario (){
-        this.id=" ";
-        this.email=" ";
-        this.pass=" ";
+        this.codVol=" ";
+        this.nome=" ";
         this.gpsx=0;
         this.gpsy=0;
         this.raio=0;
     }
 
-    public Voluntario(String id, String email,String pass, double gpsx,double gpsy, float raio){
-        this.id= id;
-        this.email=email;
-        this.pass=pass;
+    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio){
+        this.codVol= codVol;
+        this.nome=nome;
         this.gpsx=gpsx;
         this.gpsy=gpsy;
         this.raio=raio;
     }
 
-    public String getId(){
-        return this.id;
+    public String getCodVol(){
+        return this.codVol;
     }
 
-    public String getEmail(){
-        return this.email;
-    }
-
-    public String getPass(){
-        return this.pass;
+    public String getNome(){
+        return this.nome;
     }
 
     public double getGpsx(){
@@ -46,15 +39,14 @@ public class Voluntario {
         return this.gpsy;
     }
 
-    public float getRaio(){
+    public double getRaio(){
         return this.raio;
     }
 
 
     public Voluntario(Voluntario t){
-        this.id=t.getId();
-        this.email=t.getEmail();
-        this.pass=t.getPass();
+        this.codVol=t.getCodVol();
+        this.nome=t.getNome();
         this.gpsx=t.getGpsx();
         this.gpsy=t.getGpsy();
         this.raio=t.getRaio();
@@ -67,9 +59,8 @@ public class Voluntario {
     @Override
     public String toString() {
         return "Voluntario{" +
-                "id='" + id + '\'' +
-                ", email='" + email + '\'' +
-                ", pass='" + pass + '\'' +
+                "codVol='" + codVol + '\'' +
+                ", nome='" + nome + '\'' +
                 ", gpsx=" + gpsx +
                 ", gpsy=" + gpsy +
                 ", raio=" + raio +
@@ -83,9 +74,8 @@ public class Voluntario {
         Voluntario that = (Voluntario) o;
         return Double.compare(that.getGpsx(), getGpsx()) == 0 &&
                 Double.compare(that.getGpsy(), getGpsy()) == 0 &&
-                Float.compare(that.getRaio(), getRaio()) == 0 &&
-                Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getEmail(), that.getEmail()) &&
-                Objects.equals(getPass(), that.getPass());
+                Double.compare(that.getRaio(), getRaio()) == 0 &&
+                Objects.equals(getCodVol(), that.getCodVol()) &&
+                Objects.equals(getNome(), that.getNome());
     }
 }
