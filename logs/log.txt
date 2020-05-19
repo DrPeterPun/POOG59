@@ -1,24 +1,24 @@
 Utilizador:u48,Francisco Egdio Coutinho Martins Correia,-97.28862,59.067047
 Utilizador:u97,Pedro Filipe Carvalho Barbosa,-68.78327,-50.26914
-Utilizador:u82,Hugo Andrﾃδｩ Coelho Cardoso,57.245117,19.557358
+Utilizador:u82,Hugo Andr Coelho Cardoso,57.245117,19.557358
 Utilizador:u7,Rodrigo Tiago Oliveira Ferreira,-14.681885,72.73595
-Utilizador:u80,Guilherme Joﾃδ｣o Cerqueira da Mota Miranda,-18.299461,-35.02321
-Utilizador:u33,Tomﾃδ｡s Salazar Valente,98.079666,-36.973225
-Utilizador:u78,Luﾃδｭs Pedro da Silva Vila,64.87256,43.373962
-Utilizador:u40,Luﾃδｭs Anﾃδｭbal Barbosa de Araﾃδｺjo,99.15073,-45.263195
-Utilizador:u68,Pedro Gonﾃδｧalo dos Santos Pires Pinheiro,-71.837296,-29.223396
+Utilizador:u80,Guilherme Joo Cerqueira da Mota Miranda,-18.299461,-35.02321
+Utilizador:u33,Toms Salazar Valente,98.079666,-36.973225
+Utilizador:u78,Lus Pedro da Silva Vila,64.87256,43.373962
+Utilizador:u40,Lus Anbal Barbosa de Arajo,99.15073,-45.263195
+Utilizador:u68,Pedro dfsazGonalo dos Santos Pires Pinheiro,-71.837296,-29.223396
 Utilizador:u81,Rui Pedro Neto Reis,-67.93489,99.649734
-Voluntario:v20,Joﾃδ｣o Pedro Gomes Coelho,-88.56778,-1.4521866,1.0
+Voluntario:v20,Joo Pedro Gomes Coelho,-88.56778,-1.4521866,1.0
 Voluntario:v73,Rui Pedro Gomes Coelho,-45.424522,-79.517136,15.0
-Voluntario:v69,Pedro Miguel da Silva Paiva Antﾃδｳnio,-3.4494247,78.96666,164.0
-Voluntario:v59,Joﾃδ｣o Carlos Delgado Monteiro,87.60193,-67.35995,56.0
-Voluntario:v33,Simﾃδ｣o Pedro Santa Cruz Oliveira,11.959328,95.35214,81.0
-Transportadora:t26,TERCARGO - TRANSITﾃコIOS,68.8905,-38.96917,539968772,119.0,0.5
-Transportadora:t24,TORRESTIR TRANSITﾃコIOS LDA,74.59796,12.1732025,881936632,114.0,1.5
-Transportadora:t51,SﾃィIA ATITUDE - CONSTRUﾃ�窶｡ﾃ�窶｢ES,-39.519154,8.964966,455159118,167.0,3.5
+Voluntario:v69,Pedro Miguel da Silva Paiva Antnio,-3.4494247,78.96666,164.0
+Voluntario:v59,Joo Carlos Delgado Monteiro,87.60193,-67.35995,56.0
+Voluntario:v33,Simo Pedro Santa Cruz Oliveira,11.959328,95.35214,81.0
+Transportadora:t26,TERCARGO - TRANSITﾃRIOS,68.8905,-38.96917,539968772,119.0,0.5
+Transportadora:t24,TORRESTIR TRANSITﾃRIOS LDA,74.59796,12.1732025,881936632,114.0,1.5
+Transportadora:t51,SﾃBIA ATITUDE - CONSTRUES,-39.519154,8.964966,455159118,167.0,3.5
 Transportadora:t31,ZENITHINDEX,31.47522,76.58536,599618020,192.0,1.5
-Transportadora:t9,TORRESTIR TRANSITﾃコIOS LDA,-9.798416,29.869064,923953011,128.0,1.5
-Loja:l29,TV e Telecomunicaﾃδｧﾃδｵes,39.627502,33.60112
+Transportadora:t9,TORRESTIR TRANSITﾃRIOS LDA,-9.798416,29.869064,923953011,128.0,1.5
+Loja:l29,TV e Telecomunicaｵes,39.627502,33.60112
 Loja:l58,Primark,78.73474,66.239685
 Loja:l8,Punt Roma,57.339508,-86.066315
 Loja:l83,ColchaoNet.com,95.71132,-57.792557

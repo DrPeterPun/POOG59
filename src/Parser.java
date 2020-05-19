@@ -1,8 +1,12 @@
+package src;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
@@ -23,7 +27,11 @@ public class Parser {
 	public void parse() {
 		int ui,vi,ei,li,enci,aceitei;
 		ui=vi=ei=li=enci=aceitei=0;
-		List<String> linhas = lerFicheiro("log.csv"); // path para o ficheir 
+		
+		sortAll(".");
+		List<String> linhas = lerFicheiro("src\\log.txt"); // path para o ficheiro
+		
+		System.out.println("\n foram lidas: " + linhas.size() + " linhas \n");
 		String[] linhaPartida;
 		for(String linha : linhas) {
 			linhaPartida = linha.split(":",2);
@@ -58,7 +66,7 @@ public class Parser {
 				aceitei++;
 				break;
 			default:
-				//o que fazer quando a linha nao é valida, provavelmente nao faz nada
+				//o que fazer quando a linha nao  valida, provavelmente nao faz nada
 				break;
 			}// switch(linhaPartida[0])
 		}//for(String linha : linhas) 
@@ -69,7 +77,7 @@ public class Parser {
 	public List<String> lerFicheiro(String nomeFich) {
         List<String> lines = new ArrayList<>();
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
-        catch(IOException exc) { System.out.println(exc.getMessage()); }
+        catch(IOException exc) { System.out.println(exc.getMessage() + "ficheiro nao foi loaded"); }
         return lines;
 	}
 	
@@ -139,4 +147,23 @@ public class Parser {
 		String nome=campos[1];
 		return new Loja(id,nome);
 	}
+	
+	
+	/// TESTE ///
+	private static void sortAll(String dirName) {
+        File directory = new File(dirName);
+        File[] filesArray = directory.listFiles();
+        //sort all files
+        Arrays.sort(filesArray);
+        //print the sorted values
+        for (File file : filesArray) {
+            if (file.isFile()) {
+            	System.out.println("File : " + file.getName());
+            } else if (file.isDirectory()) {
+            	System.out.println("Directory : " + file.getName());
+            } else {
+                System.out.println("Unknown : " + file.getName());
+            }
+        }
+    }
 }
