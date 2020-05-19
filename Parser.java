@@ -38,7 +38,7 @@ public class Parser {
 				this.voluntarios.addVoluntario(v);
 				vi++;
 				break;
-			case "Trasportadora":
+			case "Transportadora":
 				EmpresaT e= parseEmpresa(linhaPartida[1]);
 				this.empresasT.addEmpresa(e);
 				ei++;
@@ -124,12 +124,13 @@ public class Parser {
 		String[] campos = input.split(",");
 		String codigoEmpresa=campos[0];
 		String nomeEmpresa=campos[1];
-		int nif=Integer.parseInt(campos[2]);
-		int raio=Integer.parseInt(campos[3]);
-		int precokm=Integer.parseInt(campos[4]);
-		double gpsx=Integer.parseInt(campos[5]);
-		double gpsy=Integer.parseInt(campos[6]);
-		return new EmpresaT(codigoEmpresa,nomeEmpresa,nif,raio,precokm,gpsx,gpsy);
+		double gpsx=Double.parseDouble(campos[2]);
+		double gpsy=Double.parseDouble(campos[3]);
+		int nif=Integer.parseInt(campos[4]);
+		double raio=Double.parseDouble(campos[5]);
+		double precokm=Double.parseDouble(campos[6]);
+		
+		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm);
 	}
 	
 	private Loja parseLoja(String input) {

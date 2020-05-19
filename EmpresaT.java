@@ -3,8 +3,8 @@ import java.util.Objects;
 public class EmpresaT implements Transporte {
     private String codigoEmpresa;
     private String nomeEmpresa;
-    private int nif;
-    private int raio;
+    private double nif;
+    private double raio;
     private int precokm;
     private double gpsx;
     private double gpsy;
@@ -20,7 +20,7 @@ public class EmpresaT implements Transporte {
         this.gpsx=0;
     }
 
-    public EmpresaT(String codigoEmpresa, String nomeEmpresa, int nif, int raio,int precokm,double gpsx,double gpsy){
+    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy){
         this.codigoEmpresa=codigoEmpresa;
         this.nomeEmpresa=nomeEmpresa;
         this.nif=nif;
@@ -38,11 +38,11 @@ public class EmpresaT implements Transporte {
         return this.nomeEmpresa;
     }
 
-    public int getNif(){
+    public double getNif(){
         return this.nif;
     }
 
-    public int getRaio(){
+    public double getRaio(){
         return this.raio;
     }
 
