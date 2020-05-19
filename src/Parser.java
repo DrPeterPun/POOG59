@@ -76,7 +76,7 @@ public class Parser {
 
 	public List<String> lerFicheiro(String nomeFich) {
         List<String> lines = new ArrayList<>();
-        try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
+        try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.US_ASCII); }
         catch(IOException exc) { System.out.println(exc.getMessage() + "ficheiro nao foi loaded"); }
         return lines;
 	}
