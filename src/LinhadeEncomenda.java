@@ -1,3 +1,4 @@
+package src;
 public class LinhadeEncomenda {
    private String codProd;
    private String descricao;

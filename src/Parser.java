@@ -29,7 +29,7 @@ public class Parser {
 		ui=vi=ei=li=enci=aceitei=0;
 		
 		sortAll(".");
-		List<String> linhas = lerFicheiro("src\\log.txt"); // path para o ficheiro
+		List<String> linhas = lerFicheiro("log.txt"); // path para o ficheiro
 		
 		System.out.println("\n foram lidas: " + linhas.size() + " linhas \n");
 		String[] linhaPartida;
