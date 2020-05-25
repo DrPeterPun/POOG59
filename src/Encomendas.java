@@ -1,12 +1,42 @@
 package src;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Encomendas {
-	private Map<String,Encomenda> encomendas;
+	private List<Encomenda> encomendas;
 	
-	public Encomendas()
+	public Encomendas() {
+		this.encomendas= new ArrayList<>();
+	}
+	
+	/*public Encomendas(Encomenda enc) {
+		List<Encomenda> encm = new ArrayList<>();
+		encm.forEach(x->encm.add(enc));
+	}*/
+	
+	public List<Encomenda> getEncomendas() {
+		return encomendas;
+	}
+
+	public void setEncomendas(List<Encomenda> encomendas) {
+		this.encomendas = encomendas;
+	}
+	
+	
+	public void addEncomenda(Encomenda enc){
+		this.encomendas.add(enc);
+	}
+
+	
+	
+	
+	
+	//private Map<String,Encomenda> encomendas;
+	
+	/*public Encomendas()
 	{
 		this.encomendas = new TreeMap<>();
 	}
@@ -43,5 +73,5 @@ public class Encomendas {
 			e.addEncomenda(encomenda.getValue());
 		}
 		return e;
-	}
+	}*/
 }
