@@ -3,20 +3,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class Loja {
     private String codigoL;
     private String nomeL;
     private Encomendas encL;
+    private String email;
+    private String pass;
 
     public Loja(){
         this.codigoL=" ";
         this.nomeL=" ";
         this.encL= new Encomendas();
+        this.email="";
+        this.pass="";
     }
 
-    public Loja(String codigoL, String nomeL){
+    public Loja(String codigoL, String nomeL, String email , String pass){
         this.codigoL=codigoL;
         this.nomeL=nomeL;
+        this.email=email;
+        this.pass=pass;
     }
     
     public Encomendas getEncL() {
@@ -38,6 +45,16 @@ public class Loja {
     public Loja(Loja l){
         this.codigoL=getCodigoL();
         this.nomeL=getNomeL();
+    }
+    
+    public String getEmail()
+    {
+    	return this.email;
+    }
+    
+    public String getPass()
+    {
+    	return this.pass;
     }
 
     public Loja clone(){
@@ -74,4 +91,8 @@ public class Loja {
                 ", nomeL='" + nomeL + '\'' +
                 '}';
     }
+
+	public boolean logIn(String pass2) {
+		return this.pass==pass;
+	}
 }

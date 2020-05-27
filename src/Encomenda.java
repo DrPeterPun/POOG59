@@ -13,7 +13,7 @@ public class Encomenda {
       this.codUt=" ";
       this.codL=" ";
       this.peso=0;
-      this.encomendas=new ArrayList<>();
+      this.encomendas=new ArrayList<LinhadeEncomenda>();
    }
 
    @SuppressWarnings("unchecked")
@@ -31,7 +31,7 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
       this.codUt=codUt;
       this.codL=codL;
       this.peso=peso;
-      this.encomendas=new ArrayList<>();
+      this.encomendas=new ArrayList<LinhadeEncomenda>();
    }   
 
    public String getCodEnc() {
@@ -52,15 +52,15 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
 
    @SuppressWarnings("unchecked")
    public ArrayList<LinhadeEncomenda> getEncomendas() {
-      return (ArrayList<LinhadeEncomenda>)encomendas.clone();
+      return (ArrayList<LinhadeEncomenda>)this.encomendas.clone();
    }
 
    public Encomenda(Encomenda t){
-      this.codEnc=getCodEnc();
-      this.codUt=getCodUt();
-      this.codL=getCodL();
-      this.peso=getPeso();
-      this.encomendas=getEncomendas();
+      this.codEnc=t.getCodEnc();
+      this.codUt=t.getCodUt();
+      this.codL=t.getCodL();
+      this.peso=t.getPeso();
+      this.encomendas=t.getEncomendas();
    }
 
    public Encomenda clone(){

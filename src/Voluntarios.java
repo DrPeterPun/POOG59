@@ -49,9 +49,13 @@ public class Voluntarios {
 
     // estes dois métodos permitem adicionar um voluntario caso ele não exista no sistema
     // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
-    public void addVoluntario(Voluntario v) {
+    public boolean addVoluntario(Voluntario v) {
         if(!(existeV(v.getCodVol())))
-        this.voluntarios.put(v.getCodVol(),new Voluntario(v.getCodVol(),v.getNome(),v.getGpsx(),v.getGpsy(),v.getRaio()));
+        {
+        	this.voluntarios.put(v.getCodVol(),new Voluntario(v));
+        	return true;
+        }
+        else return false;
     }
 
     public boolean existeV(String cod){
@@ -59,6 +63,10 @@ public class Voluntarios {
         if(this.voluntarios.containsKey(cod))r=true;
         return r;
     }
+
+	public boolean logIn(String email, String pass) {
+		return this.voluntarios.get(email).logIn(pass);
+	}
 
 
 }

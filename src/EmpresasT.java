@@ -15,7 +15,7 @@ public class EmpresasT {
     public EmpresasT(Map<String,EmpresaT> transportadoras){
         this.transportadoras =new TreeMap<>();
         for(EmpresaT l: transportadoras.values())
-            this.transportadoras.put(l.clone().getCodigoEmpresa(),l.clone());
+            this.transportadoras.put(l.clone().getCodigo(),l.clone());
     }
 
     public Map<String,EmpresaT> getTransportadoras(){
@@ -52,9 +52,13 @@ public class EmpresasT {
 
     // estes dois métodos permitem adicionar uma empresa caso ela não exista no sistema
     // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
-    public void addEmpresa (EmpresaT e){
-        if(!(existeEmpresa(e.getCodigoEmpresa())))
-        this.transportadoras.put(e.getCodigoEmpresa(),new EmpresaT(e.getCodigoEmpresa(),e.getNomeEmpresa(),e.getNif(),e.getRaio(),e.getPrecokm(),e.getGpsx(),e.getGpsy()));
+    public boolean addEmpresa (EmpresaT e){
+        if(!(existeEmpresa(e.getCodigo())))
+        {
+        	this.transportadoras.put(e.getCodigo(),new EmpresaT(e));
+        	return true;
+        }
+        else return false;
     }
 
     public boolean existeEmpresa(String cod){
@@ -62,6 +66,11 @@ public class EmpresasT {
         if(this.transportadoras.containsKey(cod)) r=true;
         return r;
     }
+
+	public boolean logIn(String email, String pass) {
+		return this.transportadoras.get(email).logIn(pass);
+	}
+
 
 
 }

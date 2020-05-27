@@ -1,4 +1,4 @@
-package src;
+package Viewer;
 
 public class Viewer {
 	 

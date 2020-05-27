@@ -10,6 +10,8 @@ public class Utilizador {
     private double gpsxuser;
     private double gpsyuser;
     private Encomendas encUser;
+    private String email;
+    private String pass;
 
     public Utilizador(){
         this.iduser=" ";
@@ -17,13 +19,17 @@ public class Utilizador {
         this.gpsxuser=0;
         this.gpsyuser=0;
         this.encUser= new Encomendas();
+        this.email="";
+        this.pass="";
     }
 
-    public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser){
+    public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser,String email, String pass){
         this.iduser=iduser;
         this.name=name;
         this.gpsxuser=gpsxuser;
         this.gpsyuser=gpsyuser;
+        this.email=email;
+        this.pass=pass;
     }
 
     public String getIduser() {
@@ -69,6 +75,15 @@ public class Utilizador {
 		this.encUser = encUser;
 	}
 
+	public String getEmail()
+    {
+    	return this.email;
+    }
+    
+    public String getPass()
+    {
+    	return this.pass;
+    }
 	/* public Map<String,String> getEmailpass() {
         return this.emailpass.values().stream().collect(Collectors.toMap;
 */
@@ -118,4 +133,8 @@ public class Utilizador {
                 ", gpsyuser=" + gpsyuser +
                 '}';
     }
+
+	public boolean logIn(String pass) {
+		return this.pass==pass;
+	}
 }

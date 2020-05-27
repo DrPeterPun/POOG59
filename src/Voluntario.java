@@ -10,6 +10,8 @@ public class Voluntario {
     private double gpsy;
     private double raio;
     private Encomendas encV;
+    private String email;
+    private String pass;
 
     public Voluntario (){
         this.codVol=" ";
@@ -18,14 +20,20 @@ public class Voluntario {
         this.gpsy=0;
         this.raio=0;
         this.encV= new Encomendas();
+        this.email="";
+        this.pass="";
     }
 
-    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio){
+    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass){
         this.codVol= codVol;
         this.nome=nome;
         this.gpsx=gpsx;
         this.gpsy=gpsy;
         this.raio=raio;
+        this.email=email;
+        this.pass=pass;
+        this.email=email;
+        this.pass=pass;
     }
     
     
@@ -55,6 +63,16 @@ public class Voluntario {
 
     public double getRaio(){
         return this.raio;
+    }
+    
+    public String getEmail()
+    {
+    	return this.email;
+    }
+    
+    public String getPass()
+    {
+    	return this.pass;
     }
 
     //sets para o gps???
@@ -103,4 +121,12 @@ public class Voluntario {
                 Objects.equals(getCodVol(), that.getCodVol()) &&
                 Objects.equals(getNome(), that.getNome());
     }
+
+	public boolean logIn(String pass) {
+		return this.pass==pass;
+	}
+	
+	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso) {
+		return 0;
+	}
 }

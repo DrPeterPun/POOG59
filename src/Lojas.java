@@ -29,9 +29,13 @@ public class Lojas {
 
     // estes dois métodos permitem adicionar uma loja caso ele não exista no sistema
     // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
-    public void addLoja(Loja l) {
+    public boolean addLoja(Loja l) {
         if(!(existeLoja(l.getCodigoL())))
-        this.lojas.put(l.getCodigoL(),new Loja(l.getCodigoL(),l.getNomeL() ));
+        {
+        	this.lojas.put(l.getCodigoL(),new Loja(l));
+        	return true;
+        }
+        else return false;
     }
 
     public boolean existeLoja(String cod){
@@ -59,4 +63,8 @@ public class Lojas {
                 "lojas=" + lojas +
                 '}';
     }
+
+	public boolean logIn(String email, String pass) {
+		return this.lojas.get(email).logIn(pass);
+	}
 }

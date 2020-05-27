@@ -2,6 +2,8 @@ package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Reader.Parser;
+
 public class TrazAqui {
     public static void main(String[] args) {
     /*    System.out.println("Bem-vindo ao Traz-Aqui");

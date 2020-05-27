@@ -1,4 +1,4 @@
-package src;
+package Reader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +8,18 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import src.EmpresaT;
+import src.EmpresasT;
+import src.Encomenda;
+import src.Encomendas;
+import src.LinhadeEncomenda;
+import src.Loja;
+import src.Lojas;
+import src.Utilizador;
+import src.Utilizadores;
+import src.Voluntario;
+import src.Voluntarios;
 
 public class Parser {
 	private Utilizadores utilizadores;
@@ -87,7 +99,7 @@ public class Parser {
         String codUtilizador = campos[1];
         double gpsx = Double.parseDouble(campos[2]);
         double gpsy = Double.parseDouble(campos[3]);
-        Utilizador u = new Utilizador(nome,codUtilizador,gpsx,gpsy);
+        Utilizador u = new Utilizador(nome,codUtilizador,gpsx,gpsy,(nome+"@loja") , "123");
         return u;
 	}
 	
@@ -99,7 +111,7 @@ public class Parser {
 		double gpsy = Double.parseDouble(campos[3]);
 		double raio = Double.parseDouble(campos[4]);
 		
-		return new Voluntario(codVol,nome,gpsx,gpsy,raio);
+		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(nome+"@loja") , "123");
 	}
 	
 	public Encomenda parseEncomenda(String input) {
@@ -138,14 +150,14 @@ public class Parser {
 		double raio=Double.parseDouble(campos[5]);
 		double precokm=Double.parseDouble(campos[6]);
 		
-		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm);
+		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm,(nomeEmpresa+"@empresa") , "123");
 	}
 	
 	private Loja parseLoja(String input) {
 		String[] campos = input.split(",");
 		String id=campos[0];
 		String nome=campos[1];
-		return new Loja(id,nome);
+		return new Loja(id,nome,(nome+"@loja") , "123");
 	}
 	
 	

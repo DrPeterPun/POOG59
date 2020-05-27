@@ -50,9 +50,14 @@ public class Utilizadores {
 
    // estes dois métodos permitem adicionar um utilizador caso ele não exista no sistema
    // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
-    public void addUtilizador(Utilizador u){
+    public boolean addUtilizador(Utilizador u){
         if(!(existeUser( u.getIduser() ) ) )
-        	this.utilizadores.put(u.getIduser(),new Utilizador(u));
+        	{
+        	this.utilizadores.put(u.getEmail(),new Utilizador(u));
+        	return true;
+        	}
+        return false;
+                
    }
 
     public boolean existeUser(String cod){
@@ -60,6 +65,10 @@ public class Utilizadores {
         if(this.utilizadores.containsKey(cod)) r= true;
         return r;
     }
+
+	public boolean logIn(String email, String pass) {
+		return utilizadores.get(email).logIn(pass);
+	}
 
 /*
     public boolean loginUV (String email, String pass){

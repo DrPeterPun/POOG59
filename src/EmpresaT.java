@@ -1,7 +1,7 @@
 package src;
 import java.util.Objects;
 
-public class EmpresaT implements Transporte {
+public class EmpresaT implements TransporteInterface {
     private String codigoEmpresa;
     private String nomeEmpresa;
     private double nif;
@@ -10,6 +10,8 @@ public class EmpresaT implements Transporte {
     private double gpsx;
     private double gpsy;
     private Encomendas encT;
+    private String email;
+    private String pass;
 
     public EmpresaT(){
         this.codigoEmpresa=" ";
@@ -20,9 +22,11 @@ public class EmpresaT implements Transporte {
         this.gpsx=0;
         this.gpsx=0;
         this.encT= new Encomendas();
+        this.email="";
+        this.pass="";
     }
 
-    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy){
+    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass){
         this.codigoEmpresa=codigoEmpresa;
         this.nomeEmpresa=nomeEmpresa;
         this.nif=nif;
@@ -30,12 +34,11 @@ public class EmpresaT implements Transporte {
         this.precokm=precokm;
         this.gpsx=gpsx;
         this.gpsy=gpsy;
+        this.email=email;
+        this.pass=pass;
     }
-    
-    
-    
-
-	public Encomendas getEncT() {
+       
+ 	public Encomendas getEncT() {
 		return encT;
 	}
 
@@ -43,7 +46,7 @@ public class EmpresaT implements Transporte {
 		this.encT = encT;
 	}
 
-	public String getCodigoEmpresa(){
+	public String getCodigo(){
         return this.codigoEmpresa;
     }
 
@@ -71,8 +74,17 @@ public class EmpresaT implements Transporte {
         return this.gpsy;
     }
 
+    public String getEmail()
+    {
+    	return this.email;
+    }
+    
+    public String getPass()
+    {
+    	return this.pass;
+    }
     public EmpresaT(EmpresaT t){
-        this.codigoEmpresa=t.getCodigoEmpresa();
+        this.codigoEmpresa=t.getCodigo();
         this.nomeEmpresa=t.getNomeEmpresa();
         this.nif=t.getNif();
         this.raio=t.getRaio();
@@ -97,7 +109,7 @@ public class EmpresaT implements Transporte {
         return getNif() == empresaT.getNif() &&
                 getRaio() == empresaT.getRaio() &&
                 getPrecokm() == empresaT.getPrecokm() &&
-                Objects.equals(getCodigoEmpresa(), empresaT.getCodigoEmpresa()) &&
+                Objects.equals(getCodigo(), empresaT.getCodigo()) &&
                 Objects.equals(getNomeEmpresa(), empresaT.getNomeEmpresa()) &&
                 Objects.equals(getGpsx(), empresaT.getGpsx()) &&
                 Objects.equals(getGpsy(), empresaT.getGpsy());
@@ -115,4 +127,21 @@ public class EmpresaT implements Transporte {
                 ", gpsy='" + gpsy + '\'' +
                 '}';
     }
+
+
+	public boolean logIn(String pass) {
+		return this.pass==pass;
+	}
+	
+	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+	{
+		double preco;
+
+		preco = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
+		preco=preco*this.precokm;
+		if(peso>2)
+			preco=preco*1.5;
+		return preco;
+		
+	}
 }
