@@ -10,5 +10,7 @@ public interface TransporteInterface {
 
 	public String getCodigo();
 	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso);
+	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso);
+	
 
 }

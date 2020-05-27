@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Voluntario {
+public class Voluntario implements TransporteInterface {
     private String codVol;
     private String nome;
     private double gpsx;
@@ -128,5 +128,17 @@ public class Voluntario {
 	
 	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso) {
 		return 0;
+	}
+
+	public String getCodigo() {
+		return this.codVol;
+	}
+
+	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+	{
+
+		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
+		return dist;
+		
 	}
 }
