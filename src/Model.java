@@ -8,19 +8,15 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	private Voluntarios volts;
 	private EmpresasT transportadoras;
 	private Lojas lojas;
-	private Encomendas encomendas;
-	private EncLojas encomendaL;
-	private EncUser encomendaUser;
-	
+	private RegEncomendas regEnc;
+
 	public Model() {
 		this.users= new Utilizadores();
 		this.volts= new Voluntarios();
 		this.transportadoras= new EmpresasT();
 		this.lojas= new Lojas();
-		this.encomendas= new Encomendas();
-		this.encomendaL= new EncLojas();
-		this.encomendaUser=new EncUser();
-	}
+		this.regEnc= new RegEncomendas();
+	}	
 	
 	public void RegistaUser(Utilizador user) {
 		this.users.addUtilizador(user);
@@ -44,10 +40,9 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	}*/
 	
 	//Inserir uma encomenda de uma loja, por parte do utilizador(Não testei)
-	public void inserirEnc (Encomenda b){
-		 if(this.encomendaL.getCodigoL()==b.getCodL()) this.encomendaL.addEncLoja(b, this.encomendaL.getCodigoL());
-		 this.encomendaUser.addEncUser(b, b.getCodUt());
-	}
+	/*public void inserirEnc (Encomenda b){
+	 
+	}*/
 	
 	
 	

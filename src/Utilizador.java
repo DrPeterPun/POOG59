@@ -1,17 +1,22 @@
 package src;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Utilizador {
     private String iduser;
     private String name;
     private double gpsxuser;
     private double gpsyuser;
+    private Encomendas encUser;
 
     public Utilizador(){
         this.iduser=" ";
         this.name=" ";
         this.gpsxuser=0;
         this.gpsyuser=0;
+        this.encUser= new Encomendas();
     }
 
     public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser){
@@ -54,8 +59,17 @@ public class Utilizador {
     public void setGpsyuser(double gpsy) {
         this.gpsyuser=gpsy;
     }
+    
+    
+   public Encomendas getEncUser() {
+		return encUser;
+	}
 
-   /* public Map<String,String> getEmailpass() {
+	public void setEncUser(Encomendas encUser) {
+		this.encUser = encUser;
+	}
+
+	/* public Map<String,String> getEmailpass() {
         return this.emailpass.values().stream().collect(Collectors.toMap;
 */
     public Utilizador(Utilizador t){
@@ -68,6 +82,20 @@ public class Utilizador {
 
     public Utilizador clone(){
         return new Utilizador(this);
+    }
+    
+    //Aqui tem que se acrescentar esta encomenda às encomendas pendentes, não sei se se faz aqui ou no model
+    public void addEncU(Encomenda a) {
+        this.encUser.addEncomenda(a.clone());
+    }
+    
+    //Função que põe numa list os registos de encomendas de um utilizador(encomendas terminhas, recusadas e aceites);
+    public List<Encomenda> registosU(RegEncomendas a){
+    	List<Encomenda> enc = new ArrayList<>();
+    	a.getEncTerminadas().stream().filter(x->x.getCodUt()==this.iduser).forEach(x->enc.add(x));
+    	a.getEncRecusadas().stream().filter(x->x.getCodUt()==this.iduser).forEach(x->enc.add(x));
+    	a.getEncAceites().stream().filter(x->x.getCodUt()==this.iduser).forEach(x->enc.add(x));
+    	return enc;
     }
 
     @Override

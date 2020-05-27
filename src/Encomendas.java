@@ -27,9 +27,12 @@ public class Encomendas {
 	
 	
 	public void addEncomenda(Encomenda enc){
-		this.encomendas.add(enc);
+		this.encomendas.add(enc.clone());
 	}
-
+    
+	public void removeEncomenda(Encomenda enc) {
+		this.encomendas.remove(enc.clone());
+	}
 	
 	
 	

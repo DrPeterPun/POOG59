@@ -1,4 +1,6 @@
 package src;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Voluntario {
@@ -7,6 +9,7 @@ public class Voluntario {
     private double gpsx;
     private double gpsy;
     private double raio;
+    private Encomendas encV;
 
     public Voluntario (){
         this.codVol=" ";
@@ -14,6 +17,7 @@ public class Voluntario {
         this.gpsx=0;
         this.gpsy=0;
         this.raio=0;
+        this.encV= new Encomendas();
     }
 
     public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio){
@@ -23,8 +27,17 @@ public class Voluntario {
         this.gpsy=gpsy;
         this.raio=raio;
     }
+    
+    
+    public Encomendas getEncV() {
+		return encV;
+	}
 
-    public String getCodVol(){
+	public void setEncV(Encomendas encV) {
+		this.encV = encV;
+	}
+
+	public String getCodVol(){
         return this.codVol;
     }
 
@@ -44,7 +57,8 @@ public class Voluntario {
         return this.raio;
     }
 
-
+    //sets para o gps???
+    
     public Voluntario(Voluntario t){
         this.codVol=t.getCodVol();
         this.nome=t.getNome();
@@ -56,7 +70,17 @@ public class Voluntario {
     public Voluntario clone(){
         return new Voluntario(this);
     }
-
+    
+    public void addEncV(Encomenda a) {
+    	this.encV.addEncomenda(a.clone());
+    }
+    
+    /*public List<Encomenda> registosV(RegEncomendas a){
+    	List<Encomenda> enc = new ArrayList<>();
+    	a.getEncTerminadas().stream().filter(x->x.);
+    
+    }*/
+    
     @Override
     public String toString() {
         return "Voluntario{" +

@@ -9,7 +9,7 @@ public class EmpresaT implements Transporte {
     private int precokm;
     private double gpsx;
     private double gpsy;
-
+    private Encomendas encT;
 
     public EmpresaT(){
         this.codigoEmpresa=" ";
@@ -19,6 +19,7 @@ public class EmpresaT implements Transporte {
         this.precokm=0;
         this.gpsx=0;
         this.gpsx=0;
+        this.encT= new Encomendas();
     }
 
     public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy){
@@ -30,8 +31,19 @@ public class EmpresaT implements Transporte {
         this.gpsx=gpsx;
         this.gpsy=gpsy;
     }
+    
+    
+    
 
-    public String getCodigoEmpresa(){
+	public Encomendas getEncT() {
+		return encT;
+	}
+
+	public void setEncT(Encomendas encT) {
+		this.encT = encT;
+	}
+
+	public String getCodigoEmpresa(){
         return this.codigoEmpresa;
     }
 
@@ -71,6 +83,10 @@ public class EmpresaT implements Transporte {
         
     public EmpresaT clone(){
         return new EmpresaT(this);
+    }
+    
+    public void addEncT(Encomenda a) {
+    	this.encT.addEncomenda(a.clone());
     }
 
     @Override
