@@ -10,6 +10,8 @@ public class Loja {
     private Encomendas encL;
     private String email;
     private String pass;
+    private double gpsx;
+    private double gpsy;
 
     public Loja(){
         this.codigoL=" ";
@@ -17,13 +19,17 @@ public class Loja {
         this.encL= new Encomendas();
         this.email="";
         this.pass="";
+        this.gpsx=0;
+        this.gpsy=0;
     }
 
-    public Loja(String codigoL, String nomeL, String email , String pass){
+    public Loja(String codigoL, String nomeL, String email , String pass ,double gpsx ,double gpsy){
         this.codigoL=codigoL;
         this.nomeL=nomeL;
         this.email=email;
         this.pass=pass;
+        this.gpsx=gpsx;
+        this.gpsy=gpsy;
     }
     
     public Encomendas getEncL() {
@@ -40,6 +46,16 @@ public class Loja {
 
     public String getNomeL() {
         return nomeL;
+    }
+    
+    public double getGpsx()
+    {
+    	return this.gpsx;
+    }
+    
+    public double getGpsy()
+    {
+    	return this.gpsy;
     }
 
     public Loja(Loja l){
@@ -92,7 +108,7 @@ public class Loja {
                 '}';
     }
 
-	public boolean logIn(String pass2) {
+	public boolean logIn(String pass) {
 		return this.pass==pass;
 	}
 }

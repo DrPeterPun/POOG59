@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import src.EmpresaT;
 import src.EmpresasT;
@@ -154,15 +155,17 @@ public class Parser {
 	}
 	
 	private Loja parseLoja(String input) {
+		Random rand = new Random();
 		String[] campos = input.split(",");
 		String id=campos[0];
 		String nome=campos[1];
-		return new Loja(id,nome,(nome+"@loja") , "123");
+		return new Loja(id,nome,(nome+"@loja") , "123", rand.nextDouble() , rand.nextDouble() );
 	}
 	
 	
 	/// TESTE ///
 	private static void sortAll(String dirName) {
+		
         File directory = new File(dirName);
         File[] filesArray = directory.listFiles();
         //sort all files

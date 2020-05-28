@@ -18,6 +18,27 @@ public class Transportadoras {
 	            this.transportadoras.put(l.clone().getCodigo(),l.clone());
 	        }
 	 }
+	 
+	 public boolean addTransportadora(TransporteInterface transp) {
+		 //this.transportadoras.put(transp.getCodigo() ,transp );
+		 //return true;
+		 
+		 
+		 if(!(existeTtransportadora(transp.getCodigo())))
+		 {
+			 this.transportadoras.put(transp.getCodigo(),transp.clone());
+			 return true;
+		 }
+		 else return false; 
+		 
+	 }
+	 
+	 public boolean existeTtransportadora(String codigo) {
+	        boolean r=false;
+	        if(this.transportadoras.containsKey(codigo)) r=true;
+	        return r;
+	 }
+	 
 	 @SuppressWarnings("unchecked")
 	 public TransporteInterface detMaisBarato(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
 	 {

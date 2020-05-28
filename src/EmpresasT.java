@@ -67,10 +67,13 @@ public class EmpresasT {
         return r;
     }
 
-	public boolean logIn(String email, String pass) {
-		return this.transportadoras.get(email).logIn(pass);
+	public boolean logIn(String codigo, String pass) {
+		for(Map.Entry<String,EmpresaT> entry : this.transportadoras.entrySet()) {
+			if(entry.getValue().logIn(pass))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
-
-
-
 }

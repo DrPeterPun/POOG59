@@ -43,6 +43,14 @@ public class Lojas {
         if(this.lojas.containsKey(cod)) r=true;
         return r;
     }
+    
+    public Optional<Loja> getLoja(String codigo){
+        Optional<Loja> opt = Optional.empty();
+        if(this.lojas.containsKey(codigo)) {
+        	opt = Optional.ofNullable(this.lojas.get(codigo));
+        }
+        return opt;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -64,7 +72,14 @@ public class Lojas {
                 '}';
     }
 
-	public boolean logIn(String email, String pass) {
-		return this.lojas.get(email).logIn(pass);
+
+	public boolean logIn(String codigo, String pass) {
+		for(Map.Entry<String,Loja> entry : this.lojas.entrySet()) {
+			if(entry.getValue().logIn(pass))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -40,11 +40,11 @@ public class Utilizador {
         return this.name;
     }
 
-    public double getGpsxuser() {
+    public double getGpsx() {
         return this.gpsxuser;
     }
 
-    public double getGpsyuser() {
+    public double getGpsy() {
         return this.gpsyuser;
     }
 
@@ -90,8 +90,8 @@ public class Utilizador {
     public Utilizador(Utilizador t){
         this.iduser=getIduser();
         this.name=getName();
-        this.gpsxuser=getGpsxuser();
-        this.gpsyuser=getGpsyuser();
+        this.gpsxuser=getGpsx();
+        this.gpsyuser=getGpsy();
     }
 
 
@@ -118,8 +118,8 @@ public class Utilizador {
         if (this == o) return true;
         if (!(o instanceof Utilizador)) return false;
         Utilizador that = (Utilizador) o;
-        return Double.compare(that.getGpsxuser(), getGpsxuser()) == 0 &&
-                Double.compare(that.getGpsyuser(), getGpsyuser()) == 0 &&
+        return Double.compare(that.getGpsx(), getGpsx()) == 0 &&
+                Double.compare(that.getGpsy(), getGpsy()) == 0 &&
                 Objects.equals(getIduser(), that.getIduser()) &&
                 Objects.equals(getName(), that.getName());
     }

@@ -1,32 +1,37 @@
 package Model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import src.EmpresaT;
-import src.EmpresasT;
-import src.Encomenda;
-import src.Loja;
-import src.Lojas;
-import src.RegEncomendas;
-import src.Utilizador;
-import src.Utilizadores;
-import src.Voluntario;
-import src.Voluntarios;
+import src.*;
+
 
 public class Model { //Criei esta classe, não sei se vai ser o model, mas a ideia é ser um tipo de SGV como fizemos em LI3
 	private Utilizadores users;
 	private Voluntarios volts;
-	private EmpresasT transportadoras;
+	private EmpresasT empresas;
+	private Transportadoras transportadoras;
 	private Lojas lojas;
 	private RegEncomendas regEnc;
+	
+	private Optional<Utilizador> currentUser;
+	private Optional<EmpresaT> currentEmpresa;
+	private Optional<Voluntario> currentVol;
+	private Optional<Loja> currentLoja;
+	
 
 	public Model() {
 		this.users= new Utilizadores();
 		this.volts= new Voluntarios();
-		this.transportadoras= new EmpresasT();
+		this.empresas= new EmpresasT();
+		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
 		this.regEnc= new RegEncomendas();
+		this.currentUser = Optional.empty();
+		this.currentEmpresa =Optional.empty();
+		this.currentVol = Optional.empty();
+		this.currentLoja = Optional.empty();
 	}	
 	
 	//--------- Global --------- 
@@ -55,8 +60,20 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		}
 	}
 	
-	public boolean RegistaTransportadora(EmpresaT transportadora) {
-		if(this.transportadoras.addEmpresa(transportadora))
+	public boolean RegistaEmpresa(EmpresaT empresa) {
+		if(this.empresas.addEmpresa(empresa))
+		{
+			//diz que foi concluido com sucesso
+			return true;
+		}
+		else {
+			//diz que nao deu
+			return false;
+		}
+	}
+	
+	public boolean RegistaTransportadora(TransporteInterface transportadora) {
+		if(this.transportadoras.addTransportadora(transportadora))
 		{
 			//diz que foi concluido com sucesso
 			return true;
@@ -91,7 +108,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	
 	public boolean logInEmp(String email, String pass)
 	{
-		return  this.transportadoras.logIn(email, pass);
+		return  this.empresas.logIn(email, pass);
 	}
 	
 	public boolean logInLoja(String email, String pass)
@@ -129,11 +146,65 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	
 	public boolean fazEncomenda(Encomenda enc)
 	{
+		int done=0;
+		while(done==0)
+		{
+			//perguntar a view se quer prioritizar por mais barato ou mais perto e wtv
+			int pol=0; // maisperto =0; mais barato =1
+			Loja loja = this.lojas.getLoja(enc.getCodL()).get();
+			Utilizador user = this.currentUser.get();
+			TransporteInterface transportador;
+			if(pol==0)
+			{
+				transportador = this.transportadoras.detMaisPerto(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());
+			}
+			else
+			{
+				transportador = this.transportadoras.detMaisBarato(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());	
+			}
 		
-		return false;
+			if (transportador instanceof EmpresaT)
+			{
+				//Pergunta ao user se esta contente com a escolhe, se estiver done=1 se nao nao faz nada e volta ao inicio
+			}
+			
+		}
+		
+		// regista a encomenda no user/transportador/loja apropriados		return false;
+		return done==1;// se done for 0 � pq nao acabou a encomenda
 	}
 	
+	//--------- Voluntario---------
+	public void preparaAceitarEnc()
+	{
+		for(int i=0;i<1;i++)// para todas as encomendas por aceitar pergunta se quer aceitar
+		{
+			//pergunta ao voluntario se aceita a encomenda
+		}
+	}
 	
+	//--------- Voluntario // EmpresaT---------
+	public void enviarEnc()
+	{
+		int enviou=0;
+		for(int i=0;i<1;i++)// para todas as encomendas aceites pergunta se quer enviar a enc
+		{
+			//pergunta ao voluntario//empresa se quer enviar a encomenda
+			
+			if(true)//quis enviar a encomenda
+			{
+				return;
+			}
+		}
+	}
 	
+	//--------- Loja ---------
+	public void preparaEnc()
+	{
+		for(int i=0;i<1;i++)// para todas as encomenda spoir sinalizar pergunta se quer siznalizar
+		{
+			//pergunta a loja se quer por esta encomendas como pronta para ser entregue
+		}
+	}
 
 }

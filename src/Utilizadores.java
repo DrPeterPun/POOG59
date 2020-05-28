@@ -66,10 +66,15 @@ public class Utilizadores {
         return r;
     }
 
-	public boolean logIn(String email, String pass) {
-		return utilizadores.get(email).logIn(pass);
+	public boolean logIn(String codigo, String pass) {
+		for(Map.Entry<String,Utilizador> entry : this.utilizadores.entrySet()) {
+			if(entry.getValue().logIn(pass))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
-
 /*
     public boolean loginUV (String email, String pass){
         boolean r=false;

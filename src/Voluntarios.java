@@ -64,9 +64,14 @@ public class Voluntarios {
         return r;
     }
 
-	public boolean logIn(String email, String pass) {
-		return this.voluntarios.get(email).logIn(pass);
+	public boolean logIn(String codigo, String pass) {
+		for(Map.Entry<String,Voluntario> entry : this.voluntarios.entrySet()) {
+			if(entry.getValue().logIn(pass))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
-
 
 }
