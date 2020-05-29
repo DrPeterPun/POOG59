@@ -12,6 +12,7 @@ public class Voluntario implements TransporteInterface {
     private Encomendas encV;
     private String email;
     private String pass;
+    private ArrayList<Integer> ratings;
 
     public Voluntario (){
         this.codVol=" ";
@@ -22,9 +23,10 @@ public class Voluntario implements TransporteInterface {
         this.encV= new Encomendas();
         this.email="";
         this.pass="";
+        this.ratings = new ArrayList<Integer>();
     }
 
-    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass){
+    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass,ArrayList<Integer> ratings){
         this.codVol= codVol;
         this.nome=nome;
         this.gpsx=gpsx;
@@ -34,6 +36,7 @@ public class Voluntario implements TransporteInterface {
         this.pass=pass;
         this.email=email;
         this.pass=pass;
+        this.ratings=ratings;
     }
     
     
@@ -91,6 +94,26 @@ public class Voluntario implements TransporteInterface {
     
     public void addEncV(Encomenda a) {
     	this.encV.addEncomenda(a.clone());
+    }
+    
+    public double getRating()
+    {
+    	double r = 0;
+    	for(int rating:ratings)
+    	{
+    		r+=rating;
+    	}
+    	return r/ratings.size();
+    }
+    
+    public boolean addRating(int n)
+    {
+    	if(n>=0 && n<=5)
+    	{
+    		this.ratings.add(n);
+    		return true;
+    	}
+    	 return false;
     }
     
     /*public List<Encomenda> registosV(RegEncomendas a){

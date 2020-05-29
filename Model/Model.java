@@ -174,12 +174,26 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		return done==1;// se done for 0 � pq nao acabou a encomenda
 	}
 	
+	public void rateTransp()
+	{
+		for(int i=0;i<1;i++)// para todas as encomendas por avaliar pergunta se quer avaliar
+		{
+			if(true)//quer avaliar?
+			{
+				//pede a avaliacao ao user 
+				//insere a avaliacao no transportador
+				//move a encomende de "por avaliar" para "terminada"
+			}
+		}
+	}
+	
 	//--------- Voluntario---------
 	public void preparaAceitarEnc()
 	{
 		for(int i=0;i<1;i++)// para todas as encomendas por aceitar pergunta se quer aceitar
 		{
 			//pergunta ao voluntario se aceita a encomenda
+			//se sim move a encomenda de "aberta" para "aceite" 
 		}
 	}
 	
@@ -206,5 +220,4 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 			//pergunta a loja se quer por esta encomendas como pronta para ser entregue
 		}
 	}
-
 }

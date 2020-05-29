@@ -1,4 +1,5 @@
 package src;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class EmpresaT implements TransporteInterface {
@@ -12,6 +13,7 @@ public class EmpresaT implements TransporteInterface {
     private Encomendas encT;
     private String email;
     private String pass;
+    private ArrayList<Integer> ratings;
 
     public EmpresaT(){
         this.codigoEmpresa=" ";
@@ -24,9 +26,10 @@ public class EmpresaT implements TransporteInterface {
         this.encT= new Encomendas();
         this.email="";
         this.pass="";
+        this.ratings = new ArrayList<Integer>();
     }
 
-    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass){
+    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings){
         this.codigoEmpresa=codigoEmpresa;
         this.nomeEmpresa=nomeEmpresa;
         this.nif=nif;
@@ -36,6 +39,7 @@ public class EmpresaT implements TransporteInterface {
         this.gpsy=gpsy;
         this.email=email;
         this.pass=pass;
+        this.ratings = ratings;
     }
        
  	public Encomendas getEncT() {
@@ -82,6 +86,26 @@ public class EmpresaT implements TransporteInterface {
     public String getPass()
     {
     	return this.pass;
+    }
+    
+    public double getRating()
+    {
+    	double r = 0;
+    	for(int rating:ratings)
+    	{
+    		r+=rating;
+    	}
+    	return r/ratings.size();
+    }
+    
+    public boolean addRating(int n)
+    {
+    	if(n>=0 && n<=5)
+    	{
+    		this.ratings.add(n);
+    		return true;
+    	}
+    	 return false;
     }
     public EmpresaT(EmpresaT t){
         this.codigoEmpresa=t.getCodigo();
@@ -147,9 +171,9 @@ public class EmpresaT implements TransporteInterface {
 	
 	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
 	{
-
 		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
 		return dist;
-		
 	}
+	
+	
 }

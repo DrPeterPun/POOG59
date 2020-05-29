@@ -105,14 +105,21 @@ public class Parser {
 	}
 	
 	public Voluntario parseVoluntario(String input) {
+		Random rand = new Random();
 		String[] campos = input.split(",");
 		String codVol = campos[0];
 		String nome = campos[1];
 		double gpsx = Double.parseDouble(campos[2]);
 		double gpsy = Double.parseDouble(campos[3]);
 		double raio = Double.parseDouble(campos[4]);
+		ArrayList<Integer> ratings = new ArrayList<Integer>();
+		for(int i =0; i<(rand.nextInt()*5);i++)
+		{
+			ratings.add(rand.nextInt()*5);
+		}
 		
-		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(nome+"@loja") , "123");
+		
+		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(nome+"@loja") , "123",ratings);
 	}
 	
 	public Encomenda parseEncomenda(String input) {
@@ -142,6 +149,7 @@ public class Parser {
 	}
 	
 	private EmpresaT parseEmpresa(String input) {
+		Random rand = new Random();
 		String[] campos = input.split(",");
 		String codigoEmpresa=campos[0];
 		String nomeEmpresa=campos[1];
@@ -150,8 +158,14 @@ public class Parser {
 		int nif=Integer.parseInt(campos[4]);
 		double raio=Double.parseDouble(campos[5]);
 		double precokm=Double.parseDouble(campos[6]);
+		ArrayList<Integer> ratings = new ArrayList<Integer>();
+		for(int i =0; i<(rand.nextInt()*5);i++)
+		{
+			ratings.add(rand.nextInt()*5);
+		}
 		
-		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm,(nomeEmpresa+"@empresa") , "123");
+		
+		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm,(nomeEmpresa+"@empresa") , "123", ratings);
 	}
 	
 	private Loja parseLoja(String input) {
@@ -159,7 +173,7 @@ public class Parser {
 		String[] campos = input.split(",");
 		String id=campos[0];
 		String nome=campos[1];
-		return new Loja(id,nome,(nome+"@loja") , "123", rand.nextDouble() , rand.nextDouble() );
+		return new Loja(id,nome,(nome+"@loja") , "123", (rand.nextDouble()-0.5)*200 , (rand.nextDouble()-0.5)*200 );
 	}
 	
 	
