@@ -122,6 +122,52 @@ public class Model { //Criei esta classe, n√£o sei se vai ser o model, mas a ide
 	}*/
 	
 	
+	
+
+    public void addEnc(Encomenda a) {
+		this.users.addEnc(a);
+		this.transportadoras.addEnc(a);
+		this.lojas.addEnc(a);
+	}
+	
+	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
+	public void encAceite(Encomenda a) {
+		this.users.encAceite(a);
+		this.transportadoras.encAceite(a);
+		this.lojas.encAceite(a);
+	}
+	
+	// o voluntario recusou a encomenda
+	public void encRecusada(Encomenda a) {
+		this.users.encRecusada(a);
+		this.transportadoras.encRecusada(a);
+		this.lojas.encRecusada(a);
+	}
+	
+	// a Loja diz que a encomenda esta cpronta
+	public void encPronta(Encomenda a){
+		this.users.encPronta(a);
+		this.transportadoras.encPronta(a);
+		this.lojas.encPronta(a);
+	}
+	
+	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
+	public void encPorAvaliar(Encomenda a){
+		this.users.encPorAvaliar(a);
+		this.transportadoras.encPorAvaliar(a);
+		this.lojas.encPorAvaliar(a);
+	}
+	
+	// encomenda foi completada
+	public void encCompleta(Encomenda a){
+		this.users.encCompleta(a);
+		this.transportadoras.encCompleta(a);
+		this.lojas.encCompleta(a);
+	}
+	
+	
+	//--------- User ---------
+	
 	/*
 	Processo ate uma encomenda estar completa
 	1∫ user faz uma encomenda a uma loja
@@ -142,12 +188,12 @@ public class Model { //Criei esta classe, n√£o sei se vai ser o model, mas a ide
 	
 	*/
 	
-	//--------- User ---------
-	
+	@SuppressWarnings("unused")
 	public boolean fazEncomenda(Encomenda enc)
 	{
-		int done=0;
-		while(done==0)
+		boolean done =  false; 
+		boolean querOutra = false;
+		while(!done)
 		{
 			//perguntar a view se quer prioritizar por mais barato ou mais perto e wtv
 			int pol=0; // maisperto =0; mais barato =1
@@ -166,12 +212,27 @@ public class Model { //Criei esta classe, n√£o sei se vai ser o model, mas a ide
 			if (transportador instanceof EmpresaT)
 			{
 				//Pergunta ao user se esta contente com a escolhe, se estiver done=1 se nao nao faz nada e volta ao inicio
+				if(true)//confirmar a escolhe, //se nao confir mar volta ao inicio
+				{
+					this.encAceite(enc);
+					done = true;
+				}
+				else 
+				{
+					//cena a perguntar se quer outra transportadora
+					querOutra = false;
+					done=!querOutra;
+				}
 			}
-			
+			else
+			{
+				this.addEnc(enc);
+				done = true;
+			}
 		}
 		
-		// regista a encomenda no user/transportador/loja apropriados		return false;
-		return done==1;// se done for 0 È pq nao acabou a encomenda
+		
+		return done;// se done for 0 È pq nao acabou a encomenda
 	}
 	
 	public void rateTransp()
@@ -200,12 +261,12 @@ public class Model { //Criei esta classe, n√£o sei se vai ser o model, mas a ide
 	//--------- Voluntario // EmpresaT---------
 	public void enviarEnc()
 	{
-		int enviou=0;
+		boolean enviou=false;
 		for(int i=0;i<1;i++)// para todas as encomendas aceites pergunta se quer enviar a enc
 		{
 			//pergunta ao voluntario//empresa se quer enviar a encomenda
 			
-			if(true)//quis enviar a encomenda
+			if(enviou)//quis enviar a encomenda
 			{
 				return;
 			}

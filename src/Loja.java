@@ -7,20 +7,20 @@ import java.util.Objects;
 public class Loja {
     private String codigoL;
     private String nomeL;
-    private Encomendas encL;
     private String email;
     private String pass;
     private double gpsx;
     private double gpsy;
+    private RegEncomendas regEnc;
 
     public Loja(){
         this.codigoL=" ";
         this.nomeL=" ";
-        this.encL= new Encomendas();
         this.email="";
         this.pass="";
         this.gpsx=0;
         this.gpsy=0;
+        this.regEnc = new RegEncomendas();
     }
 
     public Loja(String codigoL, String nomeL, String email , String pass ,double gpsx ,double gpsy){
@@ -30,15 +30,18 @@ public class Loja {
         this.pass=pass;
         this.gpsx=gpsx;
         this.gpsy=gpsy;
+        this.regEnc = new RegEncomendas();
     }
     
-    public Encomendas getEncL() {
-		return encL;
-	}
-
-	public void setEncL(Encomendas encL) {
-		this.encL = encL;
-	}
+    public Loja(String codigoL, String nomeL, String email , String pass ,double gpsx ,double gpsy, RegEncomendas regEnc){
+        this.codigoL=codigoL;
+        this.nomeL=nomeL;
+        this.email=email;
+        this.pass=pass;
+        this.gpsx=gpsx;
+        this.gpsy=gpsy;
+        this.regEnc = regEnc.clone();
+    }
 
 	public String getCodigoL() {
         return codigoL;
@@ -58,38 +61,60 @@ public class Loja {
     	return this.gpsy;
     }
 
-    public Loja(Loja l){
-        this.codigoL=getCodigoL();
-        this.nomeL=getNomeL();
-    }
     
     public String getEmail()
     {
     	return this.email;
     }
-    
-    public String getPass()
-    {
-    	return this.pass;
-    }
+
 
     public Loja clone(){
-        return new Loja(this);
+        return new Loja(	this.codigoL,
+        					this.nomeL,
+        					this.email,
+        					this.pass,
+        					this.gpsx,
+        					this.gpsy,
+        					this.regEnc.clone());
     }
     
+    public RegEncomendas getRegEnc()
+    {
+    	return this.regEnc.clone();
+    }
+
+    public void addEnc(Encomenda a) {
+		this.regEnc.addEnc(a);
+	}
+	
+	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
+	public void encAceite(Encomenda a) {
+		this.regEnc.encAceite(a);
+	}
+	
+	// o voluntario recusou a encomenda
+	public void encRecusada(Encomenda a) {
+		this.regEnc.encRecusada(a);
+	}
+	
+	// a Loja diz que a encomenda esta cpronta
+	public void encPronta(Encomenda a){
+		this.regEnc.encPronta(a);
+	}
+	
+	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
+	public void encPorAvaliar(Encomenda a){
+		this.regEnc.encPorAvaliar(a);
+	}
+	
+	// encomenda foi completada
+	public void encCompleta(Encomenda a){
+		this.regEnc.encCompleta(a);
+	}
+
     //Com os registos de encomendas, não sei se esta função será precisa, visto que quem solicita a encomenda é o utilizador, acho que não será necessário ter uma lista
     //de encomendas para as lojas
-    public void addEncL(Encomenda a) {
-    	this.encL.addEncomenda(a.clone());
-    }
     
-    public List<Encomenda> registosL(RegEncomendas a){
-    	List<Encomenda> enc = new ArrayList<>();
-    	a.getEncTerminadas().stream().filter(x->x.getCodL()==this.codigoL).forEach(x->enc.add(x));
-    	a.getEncRecusadas().stream().filter(x->x.getCodL()==this.codigoL).forEach(x->enc.add(x));
-    	a.getEncAceites().stream().filter(x->x.getCodL()==this.codigoL).forEach(x->enc.add(x));
-    	return enc;
-    }
 
     @Override
     public boolean equals(Object o) {

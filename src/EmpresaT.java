@@ -14,6 +14,7 @@ public class EmpresaT implements TransporteInterface {
     private String email;
     private String pass;
     private ArrayList<Integer> ratings;
+    private RegEncomendas regEnc;
 
     public EmpresaT(){
         this.codigoEmpresa=" ";
@@ -27,6 +28,7 @@ public class EmpresaT implements TransporteInterface {
         this.email="";
         this.pass="";
         this.ratings = new ArrayList<Integer>();
+        this.regEnc = new RegEncomendas();
     }
 
     public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings){
@@ -39,7 +41,22 @@ public class EmpresaT implements TransporteInterface {
         this.gpsy=gpsy;
         this.email=email;
         this.pass=pass;
-        this.ratings = ratings;
+        this.ratings = new ArrayList<Integer>(ratings);
+        this.regEnc = new RegEncomendas();
+    }
+    
+    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings, RegEncomendas regEnc){
+        this.codigoEmpresa=codigoEmpresa;
+        this.nomeEmpresa=nomeEmpresa;
+        this.nif=nif;
+        this.raio=raio;
+        this.precokm=precokm;
+        this.gpsx=gpsx;
+        this.gpsy=gpsy;
+        this.email=email;
+        this.pass=pass;
+        this.ratings = new ArrayList<Integer>(ratings);
+        this.regEnc = regEnc.clone();
     }
        
  	public Encomendas getEncT() {
@@ -98,6 +115,11 @@ public class EmpresaT implements TransporteInterface {
     	return r/ratings.size();
     }
     
+    public RegEncomendas getRegEnc()
+    {
+    	return this.regEnc.clone();
+    }
+    
     public boolean addRating(int n)
     {
     	if(n>=0 && n<=5)
@@ -107,18 +129,19 @@ public class EmpresaT implements TransporteInterface {
     	}
     	 return false;
     }
-    public EmpresaT(EmpresaT t){
-        this.codigoEmpresa=t.getCodigo();
-        this.nomeEmpresa=t.getNomeEmpresa();
-        this.nif=t.getNif();
-        this.raio=t.getRaio();
-        this.precokm=t.getPrecokm();
-        this.gpsx=t.getGpsx();
-        this.gpsy=t.getGpsy();
-    }
-        
+         
     public EmpresaT clone(){
-        return new EmpresaT(this);
+        return new EmpresaT( 	this.codigoEmpresa,
+        						this.nomeEmpresa,
+        						this.nif,
+        						this.raio,
+        						this.precokm,
+        						this.gpsx,
+        						this.gpsy,
+        						this.email,
+        						this.pass,
+        						this.ratings,
+        						this.regEnc);
     }
     
     public void addEncT(Encomenda a) {
@@ -171,8 +194,43 @@ public class EmpresaT implements TransporteInterface {
 	
 	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
 	{
+		
 		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
 		return dist;
+	}
+
+	@Override
+	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
+		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
+	}
+	
+	public void addEnc(Encomenda a) {
+		this.regEnc.addEnc(a);
+	}
+	
+	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
+	public void encAceite(Encomenda a) {
+		this.regEnc.encAceite(a);
+	}
+	
+	// o voluntario recusou a encomenda
+	public void encRecusada(Encomenda a) {
+		this.regEnc.encRecusada(a);
+	}
+	
+	// a Loja diz que a encomenda esta cpronta
+	public void encPronta(Encomenda a){
+		this.regEnc.encPronta(a);
+	}
+	
+	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
+	public void encPorAvaliar(Encomenda a){
+		this.regEnc.encPorAvaliar(a);
+	}
+	
+	// encomenda foi completada
+	public void encCompleta(Encomenda a){
+		this.regEnc.encCompleta(a);
 	}
 	
 	

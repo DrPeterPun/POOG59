@@ -55,7 +55,7 @@ public class EmpresasT {
     public boolean addEmpresa (EmpresaT e){
         if(!(existeEmpresa(e.getCodigo())))
         {
-        	this.transportadoras.put(e.getCodigo(),new EmpresaT(e));
+        	this.transportadoras.put(e.getCodigo(),e.clone());
         	return true;
         }
         else return false;

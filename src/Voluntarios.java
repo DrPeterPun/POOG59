@@ -1,5 +1,6 @@
 package src;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Voluntarios {
     private Map<String,Voluntario> voluntarios;
@@ -52,7 +53,7 @@ public class Voluntarios {
     public boolean addVoluntario(Voluntario v) {
         if(!(existeV(v.getCodVol())))
         {
-        	this.voluntarios.put(v.getCodVol(),new Voluntario(v));
+        	this.voluntarios.put(v.getCodVol(),v.clone());
         	return true;
         }
         else return false;
@@ -72,6 +73,15 @@ public class Voluntarios {
 			}
 		}
 		return false;
+	}
+	/// TESTE
+	public void printMap()
+	{
+		Set<Entry<String, Voluntario>> set = voluntarios.entrySet();
+		for(Entry<String, Voluntario> ti: set)
+		{
+			System.out.println(ti.getKey() + " " + ti.getValue().getCodigo());
+		}
 	}
 
 }

@@ -1,8 +1,12 @@
-package src;
+package Teste;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import Reader.Parser;
+import src.Encomendas;
+import src.Lojas;
+import src.Transportadoras;
+import src.Utilizadores;
 
 public class TrazAqui {
     public static void main(String[] args) {
@@ -80,8 +84,20 @@ public class TrazAqui {
         // criaccao da lista de empresas
         EmpresasT transp = new EmpresasT();
         */
-    	Parser parser = new Parser();
-    	parser.parse();
+    	//Parser parser = new Parser();
+    	//parser.parse();
     	
+    	Utilizadores utilizadores = new Utilizadores();
+		//this.empresasT = new EmpresasT();
+		Encomendas encomendas = new Encomendas();
+		Lojas lojas = new Lojas();
+		//this.voluntarios = new Voluntarios();
+		Transportadoras transp = new Transportadoras();
+		
+		new Parser(utilizadores,encomendas,lojas, transp);
+		transp.printMap();
+		lojas.printMap();
+		utilizadores.printMap();
+		
     }
 }

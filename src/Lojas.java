@@ -1,5 +1,6 @@
 package src;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Lojas {
     private Map<String,Loja> lojas;
@@ -32,7 +33,7 @@ public class Lojas {
     public boolean addLoja(Loja l) {
         if(!(existeLoja(l.getCodigoL())))
         {
-        	this.lojas.put(l.getCodigoL(),new Loja(l));
+        	this.lojas.put(l.getCodigoL(),l.clone());
         	return true;
         }
         else return false;
@@ -82,4 +83,69 @@ public class Lojas {
 		}
 		return false;
 	}
+
+public void addEnc(Encomenda a) {
+	String cod = a.getCodT();
+	if(this.lojas.containsKey(cod))
+	{
+		this.lojas.get(cod).addEnc(a);
+	}
+	 
+}
+	
+	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
+	public void encAceite(Encomenda a) {
+		String cod = a.getCodT();
+		if(this.lojas.containsKey(cod))
+		{
+			this.lojas.get(cod).encAceite(a);
+		}
+	}
+	
+	// o voluntario recusou a encomenda
+	public void encRecusada(Encomenda a) {
+		String cod = a.getCodT();
+		if(this.lojas.containsKey(cod))
+		{
+			this.lojas.get(cod).encRecusada(a);
+		}
+	}
+	
+	// a Loja diz que a encomenda esta cpronta
+	public void encPronta(Encomenda a){
+		String cod = a.getCodT();
+		if(this.lojas.containsKey(cod))
+		{
+			this.lojas.get(cod).encPronta(a);
+		}
+	}
+	
+	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
+	public void encPorAvaliar(Encomenda a){
+		String cod = a.getCodT();
+		if(this.lojas.containsKey(cod))
+		{
+			this.lojas.get(cod).encPorAvaliar(a);
+		}
+	}
+	
+	// encomenda foi completada
+	public void encCompleta(Encomenda a){
+		String cod = a.getCodT();
+		if(this.lojas.containsKey(cod))
+		{
+			this.lojas.get(cod).encCompleta(a);
+		}
+	}
+	
+	/// TESTE
+		public void printMap()
+		{
+			Set<Entry<String, Loja>> set = lojas.entrySet();
+			for(Entry<String, Loja> ti: set)
+			{
+				System.out.println(ti.getKey() + " " + ti.getValue().getCodigoL());
+			}
+		}
+	
 }

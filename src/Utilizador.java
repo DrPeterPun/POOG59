@@ -1,26 +1,23 @@
 package src;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Utilizador {
     private String iduser;
     private String name;
     private double gpsxuser;
     private double gpsyuser;
-    private Encomendas encUser;
     private String email;
     private String pass;
+    private RegEncomendas regEnc;
 
     public Utilizador(){
         this.iduser=" ";
         this.name=" ";
         this.gpsxuser=0;
         this.gpsyuser=0;
-        this.encUser= new Encomendas();
         this.email="";
         this.pass="";
+        this.regEnc = new RegEncomendas();
     }
 
     public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser,String email, String pass){
@@ -30,9 +27,20 @@ public class Utilizador {
         this.gpsyuser=gpsyuser;
         this.email=email;
         this.pass=pass;
+        this.regEnc = new RegEncomendas();
+    }
+    
+    public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser,String email, String pass, RegEncomendas regEnc){
+        this.iduser=iduser;
+        this.name=name;
+        this.gpsxuser=gpsxuser;
+        this.gpsyuser=gpsyuser;
+        this.email=email;
+        this.pass=pass;
+        this.regEnc = regEnc.clone();
     }
 
-    public String getIduser() {
+    public String getIdUser() {
         return this.iduser;
     }
 
@@ -46,6 +54,10 @@ public class Utilizador {
 
     public double getGpsy() {
         return this.gpsyuser;
+    }
+    public RegEncomendas getRegEncomendas()
+    {
+    	return this.regEnc.clone();
     }
 
     //sets
@@ -66,62 +78,32 @@ public class Utilizador {
         this.gpsyuser=gpsy;
     }
     
-    
-   public Encomendas getEncUser() {
-		return encUser;
-	}
-
-	public void setEncUser(Encomendas encUser) {
-		this.encUser = encUser;
-	}
-
 	public String getEmail()
     {
     	return this.email;
     }
+    	
     
-    public String getPass()
-    {
-    	return this.pass;
-    }
-	/* public Map<String,String> getEmailpass() {
-        return this.emailpass.values().stream().collect(Collectors.toMap;
-*/
-    public Utilizador(Utilizador t){
-        this.iduser=getIduser();
-        this.name=getName();
-        this.gpsxuser=getGpsx();
-        this.gpsyuser=getGpsy();
-    }
-
-
     public Utilizador clone(){
-        return new Utilizador(this);
+        return new Utilizador(	this.iduser,
+								this.name,
+								this.gpsxuser,
+								this.gpsyuser,
+								this.email,
+								this.pass,
+								this.regEnc.clone());
     }
     
-    //Aqui tem que se acrescentar esta encomenda às encomendas pendentes, não sei se se faz aqui ou no model
-    public void addEncU(Encomenda a) {
-        this.encUser.addEncomenda(a.clone());
-    }
     
-    //Função que põe numa list os registos de encomendas de um utilizador(encomendas terminhas, recusadas e aceites);
-    public List<Encomenda> registosU(RegEncomendas a){
-    	List<Encomenda> enc = new ArrayList<>();
-    	a.getEncTerminadas().stream().filter(x->x.getCodUt()==this.iduser).forEach(x->enc.add(x));
-    	a.getEncRecusadas().stream().filter(x->x.getCodUt()==this.iduser).forEach(x->enc.add(x));
-    	a.getEncAceites().stream().filter(x->x.getCodUt()==this.iduser).forEach(x->enc.add(x));
-    	return enc;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Utilizador)) return false;
         Utilizador that = (Utilizador) o;
-        return Double.compare(that.getGpsx(), getGpsx()) == 0 &&
-                Double.compare(that.getGpsy(), getGpsy()) == 0 &&
-                Objects.equals(getIduser(), that.getIduser()) &&
-                Objects.equals(getName(), that.getName());
+        return Double.compare(that.getGpsx(), this.getGpsx()) == 0 &&
+                Double.compare(that.getGpsy(), this.getGpsy()) == 0 &&
+                Objects.equals(this.getIdUser(), that.getIdUser()) &&
+                Objects.equals(this.getName(), that.getName());
     }
 
     @Override
@@ -137,4 +119,39 @@ public class Utilizador {
 	public boolean logIn(String pass) {
 		return this.pass==pass;
 	}
+	
+	public RegEncomendas getRegEnc()
+    {
+    	return this.regEnc.clone();
+    }
+
+    public void addEnc(Encomenda a) {
+		this.regEnc.addEnc(a);
+	}
+	
+	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
+	public void encAceite(Encomenda a) {
+		this.regEnc.encAceite(a);
+	}
+	
+	// o voluntario recusou a encomenda
+	public void encRecusada(Encomenda a) {
+		this.regEnc.encRecusada(a);
+	}
+	
+	// a Loja diz que a encomenda esta cpronta
+	public void encPronta(Encomenda a){
+		this.regEnc.encPronta(a);
+	}
+	
+	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
+	public void encPorAvaliar(Encomenda a){
+		this.regEnc.encPorAvaliar(a);
+	}
+	
+	// encomenda foi completada
+	public void encCompleta(Encomenda a){
+		this.regEnc.encCompleta(a);
+	}
+
 }

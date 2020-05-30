@@ -13,6 +13,7 @@ public class Voluntario implements TransporteInterface {
     private String email;
     private String pass;
     private ArrayList<Integer> ratings;
+    private RegEncomendas regEnc;
 
     public Voluntario (){
         this.codVol=" ";
@@ -24,8 +25,24 @@ public class Voluntario implements TransporteInterface {
         this.email="";
         this.pass="";
         this.ratings = new ArrayList<Integer>();
+        this.regEnc = new RegEncomendas();
+
     }
 
+    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass,ArrayList<Integer> ratings, RegEncomendas regEnc){
+        this.codVol= codVol;
+        this.nome=nome;
+        this.gpsx=gpsx;
+        this.gpsy=gpsy;
+        this.raio=raio;
+        this.email=email;
+        this.pass=pass;
+        this.email=email;
+        this.pass=pass;
+        this.ratings=ratings;
+        this.regEnc = regEnc;
+    }
+    
     public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass,ArrayList<Integer> ratings){
         this.codVol= codVol;
         this.nome=nome;
@@ -37,6 +54,22 @@ public class Voluntario implements TransporteInterface {
         this.email=email;
         this.pass=pass;
         this.ratings=ratings;
+        this.regEnc = new RegEncomendas();
+    }
+    
+    //é de eesperar que este seja o metudo utilizado para registar um novo voluntario pq tem toda a informacao inicial mas nao tem ratings e nao tem encomendas ja feitas
+    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass){
+        this.codVol= codVol;
+        this.nome=nome;
+        this.gpsx=gpsx;
+        this.gpsy=gpsy;
+        this.raio=raio;
+        this.email=email;
+        this.pass=pass;
+        this.email=email;
+        this.pass=pass;
+        this.ratings=new ArrayList<Integer>();
+        this.regEnc = new RegEncomendas();
     }
     
     
@@ -78,18 +111,16 @@ public class Voluntario implements TransporteInterface {
     	return this.pass;
     }
 
-    //sets para o gps???
-    
-    public Voluntario(Voluntario t){
-        this.codVol=t.getCodVol();
-        this.nome=t.getNome();
-        this.gpsx=t.getGpsx();
-        this.gpsy=t.getGpsy();
-        this.raio=t.getRaio();
-    }
-
     public Voluntario clone(){
-        return new Voluntario(this);
+        return new Voluntario(	this.codVol,
+        						this.nome,
+        						this.gpsx,
+        						this.gpsy,
+        						this.raio,
+        						this.email,
+        						this.pass,
+        						new ArrayList<Integer>(this.ratings),
+        						this.regEnc.clone());
     }
     
     public void addEncV(Encomenda a) {
@@ -104,6 +135,11 @@ public class Voluntario implements TransporteInterface {
     		r+=rating;
     	}
     	return r/ratings.size();
+    }
+    
+    public RegEncomendas getRegEnc()
+    {
+    	return this.regEnc.clone();
     }
     
     public boolean addRating(int n)
@@ -161,7 +197,46 @@ public class Voluntario implements TransporteInterface {
 	{
 
 		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
-		return dist;
-		
+		return dist;		
 	}
+
+
+	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
+		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
+	}
+	
+	// ---relativo as encomendas---
+	
+	public void addEnc(Encomenda a) {
+		this.regEnc.addEnc(a);
+	}
+	
+	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
+	public void encAceite(Encomenda a) {
+		this.regEnc.encAceite(a);
+	}
+	
+	// o voluntario recusou a encomenda
+	public void encRecusada(Encomenda a) {
+		this.regEnc.encRecusada(a);
+	}
+	
+	// a Loja diz que a encomenda esta cpronta
+	public void encPronta(Encomenda a){
+		this.regEnc.encPronta(a);
+	}
+	
+	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
+	public void encPorAvaliar(Encomenda a){
+		this.regEnc.encPorAvaliar(a);
+	}
+	
+	// encomenda foi completada
+	public void encCompleta(Encomenda a){
+		this.regEnc.encCompleta(a);
+	}
+
+	
+
+	
 }

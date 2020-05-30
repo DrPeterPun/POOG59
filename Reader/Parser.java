@@ -10,31 +10,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import src.EmpresaT;
-import src.EmpresasT;
-import src.Encomenda;
-import src.Encomendas;
-import src.LinhadeEncomenda;
-import src.Loja;
-import src.Lojas;
-import src.Utilizador;
-import src.Utilizadores;
-import src.Voluntario;
-import src.Voluntarios;
+import src.*;
 
 public class Parser {
 	private Utilizadores utilizadores;
-	private EmpresasT empresasT;
+	//private EmpresasT empresasT;
 	private Encomendas encomendas;
 	private Lojas lojas;
-	private Voluntarios voluntarios;
+	//private Voluntarios voluntarios;
+	private Transportadoras transp;
 	
-	public Parser() {
-		this.utilizadores = new Utilizadores();
-		this.empresasT = new EmpresasT();
-		this.encomendas = new Encomendas();
-		this.lojas = new Lojas();
-		this.voluntarios = new Voluntarios();
+	public Parser(Utilizadores utilizadores,Encomendas encomendas,Lojas lojas,Transportadoras transp) {
+		this.utilizadores = utilizadores;
+		//this.empresasT = new EmpresasT();
+		this.encomendas = encomendas;
+		this.lojas = lojas;
+		//this.voluntarios = new Voluntarios();
+		this.transp = transp;
 	}
 		
 	public void parse() {
@@ -56,12 +48,14 @@ public class Parser {
 				break;
 			case "Voluntario":
 				Voluntario v= parseVoluntario(linhaPartida[1]);
-				this.voluntarios.addVoluntario(v);
+				//this.voluntarios.addVoluntario(v);
+				this.transp.addTransportadora(v);
 				vi++;
 				break;
 			case "Transportadora":
-				EmpresaT e= parseEmpresa(linhaPartida[1]);
-				this.empresasT.addEmpresa(e);
+				EmpresaT e = parseEmpresa(linhaPartida[1]);
+				//this.empresasT.addEmpresa(e);
+				this.transp.addTransportadora(e);
 				ei++;
 				break;
 			case "Loja":
