@@ -25,7 +25,7 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 	 */
 	private static final long serialVersionUID = -8208583672689808386L;
 	private Utilizadores users;
-	//private Voluntarios volts;
+	private Voluntarios volts;
 	//private EmpresasT empresas;
 	private Transportadoras transportadoras;
 	private Lojas lojas;
@@ -39,7 +39,7 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 
 	public Model() {
 		this.users= new Utilizadores();
-		//this.volts= new Voluntarios();
+		this.volts= new Voluntarios();
 		//this.empresas= new EmpresasT();
 		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
@@ -51,7 +51,7 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 	
 	public Model(Utilizadores utilizadores, Transportadoras transp, Lojas lojas2, Encomendas encomendas2) {
 		this.users= utilizadores;
-		//this.volts= new Voluntarios();
+		this.volts= new Voluntarios();
 		//this.empresas= new EmpresasT();
 		this.transportadoras = transp;
 		this.lojas= lojas2;
@@ -62,8 +62,26 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 		this.currentLoja = Optional.empty();
 	}
 	
+	
+	
 	//--------- Global --------- 
 	
+	public Utilizadores getUsers() {
+		return users;
+	}
+
+	public void setUsers(Utilizadores users) {
+		this.users = users;
+	}
+
+	public Voluntarios getVolts() {
+		return volts;
+	}
+
+	public void setVolts(Voluntarios volts) {
+		this.volts = volts;
+	}
+
 	public void printutilizadores()
 	{
 		System.out.println(this.users.toString());
@@ -273,20 +291,28 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 	
 	/*
 	Processo ate uma encomenda estar completa
-	1º user faz uma encomenda a uma loja
-	-> é sugerido ao user um Transporte
-	2º 	a)o utilizador nao aceita o tranporte mas ainda quer fazer a encomenda
+	1ï¿½ user faz uma encomenda a uma loja
+	-> ï¿½ sugerido ao user um Transporte
+	2ï¿½ 	a)o utilizador nao aceita o tranporte mas ainda quer fazer a encomenda
 		->  volta ao paco anterior
 		b) o utilizador nao aceita o tranporte e quer deisstir da encomenda
-		->  a encomenda é movida para as recusadas
+		->  a encomenda ï¿½ movida para as recusadas
 		c)o utilizador aceita o transporte e a encomenda move para "
-		->a encomenda é registada na loja como "pendente"
-	3º a loja diz que a encomenda esta pronta
-	->a encomenda é registada no transporte como"pendente"
-	4º o transporte faz a encomenda
+		->a encomenda ï¿½ registada na loja como "pendente"
+	3ï¿½ a loja diz que a encomenda esta pronta
+	->a encomenda ï¿½ registada no transporte como"pendente"
+	4ï¿½ o transporte faz a encomenda
 	-> a encomenda no transporte/loja/user passa de pendente para entregue
 	-> o user faz a avaliacao da encomenda	
 	*/
+	
+	public void getLojasMPerto(int range) {
+		
+	}
+	
+	
+	
+	
 	
 	@SuppressWarnings("unused")
 	public boolean fazEncomenda(Encomenda enc)
@@ -301,7 +327,7 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 			
 			Utilizador user = this.currentUser.get();
 			TransporteInterface transportador;
-			if(pol==0) //determina que transportadora é proposta ao user
+			if(pol==0) //determina que transportadora ï¿½ proposta ao user
 			{
 				transportador = this.transportadoras.detMaisPerto(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());
 			}
@@ -338,7 +364,7 @@ public class Model implements Serializable { //Criei esta classe, nÃ£o sei se va
 		}
 		
 		
-		return done;// se done for 0 é pq nao acabou a encomenda
+		return done;// se done for 0 ï¿½ pq nao acabou a encomenda
 	}
 	
 	public void rateTransp()

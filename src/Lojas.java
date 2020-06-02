@@ -153,5 +153,6 @@ public class Lojas implements Serializable{
 				System.out.println(ti.getKey() + " " + ti.getValue().getCodigoL());
 			}
 		}
+		
 	
 }

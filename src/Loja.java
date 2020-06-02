@@ -114,7 +114,14 @@ public class Loja implements Serializable{
         return Objects.equals(getCodigoL(), loja.getCodigoL()) &&
                 Objects.equals(getNomeL(), loja.getNomeL());
     }
-
+    
+    public double detDistL(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
+	{
+		
+		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
+		return dist;
+	}
+    
     @Override
     public String toString() {
         return "Loja{" +

@@ -18,7 +18,7 @@ public class Voluntarios implements Serializable{
     public Voluntarios(TreeMap<String,Voluntario> voluntarios){
         this.voluntarios=new TreeMap<>();
             for(Voluntario l: voluntarios.values())
-                this.voluntarios.put(l.clone().getCodVol(),l.clone());
+                this.voluntarios.put(l.clone().getEmail(),l.clone());
     }
 
     public Map<String,Voluntario> getVoluntarios(){
@@ -87,6 +87,10 @@ public class Voluntarios implements Serializable{
 		{
 			System.out.println(ti.getKey() + " " + ti.getValue().getCodigo());
 		}
+	}
+	
+	public String getCodigoV(String email) {
+		return this.voluntarios.get(email).getCodVol();
 	}
 
 }
