@@ -1,18 +1,24 @@
 package Reader;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import src.*;
 
-public class Parser {
+public class Parser implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3872858539544664438L;
 	private Utilizadores utilizadores;
 	//private EmpresasT empresasT;
 	private Encomendas encomendas;
@@ -122,8 +128,8 @@ public class Parser {
 		String codUt=campos[1];
 		String codLoja=campos[2];
 		double peso=Double.parseDouble(campos[3]);
-		
-		Encomenda enc = new Encomenda(codEnc,codUt,codLoja,peso);
+		Date data = new Date((new Date()).getTime()-(long)(Math.random() * (2592000000l - 0) + 0)) ;
+		Encomenda enc = new Encomenda(codEnc,codUt,codLoja,peso,data);
 		int n;
 		n=(campos.length-4)/4;
 		for(int i=1; i<n;i++)

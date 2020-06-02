@@ -1,9 +1,14 @@
 package src;
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Lojas {
-    private Map<String,Loja> lojas;
+public class Lojas implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2710839853129070335L;
+	private Map<String,Loja> lojas;
 
     //Resolvi usar um TreeMap devido à ordem
     public Lojas(){

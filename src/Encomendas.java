@@ -1,11 +1,12 @@
 package src;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class Encomendas {
+public class Encomendas implements Serializable {
 	//private List<Encomenda> encomendas;
 	/*
 	public Encomendas() {
@@ -37,6 +38,10 @@ public class Encomendas {
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8442531638986925753L;
 	private Map<String,Encomenda> encomendas;
 	
 	public Encomendas()

@@ -1,9 +1,14 @@
 package src;
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class Voluntarios {
-    private Map<String,Voluntario> voluntarios;
+public class Voluntarios implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2009483883153455525L;
+	private Map<String,Voluntario> voluntarios;
 
     //Resolvi usar um TreeMap devido à ordem
     public Voluntarios (){

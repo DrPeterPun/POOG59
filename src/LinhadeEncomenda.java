@@ -1,6 +1,13 @@
 package src;
-public class LinhadeEncomenda {
-   private String codProd;
+
+import java.io.Serializable;
+
+public class LinhadeEncomenda implements Serializable {
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8473626387159279097L;
+private String codProd;
    private String descricao;
    private double quant;
    private double valorUnit;

@@ -1,11 +1,17 @@
 package src;
 
+import java.io.Serializable;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Transportadoras {
+public class Transportadoras implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4508850652817811876L;
 	private Map<String,TransporteInterface> transportadoras;
 	 
 	public  Transportadoras() {
@@ -73,7 +79,31 @@ public class Transportadoras {
 			 
 		return maisBarato.getValue().clone();
 	}
-	 
+	
+	public Optional<Voluntario> getVol(String email)
+    {
+    	for(TransporteInterface l: this.transportadoras.values())
+    	{
+    		if(l.getEmail().compareTo(email)==0)
+    		{
+    			return Optional.of( (Voluntario) l);
+    		}
+    	}
+    	return Optional.empty();    	
+    }
+	
+	public Optional<EmpresaT> getEmp(String email)
+    {
+    	for(TransporteInterface l: this.transportadoras.values())
+    	{
+    		if(l.getEmail().compareTo(email)==0)
+    		{
+    			return Optional.of( (EmpresaT) l);
+    		}
+    	}
+    	return Optional.empty();    	
+    }
+	
 	
 	/// teste functions
 		public void printMap()
@@ -93,6 +123,10 @@ public class Transportadoras {
 				}
 			}
 			return false;
+		}
+
+		public EmpresaT getEmpById(String codEmp) {
+			return (EmpresaT) this.transportadoras.get(codEmp);
 		}
 		
 		

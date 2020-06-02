@@ -1,10 +1,15 @@
 package src;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Voluntario implements TransporteInterface {
-    private String codVol;
+public class Voluntario implements TransporteInterface, Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4931069963104972692L;
+	private String codVol;
     private String nome;
     private double gpsx;
     private double gpsy;

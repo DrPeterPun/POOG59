@@ -1,8 +1,4 @@
-package Teste;
-
-import src.*;
-import Reader.*;
-import Controlador.*;
+package Controlador;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,15 +6,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Date;
+import java.io.Serializable;
 
 import Model.*;
+import Reader.Parser;
+import Teste.Teste;
+import src.Encomendas;
+import src.Lojas;
+import src.Transportadoras;
+import src.Utilizadores;
 
-
-public class Teste {
-	private static Model modelo;
+public class Controlador implements Serializable{
+	private Model modelo;
 	
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public Controlador()
+	{
 		// pass = 123 email = userid@user
 		Utilizadores utilizadores = new Utilizadores();
 		//this.empresasT = new EmpresasT();
@@ -27,37 +29,18 @@ public class Teste {
 		//this.voluntarios = new Voluntarios();
 		Transportadoras transp = new Transportadoras();
 		
-		
 		Parser parser = new Parser(utilizadores,encomendas,lojas, transp);
 		parser.parse();
-		Model modelo2 = new Model(utilizadores,transp, lojas,encomendas);
-		modelo = modelo2;
-		
-		modelo.logInUser("u7user","123");
-		
-		//modelo.printutilizadores();
-		
-		Encomenda enc = new Encomenda("enc7","u7","l29",2d, new Date());
-		modelo.fazEncomenda(enc);
-		modelo.printEncs("u7");
-		modelo.avancaEstado(enc);
-		modelo.printEncs("u7");
-		//modelo.printUser();
-		//Controlador ct = new Controlador();
-		//ct.saveToFile("testeSave");
-		//System.out.println("??");
-		//ct.loadFromFile("testeSave");
-		//modelo.saveToFile("logSave");
-		System.out.println(modelo.faturadoEnc("t1"));
+		this.modelo = new Model(utilizadores,transp, lojas,encomendas);
 	}
 	
-	public static void saveToFile (String file) throws IOException
+	public void saveToFile (String file) throws IOException
 	{
 	   	FileOutputStream f = new FileOutputStream(new File(file));
 		ObjectOutputStream o = new ObjectOutputStream(f);
 
 		// Write objects to file
-		o.writeObject(Teste.modelo);
+		o.writeObject(this.modelo);
 		f.close();
 		o.close();
 	}
@@ -67,9 +50,8 @@ public class Teste {
 	{
 		FileInputStream fi = new FileInputStream(new File(file));
 		ObjectInputStream oi = new ObjectInputStream(fi);
-		Teste.modelo = (Model) oi.readObject();
+		this.modelo = (Model) oi.readObject();
 		oi.close();
 		fi.close();
 	}
-		
-}	
+}

@@ -1,10 +1,15 @@
 package src;
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
 
-public class Utilizadores {
-    private Map<String,Utilizador> utilizadores; // mapa <idUser, utilizador>
+public class Utilizadores implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1565948116459711786L;
+	private Map<String,Utilizador> utilizadores; // mapa <idUser, utilizador>
 
     //Resolvi usar um TreeMap devido à ordem
     public Utilizadores(){
@@ -154,5 +159,10 @@ public class Utilizadores {
 			{
 				System.out.println(ti.getKey() + " " + ti.getValue().getIdUser());
 			}
+		}
+
+		public Utilizador getUserById(String codUt) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 }

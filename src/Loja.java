@@ -1,11 +1,16 @@
 package src;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-public class Loja {
-    private String codigoL;
+public class Loja implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1607658183283744900L;
+	private String codigoL;
     private String nomeL;
     private String email;
     private String pass;

@@ -1,8 +1,13 @@
 package src;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Utilizador {
-    private String iduser;
+public class Utilizador implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6911427052580069167L;
+	private String iduser;
     private String name;
     private double gpsxuser;
     private double gpsyuser;

@@ -1,15 +1,29 @@
 package Model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import src.*;
 
 
-public class Model { //Criei esta classe, não sei se vai ser o model, mas a ideia é ser um tipo de SGV como fizemos em LI3
+public class Model implements Serializable { //Criei esta classe, não sei se vai ser o model, mas a ideia é ser um tipo de SGV como fizemos em LI3
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8208583672689808386L;
 	private Utilizadores users;
 	//private Voluntarios volts;
 	//private EmpresasT empresas;
@@ -18,7 +32,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	private Encomendas encomendas;
 	
 	private Optional<Utilizador> currentUser;
-	private Optional<EmpresaT> currentEmpresa;
+	private Optional<EmpresaT> currentEmp;
 	private Optional<Voluntario> currentVol;
 	private Optional<Loja> currentLoja;
 	
@@ -30,7 +44,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
 		this.currentUser = Optional.empty();
-		this.currentEmpresa =Optional.empty();
+		this.currentEmp =Optional.empty();
 		this.currentVol = Optional.empty();
 		this.currentLoja = Optional.empty();
 	}	
@@ -43,7 +57,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		this.lojas= lojas2;
 		this.encomendas =encomendas2;
 		this.currentUser = Optional.empty();
-		this.currentEmpresa =Optional.empty();
+		this.currentEmp =Optional.empty();
 		this.currentVol = Optional.empty();
 		this.currentLoja = Optional.empty();
 	}
@@ -117,7 +131,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	
 	public void logOut()
 	{
-		this.currentEmpresa = Optional.empty();
+		this.currentEmp = Optional.empty();
 		this.currentVol = Optional.empty();
 		this.currentUser = Optional.empty();
 		this.currentLoja= Optional.empty();
@@ -139,7 +153,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		if(this.transportadoras.logIn(email, pass))
 		{
 			this.logOut();
-			this.currentUser = this.users.getUser(email);
+			this.currentVol = this.transportadoras.getVol(email);
 			return true;
 		}
 		return false;
@@ -147,13 +161,24 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	
 	public boolean logInEmp(String email, String pass)
 	{
-		//return  this.transportadoras.logIn(email, pass);
-		return true;
+		if(this.transportadoras.logIn(email, pass))
+		{
+			this.logOut();
+			this.currentEmp = this.transportadoras.getEmp(email);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean logInLoja(String email, String pass)
 	{
-		return this.lojas.logIn(email, pass);
+		if(this.lojas.logIn(email, pass))
+		{
+			this.logOut();
+			this.currentLoja = this.lojas.getLoja(email);
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -171,6 +196,27 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		System.out.println(lista);
 	}
 	
+	public void saveToFile (String file) throws IOException
+	{
+	   	FileOutputStream f = new FileOutputStream(new File(file));
+		ObjectOutputStream o = new ObjectOutputStream(f);
+
+		// Write objects to file
+		o.writeObject(this);
+		f.close();
+		o.close();
+	}
+		
+		
+	public Model loadFromFile (String file) throws IOException, ClassNotFoundException
+	{
+		FileInputStream fi = new FileInputStream(new File(file));
+		ObjectInputStream oi = new ObjectInputStream(fi);
+		Model modelo = (Model) oi.readObject();
+		oi.close();
+		fi.close();
+		return modelo;
+	}
 	
 	
 	//Inserir uma encomenda de uma loja, por parte do utilizador(Não testei)
@@ -239,10 +285,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	->a encomenda � registada no transporte como"pendente"
 	4� o transporte faz a encomenda
 	-> a encomenda no transporte/loja/user passa de pendente para entregue
-	-> o user faz a avaliacao da encomenda
-	
-	para isto precisamos de ter um "RegEncomndas" para cada utilzador/voluntario/loja
-	
+	-> o user faz a avaliacao da encomenda	
 	*/
 	
 	@SuppressWarnings("unused")
@@ -272,6 +315,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 				//Pergunta ao user se esta contente com a escolhe, se estiver done=1 se nao nao faz nada e volta ao inicio
 				if(true)//confirmar a escolhe, //se nao confir mar volta ao inicio
 				{
+					enc.setCodT(transportador.getCodigo());
 					this.encomendas.addEncomenda(enc);
 					this.encomendas.setToAberto(enc);
 					done = true;
@@ -311,6 +355,21 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		}
 	}
 	
+	public List<Encomenda> showEncUser(Utilizador user)
+	{
+		TreeMap<Date,Encomenda> tree = new TreeMap<Date,Encomenda>();
+		Map<String, Encomenda> encs = this.encomendas.getEncomendas();
+		
+		for(Map.Entry<String, Encomenda> entry : encs.entrySet())
+		{
+			if(entry.getValue().getCodUt().compareTo(user.getIdUser()) ==0)
+			{
+				tree.put(entry.getValue().getDate(), entry.getValue());
+			}
+		}
+		List<Encomenda> list = new ArrayList<Encomenda>(encs.values());
+		return list;
+	}
 	//--------- Voluntario---------
 	public void preparaAceitarEnc()
 	{
@@ -334,6 +393,26 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 				return;
 			}
 		}
+	}
+	
+	
+	//--------- EmpresaT---------
+	
+	public long faturadoEnc(String CodEmp)
+	{
+		EmpresaT emp = this.transportadoras.getEmpById(CodEmp);
+		Map<String, Encomenda> encs = this.encomendas.getEncomendas();
+		long total=0;
+		for(Map.Entry<String, Encomenda> entry : encs.entrySet())
+		{
+			if(entry.getValue().getCodT().compareTo(emp.getCodigo())==0)
+			{
+				Utilizador ut= this.users.getUtilizadores().get(entry.getValue().getCodUt());
+				Loja lj = this.lojas.getLojas().get(entry.getValue().getCodL());
+				total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy(), entry.getValue().getPeso());
+			}
+		}
+		return total;
 	}
 	
 	//--------- Loja ---------

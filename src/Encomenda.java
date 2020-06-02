@@ -1,14 +1,21 @@
 package src;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class Encomenda {
-   private String codEnc;
+public class Encomenda implements Serializable{
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7784133114745763116L;
+private String codEnc;
    private String codUt;
    private String codL;
    private String codT;
    private double peso;
    private ArrayList<LinhadeEncomenda> encomendas;
    private int estado;// -1 = rejeitado -> 0,1,2,3,4 = Aberta,Aceite,Pronta,PorAvaliar,Completa
+   private Date data;
 
    public Encomenda(){
       this.codEnc=" ";
@@ -18,6 +25,7 @@ public class Encomenda {
       this.peso=0;
       this.encomendas=new ArrayList<LinhadeEncomenda>();
       this.estado =0;
+      this.data = new Date();
    }
 
    public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas,int estado){
@@ -29,7 +37,8 @@ public class Encomenda {
       this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
       this.estado=estado;
    }
-   public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas, String codT,int estado){
+   //comleto para o clone
+   public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas, String codT,int estado, Date data){
 	      this.codEnc=codEnc;
 	      this.codUt=codUt;
 	      this.codL=codL;
@@ -37,36 +46,38 @@ public class Encomenda {
 	      this.peso=peso;
 	      this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
 	      this.estado=estado;
+	      this.data=data;
 	   }
    
-public Encomenda(String codEnc, String codUt, String codL,Double peso){
-      this.codEnc=codEnc;
-      this.codUt=codUt;
-      this.codL=codL;
-      this.peso=peso;
-      this.encomendas=new ArrayList<LinhadeEncomenda>();
-      this.codT="";
-      this.estado=0;
+   public Encomenda(String codEnc, String codUt, String codL,Double peso,Date data){
+	   this.codEnc=codEnc;
+	   this.codUt=codUt;
+	   this.codL=codL;
+	   this.peso=peso;
+	   this.encomendas=new ArrayList<LinhadeEncomenda>();
+	   this.codT="";
+	   this.estado=0;
+	   this.data = data;
    }   
 
    public String getCodEnc() {
-      return codEnc;
+	   return codEnc;
    }
 
    public String getCodUt() {
-      return codUt;
+	   return codUt;
    }
 
    public String getCodL() {
-      return codL;
+	   return codL;
    }
 
    public String getCodT() {
-      return codT;
+	   return codT;
    }
 
    public double getPeso() {
-      return peso;
+	   return peso;
    }
    
    public boolean setCodT(String codT)
@@ -83,7 +94,7 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
    {
 	   return estado;
    }
-
+   
    @SuppressWarnings("unchecked")
    public ArrayList<LinhadeEncomenda> getEncomendas() {
       return new ArrayList<LinhadeEncomenda>(this.encomendas);
@@ -97,7 +108,8 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
     		  				this.peso,
     		  				this.encomendas,
     		  				this.codT,
-    		  				this.estado);
+    		  				this.estado,
+    		  				this.data);
    }
 
    public void addLinhaEncomenda(LinhadeEncomenda le)
@@ -129,5 +141,9 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
 	   if(this.estado==0)
 		   this.estado=-1;
    }
+
+public Date getDate() {
+	return this.data;
+}
    
 }

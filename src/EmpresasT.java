@@ -1,10 +1,16 @@
 package src;
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-public class EmpresasT {
-    private Map<String,EmpresaT> transportadoras;
+public class EmpresasT implements Serializable{
+ 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6056953458626015644L;
+	private Map<String,EmpresaT> transportadoras;
 
 
     public EmpresasT(){

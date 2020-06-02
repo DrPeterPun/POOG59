@@ -1,9 +1,16 @@
 package src;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class EmpresaT implements TransporteInterface {
-    private String codigoEmpresa;
+public class EmpresaT implements TransporteInterface, Serializable {
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7642785093124277585L;
+	private String codigoEmpresa;
     private String nomeEmpresa;
     private double nif;
     private double raio;
