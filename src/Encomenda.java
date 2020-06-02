@@ -8,6 +8,7 @@ public class Encomenda {
    private String codT;
    private double peso;
    private ArrayList<LinhadeEncomenda> encomendas;
+   private int estado;// -1 = rejeitado -> 0,1,2,3,4 = Aberta,Aceite,Pronta,PorAvaliar,Completa
 
    public Encomenda(){
       this.codEnc=" ";
@@ -16,23 +17,26 @@ public class Encomenda {
       this.codT="";
       this.peso=0;
       this.encomendas=new ArrayList<LinhadeEncomenda>();
+      this.estado =0;
    }
 
-   public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas){
+   public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas,int estado){
       this.codEnc=codEnc;
       this.codUt=codUt;
       this.codL=codL;
       this.codT="";
       this.peso=peso;
       this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
+      this.estado=estado;
    }
-   public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas, String codT){
+   public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas, String codT,int estado){
 	      this.codEnc=codEnc;
 	      this.codUt=codUt;
 	      this.codL=codL;
 	      this.codT=codT;
 	      this.peso=peso;
 	      this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
+	      this.estado=estado;
 	   }
    
 public Encomenda(String codEnc, String codUt, String codL,Double peso){
@@ -42,6 +46,7 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
       this.peso=peso;
       this.encomendas=new ArrayList<LinhadeEncomenda>();
       this.codT="";
+      this.estado=0;
    }   
 
    public String getCodEnc() {
@@ -73,22 +78,26 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
 	   }
 	   return false;
    }
+   
+   public int getEstado()
+   {
+	   return estado;
+   }
 
    @SuppressWarnings("unchecked")
    public ArrayList<LinhadeEncomenda> getEncomendas() {
       return new ArrayList<LinhadeEncomenda>(this.encomendas);
    }
 
-   public Encomenda(Encomenda t){
-      this.codEnc=t.getCodEnc();
-      this.codUt=t.getCodUt();
-      this.codL=t.getCodL();
-      this.peso=t.getPeso();
-      this.encomendas=t.getEncomendas();
-   }
 
    public Encomenda clone(){
-      return new Encomenda(this);
+      return new Encomenda(	this.codEnc,
+    		  				this.codUt,
+    		  				this.codL,
+    		  				this.peso,
+    		  				this.encomendas,
+    		  				this.codT,
+    		  				this.estado);
    }
 
    public void addLinhaEncomenda(LinhadeEncomenda le)
@@ -103,5 +112,22 @@ public Encomenda(String codEnc, String codUt, String codL,Double peso){
       this.encomendas.add(l);
    }
   
+   public void setToAberta()
+   {
+	   this.estado=0;
+   }
+   
+   public void avancaEstado()
+   {
+	   if(this.estado>=0 && this.estado<=4)
+		   this.estado++;
+   }
+   
+   
+   public void recusarEnc()
+   {
+	   if(this.estado==0)
+		   this.estado=-1;
+   }
    
 }

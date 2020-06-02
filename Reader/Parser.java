@@ -33,10 +33,10 @@ public class Parser {
 		int ui,vi,ei,li,enci,aceitei;
 		ui=vi=ei=li=enci=aceitei=0;
 		
-		sortAll(".");
+		//sortAll(".");
 		List<String> linhas = lerFicheiro("log.txt"); // path para o ficheiro
 		
-		System.out.println("\n foram lidas: " + linhas.size() + " linhas \n");
+		System.out.println("foram lidas: " + linhas.size() + " linhas");
 		String[] linhaPartida;
 		for(String linha : linhas) {
 			linhaPartida = linha.split(":",2);
@@ -77,7 +77,7 @@ public class Parser {
 				break;
 			}// switch(linhaPartida[0])
 		}//for(String linha : linhas) 
-		System.out.printf("utilizadores:" + ui +" voluntarios:" + vi + " empresasT:" + ei+ " lojas:" + li +" encomendas:" + enci + " aceites:" + aceitei); 
+		System.out.println("utilizadores:" + ui +" voluntarios:" + vi + " empresasT:" + ei+ " lojas:" + li +" encomendas:" + enci + " aceites:" + aceitei); 
 	}
 	
 
@@ -90,11 +90,11 @@ public class Parser {
 	
 	public Utilizador parseUtilizador(String input){
         String[] campos = input.split(",");
-        String nome = campos[0]; 
-        String codUtilizador = campos[1];
+        String nome = campos[1]; 
+        String codUtilizador = campos[0];
         double gpsx = Double.parseDouble(campos[2]);
         double gpsy = Double.parseDouble(campos[3]);
-        Utilizador u = new Utilizador(nome,codUtilizador,gpsx,gpsy,(nome+"@loja") , "123");
+        Utilizador u = new Utilizador(codUtilizador,nome,gpsx,gpsy,(codUtilizador+"user") , "123");
         return u;
 	}
 	
@@ -113,7 +113,7 @@ public class Parser {
 		}
 		
 		
-		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(nome+"@loja") , "123",ratings);
+		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(codVol+"@vol") , "123",ratings);
 	}
 	
 	public Encomenda parseEncomenda(String input) {
@@ -159,7 +159,7 @@ public class Parser {
 		}
 		
 		
-		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm,(nomeEmpresa+"@empresa") , "123", ratings);
+		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm,(codigoEmpresa+"@empresa") , "123", ratings);
 	}
 	
 	private Loja parseLoja(String input) {
@@ -167,7 +167,7 @@ public class Parser {
 		String[] campos = input.split(",");
 		String id=campos[0];
 		String nome=campos[1];
-		return new Loja(id,nome,(nome+"@loja") , "123", (rand.nextDouble()-0.5)*200 , (rand.nextDouble()-0.5)*200 );
+		return new Loja(id,nome,(id+"@loja") , "123", (rand.nextDouble()-0.5)*200 , (rand.nextDouble()-0.5)*200 );
 	}
 	
 	

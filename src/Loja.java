@@ -11,7 +11,6 @@ public class Loja {
     private String pass;
     private double gpsx;
     private double gpsy;
-    private RegEncomendas regEnc;
 
     public Loja(){
         this.codigoL=" ";
@@ -20,7 +19,6 @@ public class Loja {
         this.pass="";
         this.gpsx=0;
         this.gpsy=0;
-        this.regEnc = new RegEncomendas();
     }
 
     public Loja(String codigoL, String nomeL, String email , String pass ,double gpsx ,double gpsy){
@@ -30,17 +28,6 @@ public class Loja {
         this.pass=pass;
         this.gpsx=gpsx;
         this.gpsy=gpsy;
-        this.regEnc = new RegEncomendas();
-    }
-    
-    public Loja(String codigoL, String nomeL, String email , String pass ,double gpsx ,double gpsy, RegEncomendas regEnc){
-        this.codigoL=codigoL;
-        this.nomeL=nomeL;
-        this.email=email;
-        this.pass=pass;
-        this.gpsx=gpsx;
-        this.gpsy=gpsy;
-        this.regEnc = regEnc.clone();
     }
 
 	public String getCodigoL() {
@@ -74,10 +61,10 @@ public class Loja {
         					this.email,
         					this.pass,
         					this.gpsx,
-        					this.gpsy,
-        					this.regEnc.clone());
+        					this.gpsy);
     }
     
+    /*
     public RegEncomendas getRegEnc()
     {
     	return this.regEnc.clone();
@@ -111,9 +98,7 @@ public class Loja {
 	public void encCompleta(Encomenda a){
 		this.regEnc.encCompleta(a);
 	}
-
-    //Com os registos de encomendas, não sei se esta função será precisa, visto que quem solicita a encomenda é o utilizador, acho que não será necessário ter uma lista
-    //de encomendas para as lojas
+*/
     
 
     @Override

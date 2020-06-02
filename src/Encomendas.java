@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Encomendas {
-	private List<Encomenda> encomendas;
-	
+	//private List<Encomenda> encomendas;
+	/*
 	public Encomendas() {
 		this.encomendas= new ArrayList<>();
 	}
@@ -15,7 +15,7 @@ public class Encomendas {
 	/*public Encomendas(Encomenda enc) {
 		List<Encomenda> encm = new ArrayList<>();
 		encm.forEach(x->encm.add(enc));
-	}*/
+	}
 	
 	public List<Encomenda> getEncomendas() {
 		return encomendas;
@@ -32,14 +32,14 @@ public class Encomendas {
     
 	public void removeEncomenda(Encomenda enc) {
 		this.encomendas.remove(enc.clone());
-	}
+	}*/
 	
 	
 	
 	
-	//private Map<String,Encomenda> encomendas;
+	private Map<String,Encomenda> encomendas;
 	
-	/*public Encomendas()
+	public Encomendas()
 	{
 		this.encomendas = new TreeMap<>();
 	}
@@ -55,7 +55,7 @@ public class Encomendas {
 	
 	public void addEncomenda(Encomenda enc)
 	{
-		this.encomendas.put(enc.getCodUt(),enc);
+		this.encomendas.put(enc.getCodEnc(),enc);
 	}
 	
 	public Map<String,Encomenda> getEncomendas()
@@ -76,5 +76,20 @@ public class Encomendas {
 			e.addEncomenda(encomenda.getValue());
 		}
 		return e;
-	}*/
+	}
+	
+	public void setToAberto(Encomenda e)
+	{
+	   this.encomendas.get(e.getCodEnc()).setToAberta();
+	}
+	
+	public void avancaEstado(Encomenda e)
+	{
+		this.encomendas.get(e.getCodEnc()).avancaEstado();
+	}
+	   
+	public void recusarEnc(Encomenda e)
+	{
+		this.encomendas.get(e.getCodEnc()).recusarEnc();
+	}
 }

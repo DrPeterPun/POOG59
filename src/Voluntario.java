@@ -13,7 +13,6 @@ public class Voluntario implements TransporteInterface {
     private String email;
     private String pass;
     private ArrayList<Integer> ratings;
-    private RegEncomendas regEnc;
 
     public Voluntario (){
         this.codVol=" ";
@@ -25,37 +24,10 @@ public class Voluntario implements TransporteInterface {
         this.email="";
         this.pass="";
         this.ratings = new ArrayList<Integer>();
-        this.regEnc = new RegEncomendas();
 
     }
 
-    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass,ArrayList<Integer> ratings, RegEncomendas regEnc){
-        this.codVol= codVol;
-        this.nome=nome;
-        this.gpsx=gpsx;
-        this.gpsy=gpsy;
-        this.raio=raio;
-        this.email=email;
-        this.pass=pass;
-        this.email=email;
-        this.pass=pass;
-        this.ratings=ratings;
-        this.regEnc = regEnc;
-    }
     
-    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass,ArrayList<Integer> ratings){
-        this.codVol= codVol;
-        this.nome=nome;
-        this.gpsx=gpsx;
-        this.gpsy=gpsy;
-        this.raio=raio;
-        this.email=email;
-        this.pass=pass;
-        this.email=email;
-        this.pass=pass;
-        this.ratings=ratings;
-        this.regEnc = new RegEncomendas();
-    }
     
     //é de eesperar que este seja o metudo utilizado para registar um novo voluntario pq tem toda a informacao inicial mas nao tem ratings e nao tem encomendas ja feitas
     public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass){
@@ -69,7 +41,19 @@ public class Voluntario implements TransporteInterface {
         this.email=email;
         this.pass=pass;
         this.ratings=new ArrayList<Integer>();
-        this.regEnc = new RegEncomendas();
+    }
+    
+    public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass, ArrayList<Integer> ratings){
+        this.codVol= codVol;
+        this.nome=nome;
+        this.gpsx=gpsx;
+        this.gpsy=gpsy;
+        this.raio=raio;
+        this.email=email;
+        this.pass=pass;
+        this.email=email;
+        this.pass=pass;
+        this.ratings= new ArrayList<Integer>(ratings);
     }
     
     
@@ -118,9 +102,7 @@ public class Voluntario implements TransporteInterface {
         						this.gpsy,
         						this.raio,
         						this.email,
-        						this.pass,
-        						new ArrayList<Integer>(this.ratings),
-        						this.regEnc.clone());
+        						this.pass);
     }
     
     public void addEncV(Encomenda a) {
@@ -137,10 +119,6 @@ public class Voluntario implements TransporteInterface {
     	return r/ratings.size();
     }
     
-    public RegEncomendas getRegEnc()
-    {
-    	return this.regEnc.clone();
-    }
     
     public boolean addRating(int n)
     {
@@ -206,7 +184,7 @@ public class Voluntario implements TransporteInterface {
 	}
 	
 	// ---relativo as encomendas---
-	
+	/*
 	public void addEnc(Encomenda a) {
 		this.regEnc.addEnc(a);
 	}
@@ -234,8 +212,7 @@ public class Voluntario implements TransporteInterface {
 	// encomenda foi completada
 	public void encCompleta(Encomenda a){
 		this.regEnc.encCompleta(a);
-	}
-
+	}*/
 	
 
 	

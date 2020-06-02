@@ -1,6 +1,8 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -9,11 +11,11 @@ import src.*;
 
 public class Model { //Criei esta classe, não sei se vai ser o model, mas a ideia é ser um tipo de SGV como fizemos em LI3
 	private Utilizadores users;
-	private Voluntarios volts;
-	private EmpresasT empresas;
+	//private Voluntarios volts;
+	//private EmpresasT empresas;
 	private Transportadoras transportadoras;
 	private Lojas lojas;
-	private RegEncomendas regEnc;
+	private Encomendas encomendas;
 	
 	private Optional<Utilizador> currentUser;
 	private Optional<EmpresaT> currentEmpresa;
@@ -23,18 +25,35 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 
 	public Model() {
 		this.users= new Utilizadores();
-		this.volts= new Voluntarios();
-		this.empresas= new EmpresasT();
+		//this.volts= new Voluntarios();
+		//this.empresas= new EmpresasT();
 		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
-		this.regEnc= new RegEncomendas();
 		this.currentUser = Optional.empty();
 		this.currentEmpresa =Optional.empty();
 		this.currentVol = Optional.empty();
 		this.currentLoja = Optional.empty();
 	}	
 	
+	public Model(Utilizadores utilizadores, Transportadoras transp, Lojas lojas2, Encomendas encomendas2) {
+		this.users= utilizadores;
+		//this.volts= new Voluntarios();
+		//this.empresas= new EmpresasT();
+		this.transportadoras = transp;
+		this.lojas= lojas2;
+		this.encomendas =encomendas2;
+		this.currentUser = Optional.empty();
+		this.currentEmpresa =Optional.empty();
+		this.currentVol = Optional.empty();
+		this.currentLoja = Optional.empty();
+	}
+	
 	//--------- Global --------- 
+	
+	public void printutilizadores()
+	{
+		System.out.println(this.users.toString());
+	}
 	
 	public boolean RegistaUser(Utilizador user) {
 		if(this.users.addUtilizador(user))
@@ -49,8 +68,8 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	}
 	
 	public boolean RegistaVoluntario(Voluntario volt) {
-		if(this.volts.addVoluntario(volt))
-		{
+		if(this.transportadoras.addTransportadora(volt))
+		{ 
 			//diz que foi concluido com sucesso
 			return true;
 		}
@@ -61,7 +80,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	}
 	
 	public boolean RegistaEmpresa(EmpresaT empresa) {
-		if(this.empresas.addEmpresa(empresa))
+		if(this.transportadoras.addTransportadora(empresa))
 		{
 			//diz que foi concluido com sucesso
 			return true;
@@ -96,25 +115,63 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		}
 	}
 	
+	public void logOut()
+	{
+		this.currentEmpresa = Optional.empty();
+		this.currentVol = Optional.empty();
+		this.currentUser = Optional.empty();
+		this.currentLoja= Optional.empty();
+	}
+	
 	public boolean logInUser(String email, String pass)
 	{
-		return  this.users.logIn(email, pass);
+		if(this.users.logIn(email, pass))
+		{
+			this.logOut();
+			this.currentUser = this.users.getUser(email);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean logInVol(String email, String pass)
 	{
-		return  this.volts.logIn(email, pass);
+		if(this.transportadoras.logIn(email, pass))
+		{
+			this.logOut();
+			this.currentUser = this.users.getUser(email);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean logInEmp(String email, String pass)
 	{
-		return  this.empresas.logIn(email, pass);
+		//return  this.transportadoras.logIn(email, pass);
+		return true;
 	}
 	
 	public boolean logInLoja(String email, String pass)
 	{
 		return this.lojas.logIn(email, pass);
 	}
+	
+	
+	public void printEncs(String id)
+	{
+		// "" faz com que imprima todas as encs
+		ArrayList<String> lista = new ArrayList<String>();
+		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())
+		{
+			if(enc.getValue().getCodL().compareTo(id)==0 || enc.getValue().getCodT().compareTo(id)==0 || enc.getValue().getCodUt().compareTo(id)==0 || id.compareTo("")==0 )
+			{
+				lista.add(enc.getValue().getCodEnc() + " " + enc.getValue().getEstado());
+			}
+		}
+		System.out.println(lista);
+	}
+	
+	
 	
 	//Inserir uma encomenda de uma loja, por parte do utilizador(Não testei)
 	/*public void inserirEnc (Encomenda b){
@@ -123,7 +180,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	
 	
 	
-
+/*
     public void addEnc(Encomenda a) {
 		this.users.addEnc(a);
 		this.transportadoras.addEnc(a);
@@ -163,7 +220,7 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		this.users.encCompleta(a);
 		this.transportadoras.encCompleta(a);
 		this.lojas.encCompleta(a);
-	}
+	}*/
 	
 	
 	//--------- User ---------
@@ -198,9 +255,10 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 			//perguntar a view se quer prioritizar por mais barato ou mais perto e wtv
 			int pol=0; // maisperto =0; mais barato =1
 			Loja loja = this.lojas.getLoja(enc.getCodL()).get();
+			
 			Utilizador user = this.currentUser.get();
 			TransporteInterface transportador;
-			if(pol==0)
+			if(pol==0) //determina que transportadora � proposta ao user
 			{
 				transportador = this.transportadoras.detMaisPerto(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());
 			}
@@ -214,7 +272,8 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 				//Pergunta ao user se esta contente com a escolhe, se estiver done=1 se nao nao faz nada e volta ao inicio
 				if(true)//confirmar a escolhe, //se nao confir mar volta ao inicio
 				{
-					this.encAceite(enc);
+					this.encomendas.addEncomenda(enc);
+					this.encomendas.setToAberto(enc);
 					done = true;
 				}
 				else 
@@ -224,9 +283,12 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 					done=!querOutra;
 				}
 			}
-			else
+			else//ser o transpoerte for feito por um voluntario
 			{
-				this.addEnc(enc);
+				//this.addEnc(enc);
+				this.encomendas.addEncomenda(enc);
+				this.encomendas.setToAberto(enc);
+				this.encomendas.avancaEstado(enc);
 				done = true;
 			}
 		}
@@ -237,12 +299,13 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 	
 	public void rateTransp()
 	{
-		for(int i=0;i<1;i++)// para todas as encomendas por avaliar pergunta se quer avaliar
+		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
-			if(true)//quer avaliar?
+			if( enc.getValue().getCodUt().compareTo(this.currentUser.get().getIdUser()) == 0 && (enc.getValue().getEstado()==3) )//quer avaliar?
 			{
 				//pede a avaliacao ao user 
 				//insere a avaliacao no transportador
+				this.encomendas.avancaEstado(enc.getValue());
 				//move a encomende de "por avaliar" para "terminada"
 			}
 		}
@@ -280,5 +343,22 @@ public class Model { //Criei esta classe, não sei se vai ser o model, mas a ide
 		{
 			//pergunta a loja se quer por esta encomendas como pronta para ser entregue
 		}
+	}
+	
+	//--------- Encomendas ---------
+	
+	public void setToAberto(Encomenda e)
+	{
+	   this.encomendas.setToAberto(e);
+	}
+	
+	public void avancaEstado(Encomenda e)
+	{
+		this.encomendas.avancaEstado(e);
+	}
+	   
+	public void recusarEnc(Encomenda e)
+	{
+		this.encomendas.recusarEnc(e);
 	}
 }

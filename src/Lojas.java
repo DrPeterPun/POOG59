@@ -83,18 +83,19 @@ public class Lojas {
 		}
 		return false;
 	}
-
-public void addEnc(Encomenda a) {
-	String cod = a.getCodT();
-	if(this.lojas.containsKey(cod))
-	{
-		this.lojas.get(cod).addEnc(a);
-	}
+/*
+	public void addEnc(Encomenda a) {
+		String cod = a.getCodT();
+		if(this.lojas.containsKey(cod))
+		{
+			this.lojas.get(cod).addEnc(a);
+		}
 	 
-}
+	}
+	*/
 	
 	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
-	public void encAceite(Encomenda a) {
+	/*public void encAceite(Encomenda a) {
 		String cod = a.getCodT();
 		if(this.lojas.containsKey(cod))
 		{
@@ -137,7 +138,7 @@ public void addEnc(Encomenda a) {
 			this.lojas.get(cod).encCompleta(a);
 		}
 	}
-	
+	*/
 	/// TESTE
 		public void printMap()
 		{

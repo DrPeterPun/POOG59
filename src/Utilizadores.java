@@ -12,7 +12,7 @@ public class Utilizadores {
     }
 
     public Utilizadores(Map<String,Utilizador> utilizadores){
-        this.utilizadores =new TreeMap<>();
+        this.utilizadores = new TreeMap<>();
         for(Utilizador l: utilizadores.values())
             this.utilizadores.put(l.clone().getIdUser(),l.clone());
     }
@@ -49,6 +49,19 @@ public class Utilizadores {
                 '}';
     }
 
+    public Optional<Utilizador> getUser(String email)
+    {
+    	for(Utilizador l: utilizadores.values())
+    	{
+    		if(l.getEmail().compareTo(email)==0)
+    		{
+    			return Optional.of(l);
+    		}
+    	}
+    	return Optional.empty();    	
+    }
+    
+    
    // estes dois métodos permitem adicionar um utilizador caso ele não exista no sistema
    // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
     public boolean addUtilizador(Utilizador u){
@@ -67,16 +80,17 @@ public class Utilizadores {
         return r;
     }
 
-	public boolean logIn(String codigo, String pass) {
+	public boolean logIn(String email, String pass) {
 		for(Map.Entry<String,Utilizador> entry : this.utilizadores.entrySet()) {
-			if(entry.getValue().logIn(pass) && entry.getValue().getIdUser()==codigo)
+			if(entry.getValue().getEmail().compareTo(email)==0 && (entry.getValue().logIn(pass) ))
 			{
-				return true;
+				return true;				
 			}
 		}
 		return false;
 	}
 	
+	/*
 	public void addEnc(Encomenda a) {
 		String cod = a.getCodT();
 		if(this.utilizadores.containsKey(cod))
@@ -131,6 +145,7 @@ public class Utilizadores {
 		}
 	}
 	
+	*/
 	/// TESTE
 		public void printMap()
 		{

@@ -74,61 +74,8 @@ public class Transportadoras {
 		return maisBarato.getValue().clone();
 	}
 	 
-	public void addEnc(Encomenda a) {
-		String cod = a.getCodT();
-		if(this.transportadoras.containsKey(cod))
-		{
-			this.transportadoras.get(cod).addEnc(a);
-		}
-		 
-	}
-		
-		// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
-		public void encAceite(Encomenda a) {
-			String cod = a.getCodT();
-			if(this.transportadoras.containsKey(cod))
-			{
-				this.transportadoras.get(cod).encAceite(a);
-			}
-		}
-		
-		// o voluntario recusou a encomenda
-		public void encRecusada(Encomenda a) {
-			String cod = a.getCodT();
-			if(this.transportadoras.containsKey(cod))
-			{
-				this.transportadoras.get(cod).encRecusada(a);
-			}
-		}
-		
-		// a Loja diz que a encomenda esta cpronta
-		public void encPronta(Encomenda a){
-			String cod = a.getCodT();
-			if(this.transportadoras.containsKey(cod))
-			{
-				this.transportadoras.get(cod).encPronta(a);
-			}
-		}
-		
-		// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
-		public void encPorAvaliar(Encomenda a){
-			String cod = a.getCodT();
-			if(this.transportadoras.containsKey(cod))
-			{
-				this.transportadoras.get(cod).encPorAvaliar(a);
-			}
-		}
-		
-		// encomenda foi completada
-		public void encCompleta(Encomenda a){
-			String cod = a.getCodT();
-			if(this.transportadoras.containsKey(cod))
-			{
-				this.transportadoras.get(cod).encCompleta(a);
-			}
-		}
-		
-		/// teste functions
+	
+	/// teste functions
 		public void printMap()
 		{
 			Set<Map.Entry<String, TransporteInterface>> set = transportadoras.entrySet();
@@ -136,6 +83,16 @@ public class Transportadoras {
 			{
 				System.out.println(ti.getKey() + " " + ti.getValue().getCodigo());
 			}
+		}
+		
+		public boolean logIn(String Email, String pass) {
+			for(Entry<String, TransporteInterface> entry : this.transportadoras.entrySet()) {
+				if( entry.getValue().getEmail()==Email && entry.getValue().logIn(pass) )
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		

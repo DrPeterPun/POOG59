@@ -14,7 +14,6 @@ public class EmpresaT implements TransporteInterface {
     private String email;
     private String pass;
     private ArrayList<Integer> ratings;
-    private RegEncomendas regEnc;
 
     public EmpresaT(){
         this.codigoEmpresa=" ";
@@ -28,7 +27,6 @@ public class EmpresaT implements TransporteInterface {
         this.email="";
         this.pass="";
         this.ratings = new ArrayList<Integer>();
-        this.regEnc = new RegEncomendas();
     }
 
     public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings){
@@ -42,23 +40,8 @@ public class EmpresaT implements TransporteInterface {
         this.email=email;
         this.pass=pass;
         this.ratings = new ArrayList<Integer>(ratings);
-        this.regEnc = new RegEncomendas();
     }
-    
-    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings, RegEncomendas regEnc){
-        this.codigoEmpresa=codigoEmpresa;
-        this.nomeEmpresa=nomeEmpresa;
-        this.nif=nif;
-        this.raio=raio;
-        this.precokm=precokm;
-        this.gpsx=gpsx;
-        this.gpsy=gpsy;
-        this.email=email;
-        this.pass=pass;
-        this.ratings = new ArrayList<Integer>(ratings);
-        this.regEnc = regEnc.clone();
-    }
-       
+           
  	public Encomendas getEncT() {
 		return encT;
 	}
@@ -115,11 +98,6 @@ public class EmpresaT implements TransporteInterface {
     	return r/ratings.size();
     }
     
-    public RegEncomendas getRegEnc()
-    {
-    	return this.regEnc.clone();
-    }
-    
     public boolean addRating(int n)
     {
     	if(n>=0 && n<=5)
@@ -140,8 +118,7 @@ public class EmpresaT implements TransporteInterface {
         						this.gpsy,
         						this.email,
         						this.pass,
-        						this.ratings,
-        						this.regEnc);
+        						this.ratings);
     }
     
     public void addEncT(Encomenda a) {
@@ -204,7 +181,7 @@ public class EmpresaT implements TransporteInterface {
 		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
 	}
 	
-	public void addEnc(Encomenda a) {
+	/*public void addEnc(Encomenda a) {
 		this.regEnc.addEnc(a);
 	}
 	
@@ -232,6 +209,7 @@ public class EmpresaT implements TransporteInterface {
 	public void encCompleta(Encomenda a){
 		this.regEnc.encCompleta(a);
 	}
+	*/
 	
 	
 }

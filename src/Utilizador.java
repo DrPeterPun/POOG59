@@ -8,7 +8,6 @@ public class Utilizador {
     private double gpsyuser;
     private String email;
     private String pass;
-    private RegEncomendas regEnc;
 
     public Utilizador(){
         this.iduser=" ";
@@ -16,8 +15,6 @@ public class Utilizador {
         this.gpsxuser=0;
         this.gpsyuser=0;
         this.email="";
-        this.pass="";
-        this.regEnc = new RegEncomendas();
     }
 
     public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser,String email, String pass){
@@ -27,18 +24,9 @@ public class Utilizador {
         this.gpsyuser=gpsyuser;
         this.email=email;
         this.pass=pass;
-        this.regEnc = new RegEncomendas();
     }
     
-    public Utilizador(String iduser,String name,double gpsxuser, double gpsyuser,String email, String pass, RegEncomendas regEnc){
-        this.iduser=iduser;
-        this.name=name;
-        this.gpsxuser=gpsxuser;
-        this.gpsyuser=gpsyuser;
-        this.email=email;
-        this.pass=pass;
-        this.regEnc = regEnc.clone();
-    }
+
 
     public String getIdUser() {
         return this.iduser;
@@ -54,10 +42,6 @@ public class Utilizador {
 
     public double getGpsy() {
         return this.gpsyuser;
-    }
-    public RegEncomendas getRegEncomendas()
-    {
-    	return this.regEnc.clone();
     }
 
     //sets
@@ -90,8 +74,7 @@ public class Utilizador {
 								this.gpsxuser,
 								this.gpsyuser,
 								this.email,
-								this.pass,
-								this.regEnc.clone());
+								this.pass);
     }
     
     
@@ -113,13 +96,15 @@ public class Utilizador {
                 ", name='" + name + '\'' +
                 ", gpsxuser=" + gpsxuser +
                 ", gpsyuser=" + gpsyuser +
+                ", email=" + email +
+                ",pass=" + pass +
                 '}';
     }
 
 	public boolean logIn(String pass) {
 		return this.pass==pass;
 	}
-	
+	/*
 	public RegEncomendas getRegEnc()
     {
     	return this.regEnc.clone();
@@ -153,5 +138,6 @@ public class Utilizador {
 	public void encCompleta(Encomenda a){
 		this.regEnc.encCompleta(a);
 	}
+	*/
 
 }
