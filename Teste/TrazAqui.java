@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Reader.Parser;
+import src.Controller;
 import src.Encomendas;
 import src.Lojas;
 import src.Transportadoras;
@@ -87,7 +88,7 @@ public class TrazAqui {
     	//Parser parser = new Parser();
     	//parser.parse();
     	
-    	Utilizadores utilizadores = new Utilizadores();
+    	/*Utilizadores utilizadores = new Utilizadores();
 		//this.empresasT = new EmpresasT();
 		Encomendas encomendas = new Encomendas();
 		Lojas lojas = new Lojas();
@@ -97,7 +98,9 @@ public class TrazAqui {
 		new Parser(utilizadores,encomendas,lojas, transp);
 		transp.printMap();
 		lojas.printMap();
-		utilizadores.printMap();
+		utilizadores.printMap();*/
+    	Controller a = new Controller();
+    	a.menuInit();
 		
     }
 }

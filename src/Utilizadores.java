@@ -99,6 +99,9 @@ public class Utilizadores implements Serializable{
 		return this.utilizadores.get(email).getIdUser();
 	}
 	
+	public Utilizador getUti(String email) {
+		return this.utilizadores.get(email);
+	}
 	/*
 	public void addEnc(Encomenda a) {
 		String cod = a.getCodT();

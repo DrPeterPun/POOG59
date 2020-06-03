@@ -12,9 +12,9 @@ public class EmpresaT implements TransporteInterface, Serializable {
 	private static final long serialVersionUID = 7642785093124277585L;
 	private String codigoEmpresa;
     private String nomeEmpresa;
-    private double nif;
+    private int nif;
     private double raio;
-    private int precokm;
+    private double precokm;
     private double gpsx;
     private double gpsy;
     private Encomendas encT;
@@ -36,7 +36,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         this.ratings = new ArrayList<Integer>();
     }
 
-    public EmpresaT(String codigoEmpresa, String nomeEmpresa, double nif, double raio,int precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings){
+    public EmpresaT(String codigoEmpresa, String nomeEmpresa, int nif, double raio,double precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings){
         this.codigoEmpresa=codigoEmpresa;
         this.nomeEmpresa=nomeEmpresa;
         this.nif=nif;
@@ -65,7 +65,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         return this.nomeEmpresa;
     }
 
-    public double getNif(){
+    public int getNif(){
         return this.nif;
     }
 
@@ -73,7 +73,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         return this.raio;
     }
 
-    public int getPrecokm(){
+    public double getPrecokm(){
         return this.precokm;
     }
 

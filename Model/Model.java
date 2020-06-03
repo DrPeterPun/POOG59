@@ -87,6 +87,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		System.out.println(this.users.toString());
 	}
 	
+	public Utilizador getUti(String email) {
+		return this.users.getUti(email);
+	}
+	
 	public boolean RegistaUser(Utilizador user) {
 		if(this.users.addUtilizador(user))
 		{
@@ -306,13 +310,18 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	-> o user faz a avaliacao da encomenda	
 	*/
 	
-	public void getLojasMPerto(int range) {
-		
+	//Método que lista as lojas que se encontram a um determinado range do utilizador
+	public List<String> getLojasMPerto (double range,Utilizador a) {
+		List<String> b = new ArrayList<>();
+		this.lojas.getLojas().values().stream().filter(x-> (x.detDistL(a.getGpsx(), a.getGpsy())<=range)).forEach(x-> b.add(x.getNomeL()));
+		return b;
 	}
 	
-	
-	
-	
+	public List<String> getTodasLojas(){
+		List<String> a = new ArrayList<>();
+		this.lojas.getLojas().values().forEach(x->a.add(x.getNomeL()));
+		return a;
+	}
 	
 	@SuppressWarnings("unused")
 	public boolean fazEncomenda(Encomenda enc)

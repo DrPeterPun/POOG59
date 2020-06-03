@@ -115,10 +115,10 @@ public class Loja implements Serializable{
                 Objects.equals(getNomeL(), loja.getNomeL());
     }
     
-    public double detDistL(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
+    public double detDistL(double gpsxu, double gpsyu)
 	{
 		
-		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
+		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxu), 2) + Math.pow((this.gpsy - gpsyu), 2));
 		return dist;
 	}
     
