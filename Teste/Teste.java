@@ -37,7 +37,8 @@ public class Teste {
 		
 		//modelo.printutilizadores();
 		
-		Encomenda enc = new Encomenda("enc7","u7","l29",2d, new Date());
+		Encomenda enc = new Encomenda("e0007","u7","l29",2d, new Date() );
+		
 		modelo.fazEncomenda(enc);
 		modelo.printEncs("u7");
 		modelo.avancaEstado(enc);
@@ -48,7 +49,9 @@ public class Teste {
 		//System.out.println("??");
 		//ct.loadFromFile("testeSave");
 		//modelo.saveToFile("logSave");
-		System.out.println(modelo.faturadoEnc("t1"));
+		//System.out.println(modelo.faturadoEnc("t1"));
+		System.out.println(modelo.showUtMaisUtiliza());
+		System.out.println(modelo.showEmpMaisKms());
 	}
 	
 	public static void saveToFile (String file) throws IOException

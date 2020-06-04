@@ -40,7 +40,7 @@ public class Parser implements Serializable{
 		ui=vi=ei=li=enci=aceitei=0;
 		
 		//sortAll(".");
-		List<String> linhas = lerFicheiro("log.txt"); // path para o ficheiro
+		List<String> linhas = lerFicheiro("logSoUmaTransp.txt"); // path para o ficheiro
 		
 		System.out.println("foram lidas: " + linhas.size() + " linhas");
 		String[] linhaPartida;
@@ -137,6 +137,7 @@ public class Parser implements Serializable{
 			LinhadeEncomenda le = parseLinhaEncomenda(campos[i*4],campos[i*4+1],campos[i*4+2],campos[i*4+3]);
 			enc.addLinhaEncomenda(le);
 		}
+		enc.setEstado(4);
 		return enc;
 	}
 	
@@ -163,9 +164,7 @@ public class Parser implements Serializable{
 		{
 			ratings.add(rand.nextInt()*5);
 		}
-		
-		
-		return new EmpresaT(codigoEmpresa,nomeEmpresa,gpsx,gpsy,nif,raio,precokm,(codigoEmpresa+"@empresa") , "123", ratings);
+		return new EmpresaT(codigoEmpresa,nomeEmpresa,nif,raio,precokm,gpsx,gpsy,(codigoEmpresa+"@empresa") , "123", ratings);
 	}
 	
 	private Loja parseLoja(String input) {

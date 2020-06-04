@@ -46,7 +46,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         this.gpsy=gpsy;
         this.email=email;
         this.pass=pass;
-        this.ratings = new ArrayList<Integer>(ratings);
+        this.ratings = new ArrayList<Integer>(ratings); 
     }
            
  	public Encomendas getEncT() {
@@ -167,7 +167,6 @@ public class EmpresaT implements TransporteInterface, Serializable {
 	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
 	{
 		double preco;
-
 		preco = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
 		preco=preco*this.precokm;
 		if(peso>2)

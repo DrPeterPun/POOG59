@@ -95,6 +95,14 @@ private String codEnc;
 	   return estado;
    }
    
+   public void setEstado(int i)
+   {
+	   if(i>=-1 && i<=4)
+	   {
+		   this.estado=i;
+	   }
+   }
+   
    @SuppressWarnings("unchecked")
    public ArrayList<LinhadeEncomenda> getEncomendas() {
       return new ArrayList<LinhadeEncomenda>(this.encomendas);

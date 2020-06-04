@@ -27,7 +27,7 @@ public class Utilizadores implements Serializable{
     }    
       
     public Map<String,Utilizador> getUtilizadores() {
-        return this.utilizadores;
+        return new HashMap<String,Utilizador>(this.utilizadores);
     }
 
     public Utilizadores clone(){

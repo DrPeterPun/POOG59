@@ -402,9 +402,107 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				tree.put(entry.getValue().getDate(), entry.getValue());
 			}
 		}
-		List<Encomenda> list = new ArrayList<Encomenda>(encs.values());
+		List<Encomenda> list = new ArrayList<Encomenda>(tree.values());
 		return list;
 	}
+	
+	public List<String> showUtMaisUtiliza()
+	{
+		System.out.println("teste1");
+		List<String> lu = new ArrayList<String>();
+		List<Integer> encs = new ArrayList<Integer>();
+		List<String> utf = new  ArrayList<String>();
+		for(Encomenda enc: encomendas.getEncomendas().values())// para todas as encomendas
+		{
+			System.out.println("teste2");
+			int i=0;
+			boolean encontrou = false;
+			for(String ut:lu)//para todos os utilizadores no "lu"
+			{
+				System.out.println("teste3");
+				if(enc.getCodUt().compareTo(ut)==0)// se o utilizador foi o ut da encomenda
+				{
+					encs.set(i, encs.get(i)+1);
+					encontrou=true;
+				}
+				i++;
+			}
+			if(!encontrou)//se nao encontrou o user
+			{
+				lu.add(enc.getCodUt());
+				encs.add(1);
+			}
+		}// a este ponto ja temos um parelelo de nr encomendas e utilizadores( cada par ocupa o mesmo indice nas listas respetivas)
+		int n =10;
+		if(lu.size()<n)
+			n=lu.size();
+		
+		for(int i=0;i<n;i++)
+		{
+			int ix=getMax(encs);
+			utf.add(lu.get(ix));
+			lu.remove(ix);
+			encs.remove(ix);
+		}
+		return utf;
+	}
+	
+	public List<String> showEmpMaisKms()
+	{
+		List<String> transp = new ArrayList<String>();
+		List<Integer> encs = new ArrayList<Integer>();
+		List<String> tmu = new  ArrayList<String>();
+		for(Encomenda enc: encomendas.getEncomendas().values())// para todas as encomendas
+		{
+			int i=0;
+			boolean encontrou = false;
+			for(String emp:transp)//para todos os utilizadores no "lu"
+			{
+				if(enc.getCodT().compareTo(emp)==0 && (this.transportadoras.getTransp().get(enc.getCodT()) instanceof EmpresaT) )// se transportou uma enc e se � de facto uma empresa( e nao um voluntario)
+				{
+					encs.set(i, encs.get(i)+1);
+					encontrou=true;
+				}
+				i++;
+			}
+			if(!encontrou)//se nao encontrou o user
+			{
+				transp.add(enc.getCodT());
+				encs.add(1);
+			}
+		}// a este poznto ja temos um parelelo de nr encomendas e utilizadores( cada par ocupa o mesmo indice nas listas respetivas)
+		int n =10;
+		if(transp.size()<n)
+			n=transp.size();
+		
+		for(int i=0;i<n;i++)
+		{
+			int ix=getMax(encs);
+			tmu.add(transp.get(ix));
+			transp.remove(ix);
+			encs.remove(ix);
+		}
+		return tmu;
+	}
+	
+	public Integer getMax(List<Integer> lista)
+	{
+		int max=0;
+		int indice=0;
+		int i=0;
+		for(Integer n:lista)
+		{
+			if(n>max)
+			{
+				max=n;
+				indice=i;
+			}
+			i++;
+		}
+		return indice;
+	}
+	
+	
 	//--------- Voluntario---------
 	public void preparaAceitarEnc()
 	{
@@ -433,7 +531,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	//--------- EmpresaT---------
 	
-	public long faturadoEnc(String CodEmp)
+	public long faturadoEnc(String CodEmp, Date dStrt, Date dEnd)
 	{
 		EmpresaT emp = this.transportadoras.getEmpById(CodEmp);
 		Map<String, Encomenda> encs = this.encomendas.getEncomendas();
@@ -442,10 +540,14 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		{
 			if(entry.getValue().getCodT().compareTo(emp.getCodigo())==0)
 			{
-				Utilizador ut= this.users.getUtilizadores().get(entry.getValue().getCodUt());
-				Loja lj = this.lojas.getLojas().get(entry.getValue().getCodL());
-				total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy(), entry.getValue().getPeso());
+				if(entry.getValue().getDate().after(dStrt) && entry.getValue().getDate().after(dEnd))			
+				{
+					Utilizador ut= this.users.getUtilizadores().get(entry.getValue().getCodUt());
+					Loja lj = this.lojas.getLojas().get(entry.getValue().getCodL());
+					total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy(), entry.getValue().getPeso());
+				}
 			}
+				
 		}
 		return total;
 	}

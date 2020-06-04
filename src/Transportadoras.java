@@ -1,6 +1,7 @@
 package src;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Map.Entry;
@@ -23,6 +24,11 @@ public class Transportadoras implements Serializable{
 	       for(TransporteInterface l: transportadoras.values()) {
 	           this.transportadoras.put(l.clone().getCodigo(),l.clone());
 	       }
+	}
+	
+	public Map<String,TransporteInterface> getTransp()
+	{
+		return new HashMap<>(transportadoras);
 	}
 	
 	public boolean addTransportadora(TransporteInterface transp) {
