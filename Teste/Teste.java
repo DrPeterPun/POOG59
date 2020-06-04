@@ -16,8 +16,7 @@ import Model.*;
 
 
 public class Teste {
-	private static Model modelo;
-	
+
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		// pass = 123 email = userid@user
 		Utilizadores utilizadores = new Utilizadores();
@@ -30,19 +29,20 @@ public class Teste {
 		
 		Parser parser = new Parser(utilizadores,encomendas,lojas, transp);
 		parser.parse();
-		Model modelo2 = new Model(utilizadores,transp, lojas,encomendas);
-		modelo = modelo2;
+		Model modelo = new Model(utilizadores,transp, lojas,encomendas);
+
 		
-		modelo.logInUser("u7user","123");
+		//modelo.logInUser("u7user","123");
 		
 		//modelo.printutilizadores();
 		
 		Encomenda enc = new Encomenda("e0007","u7","l29",2d, new Date() );
+		Encomenda enc2 = new Encomenda("e0008","u7","l29",2d, new Date() );
 		
 		modelo.fazEncomenda(enc);
-		modelo.printEncs("u7");
+		modelo.printEncs("");
 		modelo.avancaEstado(enc);
-		modelo.printEncs("u7");
+		modelo.printEncs("");
 		//modelo.printUser();
 		//Controlador ct = new Controlador();
 		//ct.saveToFile("testeSave");
@@ -50,29 +50,20 @@ public class Teste {
 		//ct.loadFromFile("testeSave");
 		//modelo.saveToFile("logSave");
 		//System.out.println(modelo.faturadoEnc("t1"));
-		System.out.println(modelo.showUtMaisUtiliza());
-		System.out.println(modelo.showEmpMaisKms());
+		//System.out.println(modelo.showUtMaisUtiliza());
+		//System.out.println(modelo.showEmpMaisKms());
+		modelo.saveToFile("logfile");
+		
+		modelo.printEncs("");
+		modelo.avancaEstado(enc);
+		modelo.printEncs("");
+		modelo.fazEncomenda(enc2);
+		modelo.printEncs("");
+		//////////////////////////////////////////
+		modelo=modelo.loadFromFile("logfile");
+		
+		modelo.printEncs("");
 	}
 	
-	public static void saveToFile (String file) throws IOException
-	{
-	   	FileOutputStream f = new FileOutputStream(new File(file));
-		ObjectOutputStream o = new ObjectOutputStream(f);
-
-		// Write objects to file
-		o.writeObject(Teste.modelo);
-		f.close();
-		o.close();
-	}
-		
-		
-	public void loadFromFile (String file) throws IOException, ClassNotFoundException
-	{
-		FileInputStream fi = new FileInputStream(new File(file));
-		ObjectInputStream oi = new ObjectInputStream(fi);
-		Teste.modelo = (Model) oi.readObject();
-		oi.close();
-		fi.close();
-	}
 		
 }	
