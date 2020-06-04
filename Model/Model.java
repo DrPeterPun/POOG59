@@ -2,6 +2,7 @@ package Model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -31,10 +33,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	private Lojas lojas;
 	private Encomendas encomendas;
 	
-	private Optional<Utilizador> currentUser;
-	private Optional<EmpresaT> currentEmp;
-	private Optional<Voluntario> currentVol;
-	private Optional<Loja> currentLoja;
+	private Utilizador currentUser;
+	private EmpresaT currentEmp;
+	private Voluntario currentVol;
+	private Loja currentLoja;
 	
 
 	public Model() {
@@ -43,10 +45,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		//this.empresas= new EmpresasT();
 		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
-		this.currentUser = Optional.empty();
-		this.currentEmp =Optional.empty();
-		this.currentVol = Optional.empty();
-		this.currentLoja = Optional.empty();
+		this.currentUser = new Utilizador();
+		this.currentEmp = new EmpresaT();
+		this.currentVol = new Voluntario();
+		this.currentLoja = new Loja();
 	}	
 	
 	public Model(Utilizadores utilizadores, Transportadoras transp, Lojas lojas2, Encomendas encomendas2) {
@@ -56,10 +58,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.transportadoras = transp;
 		this.lojas= lojas2;
 		this.encomendas =encomendas2;
-		this.currentUser = Optional.empty();
-		this.currentEmp =Optional.empty();
-		this.currentVol = Optional.empty();
-		this.currentLoja = Optional.empty();
+		this.currentUser = new Utilizador();
+		this.currentEmp = new EmpresaT();
+		this.currentVol = new Voluntario();
+		this.currentLoja = new Loja();
 	}
 	
 	
@@ -153,10 +155,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	public void logOut()
 	{
-		this.currentEmp = Optional.empty();
-		this.currentVol = Optional.empty();
-		this.currentUser = Optional.empty();
-		this.currentLoja= Optional.empty();
+		this.currentUser = new Utilizador();
+		this.currentEmp = new EmpresaT();
+		this.currentVol = new Voluntario();
+		this.currentLoja = new Loja();
 	}
 	
 	public boolean logInUser(String email, String pass)
@@ -164,7 +166,15 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		if(this.users.logIn(email, pass))
 		{
 			this.logOut();
-			this.currentUser = this.users.getUser(email);
+			try
+			{
+				this.currentUser = this.users.getUser(email).get();
+			}
+			catch(NoSuchElementException e)
+			{
+				//chama a viewr para dizer uq nao existe esse login
+			}
+			
 			return true;
 		}
 		return false;
@@ -175,7 +185,15 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		if(this.transportadoras.logIn(email, pass))
 		{
 			this.logOut();
-			this.currentVol = this.transportadoras.getVol(email);
+			try
+			{
+				this.currentVol = this.transportadoras.getVol(email).get();
+			}
+			catch(NoSuchElementException e)
+			{
+				//chama a viewr para dizer uq nao existe esse login
+			}
+			
 			return true;
 		}
 		return false;
@@ -186,7 +204,15 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		if(this.transportadoras.logIn(email, pass))
 		{
 			this.logOut();
-			this.currentEmp = this.transportadoras.getEmp(email);
+			
+			try
+			{
+				this.currentEmp = this.transportadoras.getEmp(email).get();
+			}
+			catch(NoSuchElementException e)
+			{
+				//chama a viewr para dizer uq nao existe esse login
+			}
 			return true;
 		}
 		return false;
@@ -197,7 +223,15 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		if(this.lojas.logIn(email, pass))
 		{
 			this.logOut();
-			this.currentLoja = this.lojas.getLoja(email);
+			
+			try
+			{
+				this.currentLoja = this.lojas.getLoja(email).get();
+			}
+			catch(NoSuchElementException e)
+			{
+				//chama a viewr para dizer uq nao existe esse login
+			}
 			return true;
 		}
 		return false;
@@ -234,18 +268,12 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	{
 		FileInputStream fi = new FileInputStream(new File(file));
 		ObjectInputStream oi = new ObjectInputStream(fi);
+		
 		Model modelo = (Model) oi.readObject();
 		oi.close();
 		fi.close();
 		return modelo;
 	}
-	
-	
-	//Inserir uma encomenda de uma loja, por parte do utilizador(Não testei)
-	/*public void inserirEnc (Encomenda b){
-	 
-	}*/
-	
 	
 	
 /*
@@ -334,7 +362,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			int pol=0; // maisperto =0; mais barato =1
 			Loja loja = this.lojas.getLoja(enc.getCodL()).get();
 			
-			Utilizador user = this.currentUser.get();
+			Utilizador user = new Utilizador();//this.currentUser.get();
 			TransporteInterface transportador;
 			if(pol==0) //determina que transportadora � proposta ao user
 			{
@@ -380,7 +408,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
-			if( enc.getValue().getCodUt().compareTo(this.currentUser.get().getIdUser()) == 0 && (enc.getValue().getEstado()==3) )//quer avaliar?
+			if( enc.getValue().getCodUt().compareTo(this.currentUser.getIdUser()) == 0 && (enc.getValue().getEstado()==3) )//quer avaliar?
 			{
 				//pede a avaliacao ao user 
 				//insere a avaliacao no transportador
@@ -408,18 +436,15 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	public List<String> showUtMaisUtiliza()
 	{
-		System.out.println("teste1");
 		List<String> lu = new ArrayList<String>();
 		List<Integer> encs = new ArrayList<Integer>();
 		List<String> utf = new  ArrayList<String>();
 		for(Encomenda enc: encomendas.getEncomendas().values())// para todas as encomendas
 		{
-			System.out.println("teste2");
 			int i=0;
 			boolean encontrou = false;
 			for(String ut:lu)//para todos os utilizadores no "lu"
 			{
-				System.out.println("teste3");
 				if(enc.getCodUt().compareTo(ut)==0)// se o utilizador foi o ut da encomenda
 				{
 					encs.set(i, encs.get(i)+1);
@@ -577,4 +602,36 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	{
 		this.encomendas.recusarEnc(e);
 	}
+	
+	//--------- Estado ---------
+	
+	public void savestate()
+	{
+
+	    int i;
+	    File out = new File("SS");
+
+	    ObjectOutputStream output = null;
+
+	    try{
+	        output = new ObjectOutputStream(new FileOutputStream("SS"));
+	            output.writeObject(this);
+
+	    }catch (FileNotFoundException ex) {
+	        ex.printStackTrace();
+	    } catch (IOException ex) {
+	        ex.printStackTrace();
+	    } finally {
+	        try {
+	            if (output != null) {
+	                output.flush();
+	                output.close();
+	            }
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	}
+	
+	
 }

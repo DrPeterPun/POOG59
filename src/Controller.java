@@ -68,7 +68,7 @@ public class Controller {
                 String email=Input.lerString();
                 Viewer.prints("Pass \n");
                 String pass=Input.lerString();
-                app.logInUser(email, pass);
+                //app.logInUser(email, pass);
                 menuAppUser(email);
                 }
             else if (choice == 3) menuEscolha();
@@ -159,7 +159,7 @@ public class Controller {
                 String email=Input.lerString();
                 Viewer.prints("Pass \n");
                 String pass=Input.lerString();
-                app.logInVol(email, pass);
+                //app.logInVol(email, pass);
                 //menuAppUser(email);
                 }
             else if (choice == 3) menuEscolha();
@@ -221,7 +221,7 @@ public class Controller {
                 String email=Input.lerString();
                 Viewer.prints("Pass \n");
                 String pass=Input.lerString();
-                app.logInUser(email, pass);
+                //app.logInUser(email, pass);
                 menuAppTransp(email);
                 }
             else if (choice == 3) menuEscolha();

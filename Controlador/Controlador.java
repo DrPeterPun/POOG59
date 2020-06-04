@@ -35,21 +35,21 @@ public class Controlador implements Serializable{
 	}
 	
 	public void saveToFile (String file) throws IOException
-	{
-	   	FileOutputStream f = new FileOutputStream(new File(file));
+    {
+    	FileOutputStream f = new FileOutputStream(new File(file));
 		ObjectOutputStream o = new ObjectOutputStream(f);
 
 		// Write objects to file
 		o.writeObject(this.modelo);
 		f.close();
 		o.close();
-	}
-		
-		
+    }
+	
 	public void loadFromFile (String file) throws IOException, ClassNotFoundException
 	{
 		FileInputStream fi = new FileInputStream(new File(file));
 		ObjectInputStream oi = new ObjectInputStream(fi);
+
 		this.modelo = (Model) oi.readObject();
 		oi.close();
 		fi.close();
