@@ -1,5 +1,7 @@
 package src;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -82,4 +84,11 @@ public class EmpresasT implements Serializable{
 		}
 		return false;
 	}
+	
+	public List<EmpresaT> getValues() {
+		List<EmpresaT> l = new ArrayList<>();
+		for(EmpresaT a : this.transportadoras.values()) l.add(a.clone());
+		return l;
+	}
+	
 }

@@ -88,6 +88,14 @@ public class Lojas implements Serializable{
 		}
 		return false;
 	}
+	
+	public Loja procurarLojaNome(String nome) {
+		Loja l=new Loja();
+		for(Loja a: this.lojas.values()) {
+			if(a.getNomeL().equals(nome)) l=a.clone();
+		}
+		return l;
+	}
 /*
 	public void addEnc(Encomenda a) {
 		String cod = a.getCodT();

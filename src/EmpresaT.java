@@ -164,18 +164,16 @@ public class EmpresaT implements TransporteInterface, Serializable {
 		return this.pass==pass;
 	}
 	
-	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
 	{
 		double preco;
 		preco = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
 		preco=preco*this.precokm;
-		if(peso>2)
-			preco=preco*1.5;
 		return preco;
 		
 	}
 	
-	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
 	{
 		
 		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));

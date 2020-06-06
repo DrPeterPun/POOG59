@@ -9,8 +9,8 @@ public interface TransporteInterface {
 	*/
 
 	public String getCodigo();
-	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso);
-	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso);
+	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl);
+	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl);
 	public boolean inRaio(double gpsxu, double gpsyu,double gpsxl, double gpsyl);
 	public double getRating();
 	public boolean addRating(int n);

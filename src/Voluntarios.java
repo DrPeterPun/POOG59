@@ -2,6 +2,7 @@ package src;
 import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Voluntarios implements Serializable{
     /**
@@ -18,7 +19,7 @@ public class Voluntarios implements Serializable{
     public Voluntarios(TreeMap<String,Voluntario> voluntarios){
         this.voluntarios=new TreeMap<>();
             for(Voluntario l: voluntarios.values())
-                this.voluntarios.put(l.clone().getEmail(),l.clone());
+                this.voluntarios.put(l.clone().getCodVol(),l.clone());
     }
 
     public Map<String,Voluntario> getVoluntarios(){
@@ -79,6 +80,11 @@ public class Voluntarios implements Serializable{
 		}
 		return false;
 	}
+	
+	public List<Voluntario> getValues() {
+		return this.voluntarios.values().stream().collect(Collectors.toList());
+	}
+	
 	/// TESTE
 	public void printMap()
 	{
@@ -89,8 +95,8 @@ public class Voluntarios implements Serializable{
 		}
 	}
 	
-	public String getCodigoV(String email) {
+	/*public String getCodigoV(String email) {
 		return this.voluntarios.get(email).getCodVol();
-	}
+	}*/
 
 }

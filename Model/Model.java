@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import Viewer.Viewer;
 import src.*;
 
 
@@ -28,7 +29,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	private static final long serialVersionUID = -8208583672689808386L;
 	private Utilizadores users;
 	private Voluntarios volts;
-	//private EmpresasT empresas;
+	private EmpresasT empresas;
 	private Transportadoras transportadoras;
 	private Lojas lojas;
 	private Encomendas encomendas;
@@ -68,6 +69,17 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	//--------- Global --------- 
 	
+     
+	
+	public void printutilizadores()
+	{
+		System.out.println(this.users.toString());
+	}
+	
+	/*public Utilizador getUti(String email) {
+		return this.users.getUti(email);
+	}*/
+	
 	public Utilizadores getUsers() {
 		return users;
 	}
@@ -84,15 +96,38 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.volts = volts;
 	}
 
-	public void printutilizadores()
-	{
-		System.out.println(this.users.toString());
+	public Utilizador getCurrentUser() {
+		return currentUser;
 	}
-	
-	public Utilizador getUti(String email) {
-		return this.users.getUti(email);
+
+	public void setCurrentUser(Utilizador currentUser) {
+		this.currentUser = currentUser;
 	}
-	
+
+	public EmpresaT getCurrentEmp() {
+		return currentEmp;
+	}
+
+	public void setCurrentEmp(EmpresaT currentEmp) {
+		this.currentEmp = currentEmp;
+	}
+
+	public Voluntario getCurrentVol() {
+		return currentVol;
+	}
+
+	public void setCurrentVol(Voluntario currentVol) {
+		this.currentVol = currentVol;
+	}
+
+	public Loja getCurrentLoja() {
+		return currentLoja;
+	}
+
+	public void setCurrentLoja(Loja currentLoja) {
+		this.currentLoja = currentLoja;
+	}
+
 	public boolean RegistaUser(Utilizador user) {
 		if(this.users.addUtilizador(user))
 		{
@@ -351,32 +386,88 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return a;
 	}
 	
+	
+	public Loja getLojaPN(String nome) {
+		return this.lojas.procurarLojaNome(nome);
+	}
+	
+	
+	public Map<String,Double> getTranspMP(double limit, Loja a){
+		Double ux= this.currentUser.getGpsx();
+		Double uy= this.currentUser.getGpsy();
+		Double lx= a.getGpsx();
+		Double ly= a.getGpsy();
+		Map<String,Double> b = new TreeMap<>();
+		this.empresas.getValues().stream().filter(x-> (x.detDist(ux, uy, lx, ly)<=limit)).forEach(x->b.put(x.getNomeEmpresa(),x.detPreco(ux, uy, lx, ly)));
+		return b;
+		}
+	
+	public Map<String,Double> getTransp(Loja a){
+		Map<String,Double> b = new TreeMap<>();
+		Double ux= this.currentUser.getGpsx();
+		Double uy= this.currentUser.getGpsy();
+		Double lx= a.getGpsx();
+		Double ly= a.getGpsy();
+		this.empresas.getValues().forEach(x-> b.put(x.getNomeEmpresa(),x.detPreco(ux, uy, lx, ly)));
+		return b;
+	}
+	
+	public String getVoluntarioMP(Loja a) {
+		Double ux= this.currentUser.getGpsx();
+		Double uy= this.currentUser.getGpsy();
+		Double lx= a.getGpsx();
+		Double ly= a.getGpsy();
+		String s=" ";
+		Double menor=50.2;
+		for(Voluntario b: this.volts.getValues()) {
+			if(b.detDist(ux,uy,lx,ly)<menor) {
+				menor=b.detDist(ux,uy,lx,ly);
+				s=b.getNome();
+			}
+		}
+		return s;
+		
+	}
+	
+	public String getTranspPN(String nome) {
+		String s = "";
+		for(EmpresaT a: this.empresas.getValues()) {
+			if(a.getNomeEmpresa().equals(nome)) s= a.getCodigo();
+		}
+		return s;
+	}
+	
+	/*
 	@SuppressWarnings("unused")
-	public boolean fazEncomenda(Encomenda enc)
-	{
-		boolean done =  false; 
+	public boolean fazEncomenda(Encomenda enc)	{
+	
+        boolean done =  false; 
 		boolean querOutra = false;
 		while(!done)
 		{
+
 			//perguntar a view se quer prioritizar por mais barato ou mais perto e wtv
-			int pol=0; // maisperto =0; mais barato =1
+			Viewer.prints("Deseja priorizar por: \n (1)Mais bataro \n (2)Mais perto \n  " );
+			int pol=Viewer.choiceI(); // maisperto =0; mais barato =1
 			Loja loja = this.lojas.getLoja(enc.getCodL()).get();
 			
 			Utilizador user = new Utilizador();//this.currentUser.get();
 			TransporteInterface transportador;
 			if(pol==0) //determina que transportadora � proposta ao user
 			{
-				transportador = this.transportadoras.detMaisPerto(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());
+				transportador = this.transportadoras.detMaisPerto(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy());
 			}
 			else
 			{
-				transportador = this.transportadoras.detMaisBarato(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());	
+				transportador = this.transportadoras.detMaisBarato(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy());	
 			}
 		
 			if (transportador instanceof EmpresaT)
 			{
 				//Pergunta ao user se esta contente com a escolhe, se estiver done=1 se nao nao faz nada e volta ao inicio
-				if(true)//confirmar a escolhe, //se nao confir mar volta ao inicio
+				Viewer.prints("Deseja prosseguir com a encomenda? S/N");
+				String escolha=Viewer.choiceS();
+				if(escolha.equals("S"))//confirmar a escolhe, //se nao confir mar volta ao inicio
 				{
 					enc.setCodT(transportador.getCodigo());
 					this.encomendas.addEncomenda(enc);
@@ -386,8 +477,11 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				else 
 				{
 					//cena a perguntar se quer outra transportadora
+					Viewer.prints("Quer escolher outra transportadora? S/N");
+					String c=Viewer.choiceS();
+					if(c.equals("F")) {
 					querOutra = false;
-					done=!querOutra;
+					done=!querOutra;}
 				}
 			}
 			else//ser o transpoerte for feito por um voluntario
@@ -402,7 +496,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		
 		
 		return done;// se done for 0 � pq nao acabou a encomenda
-	}
+}*/
 	
 	public void rateTransp()
 	{
@@ -483,7 +577,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			boolean encontrou = false;
 			for(String emp:transp)//para todos os utilizadores no "lu"
 			{
-				if(enc.getCodT().compareTo(emp)==0 && (this.transportadoras.getTransp().get(enc.getCodT()) instanceof EmpresaT) )// se transportou uma enc e se � de facto uma empresa( e nao um voluntario)
+				if(enc.getCodT().compareTo(emp)==0 && (this.transportadoras.getTransp().get(enc.getCodT()) instanceof EmpresaT) )// se transportou uma enc e se � de facto uma empresa( e nao um voluntario)
 				{
 					encs.set(i, encs.get(i)+1);
 					encontrou=true;
@@ -569,7 +663,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				{
 					Utilizador ut= this.users.getUtilizadores().get(entry.getValue().getCodUt());
 					Loja lj = this.lojas.getLojas().get(entry.getValue().getCodL());
-					total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy(), entry.getValue().getPeso());
+					total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy());
 				}
 			}
 				
