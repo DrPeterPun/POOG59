@@ -2,6 +2,7 @@ package src;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Map.Entry;
@@ -49,14 +50,14 @@ public class Transportadoras implements Serializable{
 	}
 	 
 	@SuppressWarnings("unchecked")
-	public TransporteInterface detMaisBarato(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+	public TransporteInterface detMaisBarato(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
 	{
 		Set<Map.Entry<String, TransporteInterface>> set = transportadoras.entrySet();
 		Map.Entry<String, TransporteInterface> maisBarato= (Entry<String, TransporteInterface>) set.toArray()[0];
 		 
 		for(Entry<String, TransporteInterface> ti:set)
 		{
-			if(maisBarato.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl,peso)>ti.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl,peso))
+			if(maisBarato.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl)>ti.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl))
 			{
 				maisBarato=ti;
 			}
@@ -66,7 +67,7 @@ public class Transportadoras implements Serializable{
 	}
 	 
 	@SuppressWarnings({ "unchecked" })
-	public TransporteInterface detMaisPerto(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+	public TransporteInterface detMaisPerto(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
 	{
 		Set<Map.Entry<String, TransporteInterface>> set = transportadoras.entrySet();
 		Map.Entry<String, TransporteInterface> maisBarato= (Entry<String, TransporteInterface>) set.toArray()[0];
@@ -75,7 +76,7 @@ public class Transportadoras implements Serializable{
 		{
 			if(ti.getValue().inRaio(gpsxu, gpsyu,gpsxl,  gpsyl))
 			{
-				if(maisBarato.getValue().detDist(gpsxu,gpsyu,gpsxl,gpsyl,peso)>ti.getValue().detDist(gpsxu,gpsyu,gpsxl,gpsyl,peso))
+				if(maisBarato.getValue().detDist(gpsxu,gpsyu,gpsxl,gpsyl)>ti.getValue().detDist(gpsxu,gpsyu,gpsxl,gpsyl))
 				{
 					maisBarato=ti;
 				}
@@ -110,6 +111,7 @@ public class Transportadoras implements Serializable{
     	return Optional.empty();    	
     }
 	
+
 	
 	/// teste functions
 		public void printMap()

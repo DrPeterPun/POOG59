@@ -95,13 +95,13 @@ public class Utilizadores implements Serializable{
 		return false;
 	}
 	
-	public String getCodigo(String email) {
+	/*public String getCodigo(String email) {
 		return this.utilizadores.get(email).getIdUser();
 	}
 	
 	public Utilizador getUti(String email) {
 		return this.utilizadores.get(email);
-	}
+	}*/
 	/*
 	public void addEnc(Encomenda a) {
 		String cod = a.getCodT();
