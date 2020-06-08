@@ -27,7 +27,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	 */
 	private static final long serialVersionUID = -8208583672689808386L;
 	private Utilizadores users;
-	private Voluntarios volts;
+//	private Voluntarios volts;
 	//private EmpresasT empresas;
 	private Transportadoras transportadoras;
 	private Lojas lojas;
@@ -41,7 +41,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 
 	public Model() {
 		this.users= new Utilizadores();
-		this.volts= new Voluntarios();
+		//this.volts= new Voluntarios();
 		//this.empresas= new EmpresasT();
 		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
@@ -53,7 +53,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	public Model(Utilizadores utilizadores, Transportadoras transp, Lojas lojas2, Encomendas encomendas2) {
 		this.users= utilizadores;
-		this.volts= new Voluntarios();
+		//this.volts= new Voluntarios();
 		//this.empresas= new EmpresasT();
 		this.transportadoras = transp;
 		this.lojas= lojas2;
@@ -76,13 +76,13 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.users = users;
 	}
 
-	public Voluntarios getVolts() {
+	/*public Voluntarios getVolts() {
 		return volts;
 	}
 
 	public void setVolts(Voluntarios volts) {
 		this.volts = volts;
-	}
+	}*/
 
 	public void printutilizadores()
 	{
@@ -509,7 +509,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 		return tmu;
 	}
-	
+	// aux
 	public Integer getMax(List<Integer> lista)
 	{
 		int max=0;
