@@ -566,24 +566,47 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	//--------- Voluntario---------
 	public void preparaAceitarEnc()
 	{
-		for(int i=0;i<1;i++)// para todas as encomendas por aceitar pergunta se quer aceitar
+		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
-			//pergunta ao voluntario se aceita a encomenda
-			//se sim move a encomenda de "aberta" para "aceite" 
+			if(enc.getValue().getCodUt().compareTo(this.currentVol.getCodigo()) == 0 && (enc.getValue().getEstado()==0) )//quer avaliar?
+			{
+
+				Viewer.prints("Quer aceitar a encomenda :" + enc.toString() );
+            	String rt=Viewer.choiceS();
+            	if(rt.compareTo("S")==0)
+            	{
+            		this.encomendas.avancaEstado(enc.getValue());
+            	} else if(rt.compareTo("N")==0) {
+            		this.encomendas.recusarEnc(enc.getValue());
+              	}
+            	
+			}
 		}
 	}
 	
 	//--------- Voluntario // EmpresaT---------
-	public void enviarEnc()
+	public void enviarEnc(int c) // 0 para voluntario; 1 para empresa
 	{
-		boolean enviou=false;
-		for(int i=0;i<1;i++)// para todas as encomendas aceites pergunta se quer enviar a enc
+		String cod;
+		if(c==0)
 		{
-			//pergunta ao voluntario//empresa se quer enviar a encomenda
-			
-			if(enviou)//quis enviar a encomenda
+			cod = this.currentVol.getCodigo();
+		}
+		else
+		{
+			cod = this.currentEmp.getCodigo();
+		}
+		
+		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
+		{
+			if( enc.getValue().getCodT().compareTo(cod) == 0 && (enc.getValue().getEstado()==2) )
 			{
-				return;
+				Viewer.prints("Quer enviar a encomenda :" + enc.toString() );
+            	String rt=Viewer.choiceS();
+            	if(rt.compareTo("S")==0);
+            	{
+            		this.encomendas.avancaEstado(enc.getValue());
+            	}
 			}
 		}
 	}
@@ -615,9 +638,18 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	//--------- Loja ---------
 	public void preparaEnc()
 	{
-		for(int i=0;i<1;i++)// para todas as encomenda spoir sinalizar pergunta se quer siznalizar
+		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
-			//pergunta a loja se quer por esta encomendas como pronta para ser entregue
+			if(enc.getValue().getCodL().compareTo(this.currentLoja.getCodigoL()) == 0 && (enc.getValue().getEstado()==2) )
+			{
+
+				Viewer.prints("Quer enviar a encomenda :" + enc.toString() );
+            	String rt=Viewer.choiceS();
+            	if(rt.compareTo("S")==0);
+            	{
+            		this.encomendas.avancaEstado(enc.getValue());
+            	}
+			}
 		}
 	}
 	
