@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import Model.Model;
+import Reader.Parser;
 import Viewer.Input;
 import Viewer.Viewer;
 
@@ -15,8 +16,16 @@ public class Controller {
     private Model app;
     
     public void menuInit() {
+    	// pass = 123 email = "userid"+user para todos os users, para lojas o email � o id+loja; empresas id+emp; vols id+vol
+    	Utilizadores utilizadores = new Utilizadores();
+    	Encomendas encomendas = new Encomendas();
+    	Lojas lojas = new Lojas();
+    	Transportadoras transp = new Transportadoras();
+    	Parser parser = new Parser(utilizadores,encomendas,lojas, transp);
+    	parser.parse();
+    	
        Viewer.prints("********Bem-vindo********");
-       this.app=new Model();
+       this.app=new Model(utilizadores,transp, lojas,encomendas);
        menuEscolha();
     }
     
@@ -144,7 +153,7 @@ public class Controller {
     	Double valor= Viewer.choiceD();
     	Viewer.prints("Deseja ver as Transportadoras mais perto da loja? S/N");
     	String c= Input.lerString();
-    	if(c.equals("S")) {
+    	if(c.equals("S")|| c.equals('s')) {
     	Viewer.prints("Modo de envio: \n");
     	transpMP(20, app.getLojaPN(loja));}
     	else {
@@ -160,7 +169,7 @@ public class Controller {
             	Viewer.prints("Voluntário: " + app.getVoluntarioMP(app.getLojaPN(loja)));
             	Viewer.prints("Deseja ver o histórico do voluntário? S/N \n");
             	String aceita= Viewer.choiceS();
-            	if(aceita.equals('S')) {;} //função que mostra o histórico do voluntário e adiciona a encomenda no respetivo registo de encomenda
+            	if(aceita.equals('S')|| aceita.equals('s')) {;} //função que mostra o histórico do voluntário e adiciona a encomenda no respetivo registo de encomenda
             	else {;} //função que adiciona a encomenda no respetivo registo de encomenda
             }
             else {
@@ -180,7 +189,7 @@ public class Controller {
         case 1: {
                 Viewer.prints("Digite um email \n");
                 String email=Viewer.choiceS();
-                if(app.getVolts().existeV(email)) { //acho q esta linha aqui não respeita o encapsulamento, nem sei se valerá a pena ter esta linha visto q a função no model já verifica isso
+                if(app.getTransp().getVol(email)!=null) { //acho q esta linha aqui não respeita o encapsulamento, nem sei se valerá a pena ter esta linha visto q a função no model já verifica isso
                 	Viewer.prints("Email já usado \n");
                 	menuUser();
                 }

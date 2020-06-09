@@ -7,12 +7,12 @@ public class LinhadeEncomenda implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8473626387159279097L;
-private String codProd;
+	private String codProd;
    private String descricao;
    private double quant;
    private double valorUnit;
 
-   public LinhadeEncomenda(){
+   	public LinhadeEncomenda(){
       this.codProd=" ";
       this.descricao=" ";
       this.quant=0;
@@ -43,8 +43,7 @@ private String codProd;
    
    @Override
    public String toString() {
-       return "LinhadeEncomenda{" +
-               "codProd=" + this.codProd+
+       return  "codProd=" + this.codProd+
                " descricao=" + this.descricao+
                " quant=" + this.quant+
                " valorUnit=" + this.valorUnit +

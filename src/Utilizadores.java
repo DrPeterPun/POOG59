@@ -21,17 +21,13 @@ public class Utilizadores implements Serializable{
         for(Utilizador l: utilizadores.values())
             this.utilizadores.put(l.clone().getIdUser(),l.clone());
     }
-
-    public Utilizadores (Utilizadores u){
-        this.utilizadores = u.getUtilizadores();
-    }    
       
     public Map<String,Utilizador> getUtilizadores() {
         return new HashMap<String,Utilizador>(this.utilizadores);
     }
 
     public Utilizadores clone(){
-        return new Utilizadores(this);
+        return new Utilizadores(this.getUtilizadores());
     }
 
     @Override

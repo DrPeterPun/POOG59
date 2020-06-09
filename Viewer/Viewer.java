@@ -58,4 +58,9 @@ public class Viewer {
     	return d;
     }
     
+    public static int choiceRating() {
+    	int i = Input.lerRating();
+    	return i;
+    }
+    
 }

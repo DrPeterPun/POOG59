@@ -123,4 +123,30 @@ public class Input implements Serializable{
         //input.close();
         return s;
     }
+
+
+	public static int lerRating() {
+        Scanner input = new Scanner(in);
+        boolean ok = false;
+        int i = 0;
+        while(!ok) {
+            try {
+                i = input.nextInt();
+                ok = true;
+            }
+            catch(InputMismatchException e)
+            { out.println("Inteiro Invalido");
+                out.print("Novo valor: ");
+                input.nextLine();
+            }
+            if(i<0 || i>5)
+            {
+            	out.print("Valor Invalido \nPor favor insira um valor entre 0 e 5:");
+            	i = lerRating();
+            }
+        }
+        //input.close();
+        return i;
+    }
+
 }

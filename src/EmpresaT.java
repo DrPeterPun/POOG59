@@ -61,7 +61,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         return this.codigoEmpresa;
     }
 
-    public String getNomeEmpresa(){
+    public String getNome(){
         return this.nomeEmpresa;
     }
 
@@ -141,7 +141,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
                 getRaio() == empresaT.getRaio() &&
                 getPrecokm() == empresaT.getPrecokm() &&
                 Objects.equals(getCodigo(), empresaT.getCodigo()) &&
-                Objects.equals(getNomeEmpresa(), empresaT.getNomeEmpresa()) &&
+                Objects.equals(getNome(), empresaT.getNome()) &&
                 Objects.equals(getGpsx(), empresaT.getGpsx()) &&
                 Objects.equals(getGpsy(), empresaT.getGpsy());
     }

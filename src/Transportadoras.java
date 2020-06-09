@@ -27,6 +27,11 @@ public class Transportadoras implements Serializable{
 	       }
 	}
 	
+	public Transportadoras clone()
+	{
+		return new Transportadoras(this.getTransp());
+	}
+
 	public Map<String,TransporteInterface> getTransp()
 	{
 		return new HashMap<>(transportadoras);
@@ -111,6 +116,12 @@ public class Transportadoras implements Serializable{
     	return Optional.empty();    	
     }
 	
+	public void rateTransp(String cod, int rt)
+	{
+		if(this.transportadoras.containsKey(cod))
+		this.transportadoras.get(cod).addRating(rt);		
+	}
+	
 
 	
 	/// teste functions
@@ -136,6 +147,8 @@ public class Transportadoras implements Serializable{
 		public EmpresaT getEmpById(String codEmp) {
 			return (EmpresaT) this.transportadoras.get(codEmp);
 		}
+		
+		
 		
 		
 }

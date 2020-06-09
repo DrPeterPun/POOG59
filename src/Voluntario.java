@@ -176,16 +176,23 @@ public class Voluntario implements TransporteInterface, Serializable{
 		return this.codVol;
 	}
 
-	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
-	{
-
-		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
-		return dist;		
+	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
+		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
 	}
 
 
-	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
-		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
+
+	@Override
+	public double detPreco(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
+		return 0;
+	}
+
+
+
+	@Override
+	public double detDist(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
+		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
+		return dist;
 	}
 	
 	// ---relativo as encomendas---

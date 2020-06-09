@@ -2,8 +2,6 @@ package Teste;
 
 import src.*;
 import Reader.*;
-import Controlador.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

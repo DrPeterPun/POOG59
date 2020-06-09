@@ -82,11 +82,16 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}*/
 	
 	public Utilizadores getUsers() {
-		return users;
+		return users.clone();
 	}
 
 	public void setUsers(Utilizadores users) {
 		this.users = users;
+	}
+	
+	public Transportadoras getTransp()
+	{
+		return transportadoras.clone();
 	}
 
 	/*public Voluntarios getVolts() {
@@ -311,50 +316,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return modelo;
 	}
 	
-	
-/*
-    public void addEnc(Encomenda a) {
-		this.users.addEnc(a);
-		this.transportadoras.addEnc(a);
-		this.lojas.addEnc(a);
-	}
-	
-	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
-	public void encAceite(Encomenda a) {
-		this.users.encAceite(a);
-		this.transportadoras.encAceite(a);
-		this.lojas.encAceite(a);
-	}
-	
-	// o voluntario recusou a encomenda
-	public void encRecusada(Encomenda a) {
-		this.users.encRecusada(a);
-		this.transportadoras.encRecusada(a);
-		this.lojas.encRecusada(a);
-	}
-	
-	// a Loja diz que a encomenda esta cpronta
-	public void encPronta(Encomenda a){
-		this.users.encPronta(a);
-		this.transportadoras.encPronta(a);
-		this.lojas.encPronta(a);
-	}
-	
-	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
-	public void encPorAvaliar(Encomenda a){
-		this.users.encPorAvaliar(a);
-		this.transportadoras.encPorAvaliar(a);
-		this.lojas.encPorAvaliar(a);
-	}
-	
-	// encomenda foi completada
-	public void encCompleta(Encomenda a){
-		this.users.encCompleta(a);
-		this.transportadoras.encCompleta(a);
-		this.lojas.encCompleta(a);
-	}*/
-	
-	
 	//--------- User ---------
 	
 	/*
@@ -399,7 +360,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		Double lx= a.getGpsx();
 		Double ly= a.getGpsy();
 		Map<String,Double> b = new TreeMap<>();
-		this.empresas.getValues().stream().filter(x-> (x.detDist(ux, uy, lx, ly)<=limit)).forEach(x->b.put(x.getNomeEmpresa(),x.detPreco(ux, uy, lx, ly)));
+		this.empresas.getValues().stream().filter(x-> (x.detDist(ux, uy, lx, ly)<=limit)).forEach(x->b.put(x.getNome(),x.detPreco(ux, uy, lx, ly)));
 		return b;
 		}
 	
@@ -409,7 +370,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		Double uy= this.currentUser.getGpsy();
 		Double lx= a.getGpsx();
 		Double ly= a.getGpsy();
-		this.empresas.getValues().forEach(x-> b.put(x.getNomeEmpresa(),x.detPreco(ux, uy, lx, ly)));
+		this.empresas.getValues().forEach(x-> b.put(x.getNome(),x.detPreco(ux, uy, lx, ly)));
 		return b;
 	}
 	
@@ -433,13 +394,11 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	public String getTranspPN(String nome) {
 		String s = "";
 		for(EmpresaT a: this.empresas.getValues()) {
-			if(a.getNomeEmpresa().equals(nome)) s= a.getCodigo();
+			if(a.getNome().equals(nome)) s= a.getCodigo();
 		}
 		return s;
 	}
 	
-	/*
-	@SuppressWarnings("unused")
 	public boolean fazEncomenda(Encomenda enc)	{
 	
         boolean done =  false; 
@@ -452,7 +411,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			int pol=Viewer.choiceI(); // maisperto =0; mais barato =1
 			Loja loja = this.lojas.getLoja(enc.getCodL()).get();
 			
-			Utilizador user = new Utilizador();//this.currentUser.get();
+			Utilizador user = this.currentUser;
 			TransporteInterface transportador;
 			if(pol==0) //determina que transportadora � proposta ao user
 			{
@@ -470,9 +429,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				String escolha=Viewer.choiceS();
 				if(escolha.equals("S"))//confirmar a escolhe, //se nao confir mar volta ao inicio
 				{
-					enc.setCodT(transportador.getCodigo());
+					enc.setCodT(transportador.getCodigo()); // encomenda � feita para uma empesa
 					this.encomendas.addEncomenda(enc);
 					this.encomendas.setToAberto(enc);
+					this.encomendas.avancaEstado(enc);// avanca logo para ceite pq as empresas nao podem recusar
 					done = true;
 				}
 				else 
@@ -487,28 +447,30 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 			else//ser o transpoerte for feito por um voluntario
 			{
-				//this.addEnc(enc);
 				this.encomendas.addEncomenda(enc);
 				this.encomendas.setToAberto(enc);
-				this.encomendas.avancaEstado(enc);
+				//this.encomendas.avancaEstado(enc); //como os  voluntarios tem de aceitar as encomendas esta fica so em aberto
 				done = true;
 			}
 		}
 		
 		
 		return done;// se done for 0 � pq nao acabou a encomenda
-}*/
+	}
 	
+	// funcao que permite ao utilizador atual avaliar as seuas encomenda spor avaliar
 	public void rateTransp()
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
 			if( enc.getValue().getCodUt().compareTo(this.currentUser.getIdUser()) == 0 && (enc.getValue().getEstado()==3) )//quer avaliar?
 			{
-				//pede a avaliacao ao user 
-				//insere a avaliacao no transportador
+
+				Viewer.prints("Como quer avaliar o transporte da encomenda:j" + enc.toString() );
+            	int rt=Viewer.choiceRating();
 				this.encomendas.avancaEstado(enc.getValue());
-				//move a encomende de "por avaliar" para "terminada"
+				this.transportadoras.rateTransp(enc.getValue().getCodT(), rt);
+				this.encomendas.avancaEstado(enc.getValue());
 			}
 		}
 	}

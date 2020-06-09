@@ -8,7 +8,7 @@ public class Encomenda implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7784133114745763116L;
-private String codEnc;
+	private String codEnc;
    private String codUt;
    private String codL;
    private String codT;
@@ -150,8 +150,19 @@ private String codEnc;
 		   this.estado=-1;
    }
 
-public Date getDate() {
-	return this.data;
-}
+   public Date getDate() {
+	   return this.data;
+   }
+   
+   public String toString() {
+       String s = new String();
+       s = "Encomenda nº: " + this.codEnc + " feita em: " + this.data + " \n ";
+       for(LinhadeEncomenda le: this.encomendas)
+       {
+    	   s.concat(le.toString());
+       }
+       return s;
+   }
+   
    
 }

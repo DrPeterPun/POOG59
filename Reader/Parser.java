@@ -119,7 +119,7 @@ public class Parser implements Serializable{
 		}
 		
 		
-		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(codVol+"@vol") , "123",ratings);
+		return new Voluntario(codVol,nome,gpsx,gpsy,raio,(codVol+"vol") , "123",ratings);
 	}
 	
 	public Encomenda parseEncomenda(String input) {
@@ -164,7 +164,7 @@ public class Parser implements Serializable{
 		{
 			ratings.add(rand.nextInt()*5);
 		}
-		return new EmpresaT(codigoEmpresa,nomeEmpresa,nif,raio,precokm,gpsx,gpsy,(codigoEmpresa+"@empresa") , "123", ratings);
+		return new EmpresaT(codigoEmpresa,nomeEmpresa,nif,raio,precokm,gpsx,gpsy,(codigoEmpresa+"emp") , "123", ratings);
 	}
 	
 	private Loja parseLoja(String input) {
