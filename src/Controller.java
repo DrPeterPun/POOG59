@@ -149,7 +149,9 @@ public class Controller {
         switch(choice){
         case 1: app.showEncUser(app.getCurrentUser());
         case 2: menuFazerEncomenda();
-        case 3: menuEscolha();
+        case 3: app.rateTransp();
+        case 4: app.logOut();
+        case 5: menuEscolha();
          }
     }
     	 while (choice!=3) ;
@@ -167,42 +169,26 @@ public class Controller {
     	else {todasLojas();} //mostra a lista de lojas todas
     	Viewer.prints("Escolha a loja que deseja(nome) \n");
     	String loja= Viewer.choiceS();
-    	Viewer.prints("Qual o código de produto que deseja comprar? \n");
-    	String cod= Viewer.choiceS();
-    	Viewer.prints("Qual a sua descrição? \n");
-    	String des= Viewer.choiceS();
-    	Viewer.prints("Que quantidade deseja comprar? \n");
-    	Double qnt= Viewer.choiceD();
-    	Viewer.prints("Qual o seu valor? \n");
-    	Double valor= Viewer.choiceD();
-    	Viewer.prints("Deseja ver as Transportadoras mais perto da loja? S/N");
-    	String c= Input.lerString();
-    	if(c.equals("S")|| c.equals('s')) {
-    	Viewer.prints("Modo de envio: \n");
-    	transpMP(20, app.getLojaPN(loja));}
-    	else {
-    	todasTransp(app.getLojaPN(loja));
+    	Encomenda a = new Encomenda(app.getCurrentUser().getIdUser(),app.getLojaPN(loja).getCodigoL());
+    	boolean n = true;
+    	while (n) {
+    		Viewer.prints("Qual o código de produto que deseja comprar? \n");
+        	String cod= Viewer.choiceS();
+        	Viewer.prints("Qual a sua descrição? \n");
+        	String des= Viewer.choiceS();
+        	Viewer.prints("Que quantidade deseja comprar? \n");
+        	Double qnt= Viewer.choiceD();
+        	Viewer.prints("Qual o seu valor? \n");
+        	Double valor= Viewer.choiceD();
+        	LinhadeEncomenda lenc = new LinhadeEncomenda(cod,des,qnt,valor);
+        	a.addLinhaEncomenda(lenc);
+        	Viewer.prints("Quer encomendar mais alguma coisa? S/N");
+        	String enc=Viewer.choiceS();
+        	if(enc.equals("S")) n= true;
+        	else n=false;
     	}
-    	Viewer.printMenuAceitar();
-    	int escolha= Viewer.choiceI();
-    	while (escolha!=3) {
-            if (escolha == 1); //função que imprime as encomendas da transportadora
-            else if (escolha == 2) ;//função que aceita a encomenda e adiciona ao respetivo registo de encomenda
-            else if (escolha == 3) {
-            	Viewer.prints("Modo de envio: \n");
-            	Viewer.prints("Voluntário: " + app.getVoluntarioMP(app.getLojaPN(loja)));
-            	Viewer.prints("Deseja ver o histórico do voluntário? S/N \n");
-            	String aceita= Viewer.choiceS();
-            	if(aceita.equals('S')|| aceita.equals('s')) {;} //função que mostra o histórico do voluntário e adiciona a encomenda no respetivo registo de encomenda
-            	else {;} //função que adiciona a encomenda no respetivo registo de encomenda
-            }
-            else {
-            	escolha = Viewer.choiceI();
-            }
-        }
-        Viewer.prints("Opção inválida \n");
-    	
-    }
+    	app.fazEncomenda(a);
+  }
     
     public void menuVol() {
         Viewer.MenuRL();
@@ -252,9 +238,11 @@ public class Controller {
     	 int choice;
     	 do {choice = Viewer.choiceI();
          switch(choice) {
-         case 1:;// imprimir as encomendas
-         case 2: ; //mostrar encomendas pendentes e aceitar encomendas
-         case 3: menuEscolha();
+         case 1: app.printEncs(app.getCurrentVol().getCodigo());// imprimir as encomendas
+         case 2: app.preparaAceitarEnc(); 
+         case 3: app.enviarEnc(0);
+         case 4: app.logOut();
+         case 5: menuEscolha();
          }
      }while (choice!=0);
      //Viewer.prints("Opção inválida \n");
@@ -314,9 +302,11 @@ public class Controller {
     	int choice;
     	do { choice= Viewer.choiceI();
     	switch (choice) {
-    	case 1:;//ver histórico de encomendas das transportadoras
-    	case 2:;//ver encomendas pendentes e aceita las se quiser
-    	case 3: menuEscolha();
+    	case 1: app.printEncs(app.getCurrentEmp().getCodigo());//ver histórico de encomendas das transportadoras
+    	case 2: app.preparaAceitarEnc();//ver encomendas pendentes e aceita las se quiser
+    	case 3: app.enviarEnc(1);
+    	case 4: app.logOut();
+    	case 5: menuEscolha();
     	}
     	} while(choice!=0);
     	//Viewer.prints("Opção inválida \n");
@@ -364,13 +354,14 @@ public class Controller {
     }
     
     public void menuAppLoja() {
-    	Viewer.printMenuVolTransp();
+    	Viewer.printMenuLoja();
     	int choice;
     	do { choice= Viewer.choiceI();
     	switch (choice) {
-    	case 1:;//ver histórico de encomendas das lojas
-    	case 2:;//ver encomendas pendentes e aceita las se quiser
-    	case 3: menuEscolha();
+    	case 1: app.printEncs(app.getCurrentLoja().getCodigoL());;//ver histórico de encomendas das lojas
+    	case 2: app.preparaEnc();;//ver encomendas pendentes e aceita las se quiser
+    	case 4: app.logOut();
+    	case 5: menuEscolha();
     	}
     	} while(choice!=0);
     	//Viewer.prints("Opção inválida \n");
@@ -384,7 +375,7 @@ public class Controller {
     	app.getTodasLojas().forEach(x-> Viewer.prints("Loja: " + x));
     }
     
-    public void transpMP(double limit, Loja a) {
+    /*public void transpMP(double limit, Loja a) {
     	Map<String,Double> b = app.getTranspMP(limit, a);
     	for(String s: b.keySet()) {
     		for(Double d: b.values()) {
@@ -401,7 +392,7 @@ public class Controller {
     		}
     	}
     }
-    
+    */
     public void printTopUsers() {
     	app.showUtMaisUtiliza().stream().forEach(x-> Viewer.prints("User: " + x));
     }

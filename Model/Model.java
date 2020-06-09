@@ -332,7 +332,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}
 	
 	
-	public Map<String,Double> getTranspMP(double limit, Loja a,Double peso){
+	/*public Map<String,Double> getTranspMP(double limit, Loja a,Double peso){
         Double ux= this.currentUser.getGpsx();
         Double uy= this.currentUser.getGpsy();
         Double lx= a.getGpsx();
@@ -367,7 +367,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 		return s;
 		
-	}
+	}*/
 	
 	public String getTranspPN(String nome) {
 		String s = "";
@@ -376,7 +376,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 		return s;
 	}
-	/*
+	
 	public boolean fazEncomenda(Encomenda enc)	{
 	
         boolean done =  false; 
@@ -397,7 +397,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 			else
 			{
-				transportador = this.transportadoras.detMaisBarato(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy());	
+				transportador = this.transportadoras.detMaisBarato(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy(),enc.getPeso());	
 			}
 		
 			if (transportador instanceof EmpresaT)
@@ -435,7 +435,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		
 		return done;// se done for 0 � pq nao acabou a encomenda
 	}
-	*/
+	
 	// funcao que permite ao utilizador atual avaliar as seuas encomenda spor avaliar
 	public void rateTransp()
 	{
@@ -653,10 +653,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 	}
 	
-	public void adicionarEnc(Encomenda enc) {
+	/*public void adicionarEnc(Encomenda enc) {
         this.encomendas.addEncomenda(enc);
     }
-    
+    */
     /*public List<Encomenda> filterEncPend(String cod){
         return this.encomendas.encPend(cod);
     }*/

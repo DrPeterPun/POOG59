@@ -18,7 +18,7 @@ public class Viewer {
     public static void MenuRL() {
         System.out.println("1)Registar-me");
         System.out.println("2)Login");
-        System.out.println("3)Voltar ao menu");
+        System.out.println("4)Voltar ao menu");
         
     }
     
@@ -29,7 +29,9 @@ public class Viewer {
     public static void printMenuUser(){
     	 System.out.println("1)Ver histórico de encomendas");
          System.out.println("2)Fazer encomenda");
-         System.out.println("3)Voltar ao menu");
+         System.out.println("3)Avaliar transporte da encomenda");
+         System.out.println("4)LogOut");
+         System.out.println("5)Voltar ao menu");
     	}
     
     public static void printMenuAceitar() {
@@ -40,9 +42,18 @@ public class Viewer {
     
     public static void printMenuVolTransp(){
    	 System.out.println("1)Ver histórico de encomendas");
-     System.out.println("2)Ver encomendas pendentes");
-     System.out.println("3)Voltar ao menu");
+     System.out.println("2)Aceitar encomendas pendentes");
+     System.out.println("3)Enviar encomendas");
+     System.out.println("4)LogOut");
+     System.out.println("5)Voltar ao menu");
    	}
+    
+    public static void printMenuLoja() {
+     System.out.println("1)Ver histórico de encomendas");
+     System.out.println("2)Aceitar encomendas pendentes");
+     System.out.println("3)LogOut");
+     System.out.println("4)Voltar ao menu");
+    }
     
     
     public static String choiceS() {
