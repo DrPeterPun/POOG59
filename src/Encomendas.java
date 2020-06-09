@@ -97,4 +97,19 @@ public class Encomendas implements Serializable {
 	{
 		this.encomendas.get(e.getCodEnc()).recusarEnc();
 	}
+	
+	public void setToAberto(String enc)
+	{
+	   this.encomendas.get(enc).setToAberta();
+	}
+	
+	public void avancaEstado(String enc)
+	{
+		this.encomendas.get(enc).avancaEstado();
+	}
+	   
+	public void recusarEnc(String enc)
+	{
+		this.encomendas.get(enc).recusarEnc();
+	}
 }

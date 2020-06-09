@@ -660,6 +660,21 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.encomendas.recusarEnc(e);
 	}
 	
+	public void setToAberto(String e)
+	{
+	   this.encomendas.setToAberto(e);
+	}
+	
+	public void avancaEstado(String e)
+	{
+		this.encomendas.avancaEstado(e);
+	}
+	   
+	public void recusarEnc(String e)
+	{
+		this.encomendas.recusarEnc(e);
+	}
+	
 	//--------- Estado ---------
 	
 	public void savestate()
