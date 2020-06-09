@@ -293,28 +293,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		System.out.println(lista);
 	}
 	
-	public void saveToFile (String file) throws IOException
-	{
-	   	FileOutputStream f = new FileOutputStream(new File(file));
-		ObjectOutputStream o = new ObjectOutputStream(f);
-
-		// Write objects to file
-		o.writeObject(this);
-		f.close();
-		o.close();
-	}
-		
-		
-	public Model loadFromFile (String file) throws IOException, ClassNotFoundException
-	{
-		FileInputStream fi = new FileInputStream(new File(file));
-		ObjectInputStream oi = new ObjectInputStream(fi);
-		
-		Model modelo = (Model) oi.readObject();
-		oi.close();
-		fi.close();
-		return modelo;
-	}
 	
 	//--------- User ---------
 	
@@ -354,25 +332,25 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}
 	
 	
-	public Map<String,Double> getTranspMP(double limit, Loja a){
-		Double ux= this.currentUser.getGpsx();
-		Double uy= this.currentUser.getGpsy();
-		Double lx= a.getGpsx();
-		Double ly= a.getGpsy();
-		Map<String,Double> b = new TreeMap<>();
-		this.empresas.getValues().stream().filter(x-> (x.detDist(ux, uy, lx, ly)<=limit)).forEach(x->b.put(x.getNome(),x.detPreco(ux, uy, lx, ly)));
-		return b;
-		}
+	public Map<String,Double> getTranspMP(double limit, Loja a,Double peso){
+        Double ux= this.currentUser.getGpsx();
+        Double uy= this.currentUser.getGpsy();
+        Double lx= a.getGpsx();
+        Double ly= a.getGpsy();
+        Map<String,Double> b = new TreeMap<>();
+        this.transportadoras.filterEmpresaT().stream().filter(x->(x.detDist(ux, uy, lx, ly)<=limit)).forEach(x->b.put((x.getNome()),x.detPreco(ux, uy, lx, ly,peso)));
+        return b;
+        }
 	
-	public Map<String,Double> getTransp(Loja a){
-		Map<String,Double> b = new TreeMap<>();
-		Double ux= this.currentUser.getGpsx();
-		Double uy= this.currentUser.getGpsy();
-		Double lx= a.getGpsx();
-		Double ly= a.getGpsy();
-		this.empresas.getValues().forEach(x-> b.put(x.getNome(),x.detPreco(ux, uy, lx, ly)));
-		return b;
-	}
+	public Map<String,Double> getTransp(Loja a,Double peso){
+        Map<String,Double> b = new TreeMap<>();
+        Double ux= this.currentUser.getGpsx();
+        Double uy= this.currentUser.getGpsy();
+        Double lx= a.getGpsx();
+        Double ly= a.getGpsy();
+        this.empresas.getValues().forEach(x-> b.put(x.getNome(),x.detPreco(ux, uy, lx, ly,peso)));
+        return b;
+    }
 	
 	public String getVoluntarioMP(Loja a) {
 		Double ux= this.currentUser.getGpsx();
@@ -398,7 +376,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 		return s;
 	}
-	
+	/*
 	public boolean fazEncomenda(Encomenda enc)	{
 	
         boolean done =  false; 
@@ -429,7 +407,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				String escolha=Viewer.choiceS();
 				if(escolha.equals("S"))//confirmar a escolhe, //se nao confir mar volta ao inicio
 				{
-					enc.setCodT(transportador.getCodigo()); // encomenda � feita para uma empesa
+					enc.setCodT(transportador.getCodigo()); // encomenda � feita para uma empesa
 					this.encomendas.addEncomenda(enc);
 					this.encomendas.setToAberto(enc);
 					this.encomendas.avancaEstado(enc);// avanca logo para ceite pq as empresas nao podem recusar
@@ -457,7 +435,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		
 		return done;// se done for 0 � pq nao acabou a encomenda
 	}
-	
+	*/
 	// funcao que permite ao utilizador atual avaliar as seuas encomenda spor avaliar
 	public void rateTransp()
 	{
@@ -626,7 +604,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				{
 					Utilizador ut= this.users.getUtilizadores().get(entry.getValue().getCodUt());
 					Loja lj = this.lojas.getLojas().get(entry.getValue().getCodL());
-					total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy());
+					total+=emp.detPreco(ut.getGpsx(), ut.getGpsy(), lj.getGpsx(), lj.getGpsy(),entry.getValue().getPeso());
 				}
 			}
 				
@@ -642,6 +620,18 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			//pergunta a loja se quer por esta encomendas como pronta para ser entregue
 		}
 	}
+	
+	public void adicionarEnc(Encomenda enc) {
+        this.encomendas.addEncomenda(enc);
+    }
+    
+    /*public List<Encomenda> filterEncPend(String cod){
+        return this.encomendas.encPend(cod);
+    }*/
+    
+    public void aceitaEnc(String cod) {
+        
+    } 
 	
 	//--------- Encomendas ---------
 	

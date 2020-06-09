@@ -2,7 +2,7 @@ package Viewer;
 
 public class Viewer {
      
-    public static void  menuPrincipal(){     
+	public static void  menuPrincipal(){     
         System.out.println("1)Sou um utilizador");
         System.out.println("2)Sou um voluntário");
         System.out.println("3)Sou uma transportadora");
@@ -10,7 +10,9 @@ public class Viewer {
         System.out.println("5)Top 10 utilizadores que mais usam a app");
         System.out.println("6)Top 10 transportadoras com mais KM's");
         System.out.println("7)Ver total faturado de uma determinada empresa");
-        System.out.println("8)Sair.\n");
+        System.out.println("8)Gravar estado");
+        System.out.println("9)Carregar estado");
+        System.out.println("10)Sair.\n");
         }
     
     public static void MenuRL() {

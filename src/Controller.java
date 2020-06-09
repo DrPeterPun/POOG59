@@ -1,6 +1,11 @@
 package src;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +21,7 @@ public class Controller {
     private Model app;
     
     public void menuInit() {
-    	// pass = 123 email = "userid"+user para todos os users, para lojas o email � o id+loja; empresas id+emp; vols id+vol
+    	// pass = 123 email = "userid"+user para todos os users, para lojas o email � o id+loja; empresas id+emp; vols id+vol
     	Utilizadores utilizadores = new Utilizadores();
     	Encomendas encomendas = new Encomendas();
     	Lojas lojas = new Lojas();
@@ -41,7 +46,26 @@ public class Controller {
             case 5: printTopUsers();
             case 6: printTopTransp();
             case 7: menuFaturacao();
-            case 8:Viewer.prints("Volte sempre \n");
+            case 8:
+                try {
+                    saveToFile("logs.txt");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Viewer.prints("Não foi possível gravar");
+                }
+                menuEscolha();
+            case 9:
+              try {
+                  this.app = loadFromFile("logs.txt");
+              } catch (IOException e) {
+                  Viewer.prints("Não foi possível ler");
+              } catch (ClassNotFoundException e) {
+                  Viewer.prints("Erro");
+              } catch (ClassCastException e) {
+                  Viewer.prints("Erro!");
+              }
+            menuEscolha();;
+            case 10:Viewer.prints("Volte sempre \n");
             menuEscolha();
             break;
             default:
@@ -389,5 +413,28 @@ public class Controller {
     public void printTFat(String CodEmp, Date dStrt, Date dEnd) {
     	Viewer.prints("Total faturado: " + app.faturadoEnc(CodEmp, dStrt, dEnd));
     	
+    }
+    
+    public void saveToFile (String file) throws IOException
+    {
+           FileOutputStream f = new FileOutputStream(new File(file));
+        ObjectOutputStream o = new ObjectOutputStream(f);
+
+        // Write objects to file
+        o.writeObject(this);
+        f.close();
+        o.close();
+    }
+        
+        
+    public Model loadFromFile (String file) throws IOException, ClassNotFoundException, ClassCastException
+    {
+        FileInputStream fi = new FileInputStream(new File(file));
+        ObjectInputStream oi = new ObjectInputStream(fi);
+        
+        Model modelo = (Model) oi.readObject();
+        oi.close();
+        fi.close();
+        return modelo;
     }
 }
