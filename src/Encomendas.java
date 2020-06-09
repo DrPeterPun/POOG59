@@ -60,6 +60,15 @@ public class Encomendas implements Serializable {
 	
 	public void addEncomenda(Encomenda enc)
 	{
+		int i=0;
+		while(enc.getCodEnc()==" ")
+		{
+			if(!encomendas.containsKey("e"+i));
+			{
+				enc.setCodEnc("e"+i);
+			}
+			i++;
+		}
 		this.encomendas.put(enc.getCodEnc(),enc);
 	}
 	

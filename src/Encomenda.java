@@ -21,18 +21,29 @@ public class Encomenda implements Serializable{
       this.codEnc=" ";
       this.codUt=" ";
       this.codL=" ";
-      this.codT="";
+      this.codT=" ";
       this.peso=0;
       this.encomendas=new ArrayList<LinhadeEncomenda>();
-      this.estado =0;
+      this.estado = 0;
       this.data = new Date();
    }
+   
+   public Encomenda(String codUt, String codLoja){
+	      this.codEnc=" ";
+	      this.codUt=codUt;
+	      this.codL=codLoja;
+	      this.codT=" ";
+	      this.peso=0;
+	      this.encomendas=new ArrayList<LinhadeEncomenda>();
+	      this.estado = 0;
+	      this.data = new Date();
+	   }
 
    public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas,int estado){
       this.codEnc=codEnc;
       this.codUt=codUt;
       this.codL=codL;
-      this.codT="";
+      this.codT=" ";
       this.peso=peso;
       this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
       this.estado=estado;
@@ -82,13 +93,19 @@ public class Encomenda implements Serializable{
    
    public boolean setCodT(String codT)
    {
-	   if(this.codT=="")
+	   if(this.codT==" ")
 	   {
 		   this.codT=codT;
 		   return true;
 	   }
 	   return false;
    }
+   
+   public void setCodEnc(String codEnc)
+   {
+	   this.codEnc=codEnc;
+   }
+   
    
    public int getEstado()
    {
@@ -101,6 +118,11 @@ public class Encomenda implements Serializable{
 	   {
 		   this.estado=i;
 	   }
+   }
+   
+   public void setPeso(double peso)
+   {
+	   this.peso=peso;
    }
    
    @SuppressWarnings("unchecked")
@@ -126,9 +148,9 @@ public class Encomenda implements Serializable{
       this.encomendas.add(le1);
    }
 
-   public void addLinhaEncomenda(String codProd, String descricao, double quant, double voluntarios)
+   public void addLinhaEncomenda(String codProd, String descricao, double quant, double valor)
    {
-      LinhadeEncomenda l = new LinhadeEncomenda(codProd, descricao, quant, voluntarios);
+      LinhadeEncomenda l = new LinhadeEncomenda(codProd, descricao, quant, valor);
       this.encomendas.add(l);
    }
   
@@ -163,6 +185,8 @@ public class Encomenda implements Serializable{
        }
        return s;
    }
+
+
    
    
 }
