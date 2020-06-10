@@ -121,4 +121,11 @@ public class Encomendas implements Serializable {
 	{
 		this.encomendas.get(enc).recusarEnc();
 	}
+
+	public void preencheEncs(Transportadoras transp) {
+		for(Encomenda enc: this.encomendas.values())
+		{
+			enc.setCodT(transp.getRT());
+		}
+	}
 }

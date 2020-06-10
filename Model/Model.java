@@ -64,6 +64,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.currentEmp = new EmpresaT();
 		this.currentVol = new Voluntario();
 		this.currentLoja = new Loja();
+		preencheEncs();
 	}
 	
 	
@@ -314,6 +315,11 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		oi.close();
 		fi.close();
 		return modelo;
+	}
+	
+	public void preencheEncs()
+	{
+		this.encomendas.preencheEncs(this.transportadoras);
 	}
 	
 	//--------- User ---------

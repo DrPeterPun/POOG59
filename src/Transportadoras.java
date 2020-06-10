@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
@@ -146,6 +147,20 @@ public class Transportadoras implements Serializable{
 
 		public EmpresaT getEmpById(String codEmp) {
 			return (EmpresaT) this.transportadoras.get(codEmp);
+		}
+
+		public String getRT() {
+			int size = this.transportadoras.size();
+			int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+			int i = 0;
+			String cod = " ";
+			for(TransporteInterface ti : this.transportadoras.values())
+			{
+			    if (i == item)
+			        cod = ti.getCodigo();
+			    i++;
+			}
+			return cod;
 		}
 		
 		

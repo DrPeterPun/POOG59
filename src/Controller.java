@@ -146,6 +146,7 @@ public class Controller {
     	
     	// o utilizador pode querer comprar mais do que um produto
     	// comeca o while
+    	
     	Encomenda enc = new Encomenda();
     	Viewer.prints("Qual o código de produto que deseja comprar? \n");
     	String cod= Viewer.choiceS();
