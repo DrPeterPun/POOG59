@@ -134,7 +134,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	public void setCurrentLoja(Loja currentLoja) {
 		this.currentLoja = currentLoja;
 	}
-
+    
+	/**Método que regista um user
+	 * @param user Um Utilizador*/
 	public boolean RegistaUser(Utilizador user) {
 		if(this.users.addUtilizador(user))
 		{
