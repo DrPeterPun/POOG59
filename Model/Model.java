@@ -399,13 +399,13 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return s;
 	}
 	
-	public boolean fazEncomenda(Encomenda enc)	{
-	
-        boolean done =  false; 
+	public boolean fazEncomenda(Encomenda enc)	
+	{
+		enc.calculaPeso();
+	    boolean done =  false; 
 		boolean querOutra = false;
 		while(!done)
 		{
-
 			//perguntar a view se quer prioritizar por mais barato ou mais perto e wtv
 			Viewer.prints("Deseja priorizar por: \n (1)Mais bataro \n (2)Mais perto \n  " );
 			int pol=Viewer.choiceI(); // maisperto =0; mais barato =1
@@ -586,11 +586,11 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	
 	//--------- Voluntario---------
-	public void preparaAceitarEnc()
+	public void AceitarEnc()
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
-			if(enc.getValue().getCodUt().compareTo(this.currentVol.getCodigo()) == 0 && (enc.getValue().getEstado()==0) )//quer avaliar?
+			if(enc.getValue().getCodT().compareTo(this.currentVol.getCodigo()) == 0 && (enc.getValue().getEstado()==0) )
 			{
 
 				Viewer.prints("Quer aceitar a encomenda :" + enc.toString() );
@@ -598,7 +598,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
             	if(rt.compareTo("S")==0)
             	{
             		this.encomendas.avancaEstado(enc.getValue());
-            	} else if(rt.compareTo("N")==0) {
+            	} 
+            	else if(rt.compareTo("N")==0) 
+            	{
             		this.encomendas.recusarEnc(enc.getValue());
               	}
             	
@@ -662,7 +664,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
 		{
-			if(enc.getValue().getCodL().compareTo(this.currentLoja.getCodigoL()) == 0 && (enc.getValue().getEstado()==2) )
+			if(enc.getValue().getCodL().compareTo(this.currentLoja.getCodigoL()) == 0 && (enc.getValue().getEstado()==1) )
 			{
 
 				Viewer.prints("Quer enviar a encomenda :" + enc.toString() );

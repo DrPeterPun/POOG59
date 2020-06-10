@@ -143,6 +143,10 @@ public class Controller {
     	else {todasLojas();} //mostra a lista de lojas todas
     	Viewer.prints("Escolha a loja que deseja(nome) \n");
     	String loja= Viewer.choiceS();
+    	
+    	// o utilizador pode querer comprar mais do que um produto
+    	// comeca o while
+    	Encomenda enc = new Encomenda();
     	Viewer.prints("Qual o código de produto que deseja comprar? \n");
     	String cod= Viewer.choiceS();
     	Viewer.prints("Qual a sua descrição? \n");
@@ -151,6 +155,10 @@ public class Controller {
     	Double qnt= Viewer.choiceD();
     	Viewer.prints("Qual o seu valor? \n");
     	Double valor= Viewer.choiceD();
+    	
+    	// tem de perguntar se quer comprar mais produtos
+    	// acaba o while, 
+    	
     	Viewer.prints("Deseja ver as Transportadoras mais perto da loja? S/N");
     	String c= Input.lerString();
     	if(c.equals("S")|| c.equals('s')) {

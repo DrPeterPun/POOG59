@@ -2,6 +2,7 @@ package src;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class Encomenda implements Serializable{
    /**
@@ -184,6 +185,18 @@ public class Encomenda implements Serializable{
     	   s.concat(le.toString());
        }
        return s;
+   }
+   
+   public void calculaPeso()
+   {
+	   if(this.peso!=0) {return;}
+	   Random r = new Random();
+	   
+	   for(LinhadeEncomenda le: this.encomendas)
+	   {
+		   double rv = 0 + (10 - 0) * r.nextDouble();
+		   this.peso+=rv*le.getQuant();
+	   }
    }
 
 
