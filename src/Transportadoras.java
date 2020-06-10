@@ -1,6 +1,7 @@
 package src;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,21 +57,21 @@ public class Transportadoras implements Serializable{
 	}
 	 
 	@SuppressWarnings("unchecked")
-	public TransporteInterface detMaisBarato(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
-	{
-		Set<Map.Entry<String, TransporteInterface>> set = transportadoras.entrySet();
-		Map.Entry<String, TransporteInterface> maisBarato= (Entry<String, TransporteInterface>) set.toArray()[0];
-		 
-		for(Entry<String, TransporteInterface> ti:set)
-		{
-			if(maisBarato.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl)>ti.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl))
-			{
-				maisBarato=ti;
-			}
-		}
-			 
-		return maisBarato.getValue().clone();
-	}
+	public TransporteInterface detMaisBarato(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
+    {
+        Set<Map.Entry<String, TransporteInterface>> set = transportadoras.entrySet();
+        Map.Entry<String, TransporteInterface> maisBarato= (Entry<String, TransporteInterface>) set.toArray()[0];
+         
+        for(Entry<String, TransporteInterface> ti:set)
+        {
+            if(maisBarato.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl,peso)>ti.getValue().detPreco(gpsxu,gpsyu,gpsxl,gpsyl,peso))
+            {
+                maisBarato=ti;
+            }
+        }
+             
+        return maisBarato.getValue().clone();
+    }
 	 
 	@SuppressWarnings({ "unchecked" })
 	public TransporteInterface detMaisPerto(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
@@ -163,6 +164,11 @@ public class Transportadoras implements Serializable{
 			return cod;
 		}
 		
+		public List<TransporteInterface> filterEmpresaT(){
+            List<TransporteInterface> r = new ArrayList<>();
+            this.transportadoras.values().stream().filter(x-> x instanceof EmpresaT).forEach(x-> r.add(x));
+            return r;
+        }
 		
 		
 		
