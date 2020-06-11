@@ -105,6 +105,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
     	return r/ratings.size();
     }
     
+    /**Método que adiciona uma classificação à lista de classificações*/
     public boolean addRating(int n)
     {
     	if(n>=0 && n<=5)
@@ -164,6 +165,13 @@ public class EmpresaT implements TransporteInterface, Serializable {
 		return this.pass==pass;
 	}
 	
+	/**Método que determina o preço de uma encomenda
+	 * @param gpsxu Coordenada x de um utilizador
+	 * @param gpsy Coordenada y de um utilizador
+	 * @param gpsxl Coordenada x de uma loja
+	 * @param gpsyl Coordenada y de uma loja
+	 * @param peso Peso de uma encomenda*/
+	
 	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso)
     {
         double preco;
@@ -176,6 +184,11 @@ public class EmpresaT implements TransporteInterface, Serializable {
 
     }
     
+	/**Método que determina a distancia de uma empresa transportadora a um utilizador e a uma loja
+	 * @param gpsxu Coordenada x de um utilizador
+	 * @param gpsy Coordenada y de um utilizador
+	 * @param gpsxl Coordenada x de uma loja
+	 * @param gpsyl Coordenada y de uma loja*/
 	
 	public double detDist(double gpsxu, double gpsyu,double gpsxl, double gpsyl)
 	{
@@ -185,6 +198,11 @@ public class EmpresaT implements TransporteInterface, Serializable {
 	}
 
 	@Override
+	/**Método que determina se a empresa transportadora se encontra dentro de um raio
+	 * @param gpsxu Coordenada x de um utilizador
+	 * @param gpsy Coordenada y de um utilizador
+	 * @param gpsxl Coordenada x de uma loja
+	 * @param gpsyl Coordenada y de uma loja*/
 	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
 		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
 	}

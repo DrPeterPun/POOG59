@@ -173,6 +173,8 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 	}
 	
+	/**Método que regista uma transportadora seja ela uma empresa ou um voluntário
+	 * @param transportadora Uma transportadora*/
 	public boolean RegistaTransportadora(TransporteInterface transportadora) {
 		if(this.transportadoras.addTransportadora(transportadora))
 		{
@@ -185,6 +187,8 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 	}
 	
+	/**Método que regista uma loja
+	 * @param loja Uma Loja*/
 	public boolean RegistaLoja(Loja loja) {
 		if(this.lojas.addLoja(loja))
 		{
@@ -197,6 +201,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 	}
 	
+	/**Método que faz o logout da pessoa que está a utilizar a app*/
 	public void logOut()
 	{
 		this.currentUser = new Utilizador();
@@ -205,6 +210,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.currentLoja = new Loja();
 	}
 	
+	/**Método que faz o logIn de um user
+	 * @param email Um email 
+	 * @param pass Uma pass*/
 	public boolean logInUser(String email, String pass)
 	{
 		if(this.users.logIn(email, pass))
@@ -216,7 +224,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 			catch(NoSuchElementException e)
 			{
-				//chama a viewr para dizer uq nao existe esse login
+				Viewer.prints("Não existe nenhum registo com esse email.");
 			}
 			
 			return true;
@@ -224,6 +232,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return false;
 	}
 	
+	/**Método que faz o logIn de um voluntário
+	 * @param email Um email 
+	 * @param pass Uma pass*/
 	public boolean logInVol(String email, String pass)
 	{
 		if(this.transportadoras.logIn(email, pass))
@@ -235,7 +246,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 			catch(NoSuchElementException e)
 			{
-				//chama a viewr para dizer uq nao existe esse login
+				Viewer.prints("Não existe nenhum registo com esse email.");
 			}
 			
 			return true;
@@ -243,6 +254,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return false;
 	}
 	
+	/**Método que faz o logIn de uma empresa transportadora
+	 * @param email Um email 
+	 * @param pass Uma pass*/
 	public boolean logInEmp(String email, String pass)
 	{
 		if(this.transportadoras.logIn(email, pass))
@@ -255,13 +269,15 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 			catch(NoSuchElementException e)
 			{
-				//chama a viewr para dizer uq nao existe esse login
+				Viewer.prints("Não existe nenhum registo com esse email.");
 			}
 			return true;
 		}
 		return false;
 	}
 	
+	/**Método que faz o logIn de uma loja
+	 * @param Um email e uma pass*/
 	public boolean logInLoja(String email, String pass)
 	{
 		if(this.lojas.logIn(email, pass))
@@ -274,17 +290,17 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 			catch(NoSuchElementException e)
 			{
-				//chama a viewr para dizer uq nao existe esse login
+				Viewer.prints("Não existe nenhum registo com esse email.");
 			}
 			return true;
 		}
 		return false;
 	}
 	
-	
+	/**Função que imprime o histórico de encomendas da pessoa que está a utiliza a app
+	 * @param id Um código(seja de um user, de um voluntário, de uma empresa transportadora ou de uma loja)*/
 	public void printEncs(String id)
 	{
-		// "" faz com que imprima todas as encs
 		ArrayList<String> lista = new ArrayList<String>();
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())
 		{
@@ -321,20 +337,24 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	-> o user faz a avaliacao da encomenda	
 	*/
 	
-	//Método que lista as lojas que se encontram a um determinado range do utilizador
+	/**Método que lista as lojas que se encontram a um determinado range do utilizador
+	 * @param range Um double que determina a que distância o user quer que estaja a loja 
+	 * @param a Um utilizador*/
 	public List<String> getLojasMPerto (double range,Utilizador a) {
 		List<String> b = new ArrayList<>();
 		this.lojas.getLojas().values().stream().filter(x-> (x.detDistL(a.getGpsx(), a.getGpsy())<=range)).forEach(x-> b.add(x.getNomeL()));
 		return b;
 	}
 	
+	/**Método que determina a lista de todas as lojas possiveis*/
 	public List<String> getTodasLojas(){
 		List<String> a = new ArrayList<>();
 		this.lojas.getLojas().values().forEach(x->a.add(x.getNomeL()));
 		return a;
 	}
 	
-	
+	/**Método que procura uma loja pelo nome
+	 * @param nome O nome de uma loja*/
 	public Loja getLojaPN(String nome) {
 		return this.lojas.procurarLojaNome(nome);
 	}
@@ -377,6 +397,8 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		
 	}*/
 	
+	/**Método que procura uma empresa transportadora pelo nome e devolve o seu código
+	 * @param nome Nome da empresa*/
 	public String getTranspPN(String nome) {
 		String s = "";
 		for(EmpresaT a: this.empresas.getValues()) {
@@ -385,6 +407,8 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return s;
 	}
 	
+	/**Método que faz o processo de encomendar uma encomenda
+	 * @param enc Uma encomenda*/
 	public boolean fazEncomenda(Encomenda enc)	
 	{
 		enc.calculaPeso();
@@ -392,14 +416,13 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		boolean querOutra = false;
 		while(!done)
 		{
-			//perguntar a view se quer prioritizar por mais barato ou mais perto e wtv
 			Viewer.prints("Deseja priorizar por: \n (1)Mais bataro \n (2)Mais perto \n  " );
-			int pol=Viewer.choiceI(); // maisperto =0; mais barato =1
+			int pol=Viewer.choiceI(); 
 			Loja loja = this.lojas.getLoja(enc.getCodL()).get();
 			
 			Utilizador user = this.currentUser;
 			TransporteInterface transportador;
-			if(pol==0) //determina que transportadora � proposta ao user
+			if(pol==0) 
 			{
 				transportador = this.transportadoras.detMaisPerto(user.getGpsx(),user.getGpsy(),loja.getGpsx(),loja.getGpsy());
 			}
@@ -410,20 +433,18 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		
 			if (transportador instanceof EmpresaT)
 			{
-				//Pergunta ao user se esta contente com a escolhe, se estiver done=1 se nao nao faz nada e volta ao inicio
 				Viewer.prints("Deseja prosseguir com a encomenda? S/N");
 				String escolha=Viewer.choiceS();
-				if(escolha.equals("S"))//confirmar a escolhe, //se nao confir mar volta ao inicio
+				if(escolha.equals("S"))
 				{
-					enc.setCodT(transportador.getCodigo()); // encomenda � feita para uma empesa
+					enc.setCodT(transportador.getCodigo());
 					this.encomendas.addEncomenda(enc);
 					this.encomendas.setToAberto(enc);
-					this.encomendas.avancaEstado(enc);// avanca logo para ceite pq as empresas nao podem recusar
+					this.encomendas.avancaEstado(enc);
 					done = true;
 				}
 				else 
 				{
-					//cena a perguntar se quer outra transportadora
 					Viewer.prints("Quer escolher outra transportadora? S/N");
 					String c=Viewer.choiceS();
 					if(c.equals("F")) {
@@ -444,7 +465,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return done;// se done for 0 � pq nao acabou a encomenda
 	}
 	
-	// funcao que permite ao utilizador atual avaliar as seuas encomenda spor avaliar
+	/** Método que permite ao utilizador atual avaliar as suas encomendas por avaliar*/
 	public void rateTransp()
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
@@ -477,6 +498,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return list;
 	}
 	
+	/**Método que lista os 10 utilizadores que mais usaram a app*/
 	public List<String> showUtMaisUtiliza()
 	{
 		List<String> lu = new ArrayList<String>();
@@ -515,6 +537,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return utf;
 	}
 	
+	/**Método que lista as 10 empresas transportadoras que mais kms fizeram*/
 	public List<String> showEmpMaisKms()
 	{
 		List<String> transp = new ArrayList<String>();
@@ -572,6 +595,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	
 	//--------- Voluntario---------
+	/**Método que faz com que um voluntário aceite a encomenda*/
 	public void AceitarEnc()
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar
@@ -595,8 +619,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}
 	
 	//--------- Voluntario // EmpresaT---------
-	public void enviarEnc(int c) // 0 para voluntario; 1 para empresa
-	{
+	/**Método que faz com que um voluntário ou uma empresa transportadora envie uma encomenda
+	 * @param int Um inteiro, que se este for 0, estamos a trabalhar com voluntários, e se for 1, estamos a trabalhar com empresas transportadoras*/
+	public void enviarEnc(int c) {
 		String cod;
 		if(c==0)
 		{
@@ -623,7 +648,10 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	
 	//--------- EmpresaT---------
-	
+	/**Método que determina o total faturado por uma determinha empresa transportadora num determinado período de tempo
+	 * @param CodEmo Um código de empresa
+     * @param dStrt Uma data inicial 
+     * @param dEnd Uma data final*/
 	public long faturadoEnc(String CodEmp, Date dStrt, Date dEnd)
 	{
 		EmpresaT emp = this.transportadoras.getEmpById(CodEmp);
@@ -646,6 +674,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}
 	
 	//--------- Loja ---------
+	/**Método que prepara uma encomenda para ser entrega por parte de uma loja*/
 	public void preparaEnc()
 	{
 		for(Entry<String, Encomenda> enc: this.encomendas.getEncomendas().entrySet())// para todas as encomendas por avaliar pergunta se quer avaliar

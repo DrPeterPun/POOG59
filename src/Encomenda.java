@@ -15,7 +15,8 @@ public class Encomenda implements Serializable{
    private String codT;
    private double peso;
    private ArrayList<LinhadeEncomenda> encomendas;
-   private int estado;// -1 = rejeitado -> 0,1,2,3,4 = Aberta,Aceite,Pronta,PorAvaliar,Completa
+   /**@param estado Estado de uma encomenda, se esta for -1, foi recusada, se for 0, está aberta, se for 1, foi aceite, de for 2, está pronta, se for 3, está por avaliar e se for 4 está completa*/
+   private int estado;
    private Date data;
 
    public Encomenda(){
@@ -49,7 +50,7 @@ public class Encomenda implements Serializable{
       this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
       this.estado=estado;
    }
-   //comleto para o clone
+   
    public Encomenda(String codEnc, String codUt, String codL,Double peso, ArrayList<LinhadeEncomenda> encomendas, String codT,int estado, Date data){
 	      this.codEnc=codEnc;
 	      this.codUt=codUt;
@@ -142,7 +143,9 @@ public class Encomenda implements Serializable{
     		  				this.estado,
     		  				this.data);
    }
-
+   
+   /**Método que adiciona uma linha  de encomenda à encomenda
+    * @param le Uma linha de encomenda*/
    public void addLinhaEncomenda(LinhadeEncomenda le)
    {
       LinhadeEncomenda le1 = new LinhadeEncomenda(le);
@@ -154,19 +157,21 @@ public class Encomenda implements Serializable{
       LinhadeEncomenda l = new LinhadeEncomenda(codProd, descricao, quant, valor);
       this.encomendas.add(l);
    }
-  
+   
+   /**Método que converte o estado de encomenda para aberta*/
    public void setToAberta()
    {
 	   this.estado=0;
    }
    
+   /**Método que avança o estado de encomenda*/
    public void avancaEstado()
    {
 	   if(this.estado>=0 && this.estado<=4)
 		   this.estado++;
    }
    
-   
+   /**Método que converte i estado de encomenda para recusada*/
    public void recusarEnc()
    {
 	   if(this.estado==0)
@@ -179,7 +184,7 @@ public class Encomenda implements Serializable{
    
    public String toString() {
        String s = new String();
-       s = "Encomenda n�: " + this.codEnc + " feita em: " + this.data + " \n ";
+       s = "Encomenda n�: " + this.codEnc + " feita em: " + this.data + " \n ";
        for(LinhadeEncomenda le: this.encomendas)
        {
     	   s.concat(le.toString());
@@ -187,6 +192,7 @@ public class Encomenda implements Serializable{
        return s;
    }
    
+   /**Método que calcula o peso de uma encomenda*/
    public void calculaPeso()
    {
 	   if(this.peso!=0) {return;}

@@ -34,7 +34,7 @@ public class Voluntario implements TransporteInterface, Serializable{
 
     
     
-    //� de eesperar que este seja o metudo utilizado para registar um novo voluntario pq tem toda a informacao inicial mas nao tem ratings e nao tem encomendas ja feitas
+    //� de eesperar que este seja o metudo utilizado para registar um novo voluntario pq tem toda a informacao inicial mas nao tem ratings e nao tem encomendas ja feitas
     public Voluntario(String codVol, String nome, double gpsx,double gpsy, double raio,String email, String pass){
         this.codVol= codVol;
         this.nome=nome;
@@ -110,9 +110,11 @@ public class Voluntario implements TransporteInterface, Serializable{
         						this.pass);
     }
     
+    /**Não é precisa?*/
     public void addEncV(Encomenda a) {
     	this.encV.addEncomenda(a.clone());
     }
+    
     
     public double getRating()
     {
@@ -124,7 +126,7 @@ public class Voluntario implements TransporteInterface, Serializable{
     	return r/ratings.size();
     }
     
-    
+    /**Método que adiciona uma classificação à lista de classificações*/
     public boolean addRating(int n)
     {
     	if(n>=0 && n<=5)
@@ -168,6 +170,7 @@ public class Voluntario implements TransporteInterface, Serializable{
 		return this.pass==pass;
 	}
 	
+	
 	public double detPreco(double gpsxu, double gpsyu,double gpsxl, double gpsyl, double peso) {
 		return 0;
 	}
@@ -175,21 +178,31 @@ public class Voluntario implements TransporteInterface, Serializable{
 	public String getCodigo() {
 		return this.codVol;
 	}
-
+    
+	/**Método que determina se o voluntário se encontra dentro de um raio
+	 * @param gpsxu Coordenada x de um utilizador
+	 * @param gpsy Coordenada y de um utilizador
+	 * @param gpsxl Coordenada x de uma loja
+	 * @param gpsyl Coordenada y de uma loja*/
 	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
 		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
 	}
 
 
 
-	@Override
-	public double detPreco(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
+	
+	/*public double detPreco(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
 		return 0;
-	}
+	}*/
 
 
 
 	@Override
+	/**Método que determina a distancia de um voluntário a um utilizador e a uma loja
+	 * @param gpsxu Coordenada x de um utilizador
+	 * @param gpsy Coordenada y de um utilizador
+	 * @param gpsxl Coordenada x de uma loja
+	 * @param gpsyl Coordenada y de uma loja*/
 	public double detDist(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
 		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
 		return dist;

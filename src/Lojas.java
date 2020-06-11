@@ -8,6 +8,7 @@ public class Lojas implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 2710839853129070335L;
+	/**Map em que nas keys guardamos o código de uma loja e nos values guardamos a informação dessa loja*/
 	private Map<String,Loja> lojas;
 
     //Resolvi usar um TreeMap devido à ordem
@@ -33,8 +34,8 @@ public class Lojas implements Serializable{
         return new Lojas(this);
     }
 
-    // estes dois métodos permitem adicionar uma loja caso ele não exista no sistema
-    // como estes métodos existem em todas as classes que existem hashmap não sei se não será necessário pô-las numa abstract class
+    /**Método que adiciona uma loja ao map de lojas
+     * @param l Uma loja*/
     public boolean addLoja(Loja l) {
         if(!(existeLoja(l.getCodigoL())))
         {
@@ -43,7 +44,8 @@ public class Lojas implements Serializable{
         }
         else return false;
     }
-
+    
+    /**Método que nos diz se uma loja já existe no map*/
     public boolean existeLoja(String cod){
         boolean r=false;
         if(this.lojas.containsKey(cod)) r=true;
@@ -78,7 +80,7 @@ public class Lojas implements Serializable{
                 '}';
     }
 
-
+    /**Método que faz o login de uma loja*/
 	public boolean logIn(String codigo, String pass) {
 		for(Map.Entry<String,Loja> entry : this.lojas.entrySet()) {
 			if(entry.getValue().logIn(pass))
@@ -89,6 +91,7 @@ public class Lojas implements Serializable{
 		return false;
 	}
 	
+	/**Método que procura no map, pelo seu nome*/
 	public Loja procurarLojaNome(String nome) {
 		Loja l=new Loja();
 		for(Loja a: this.lojas.values()) {

@@ -115,6 +115,9 @@ public class Loja implements Serializable{
                 Objects.equals(getNomeL(), loja.getNomeL());
     }
     
+    /**Método que calcula a distância de uma loja a um utilizador
+     * @param gpsxu Coordenada x de um utilizador
+     * @param gpsyu Coordenada y de um utilizador*/
     public double detDistL(double gpsxu, double gpsyu)
 	{
 		

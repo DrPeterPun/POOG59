@@ -20,6 +20,7 @@ public class Controller {
     
     private Model app;
     
+    /**Menu que inicializa a app*/
     public void menuInit() {
     	// pass = 123 email = "userid"+user para todos os users, para lojas o email � o id+loja; empresas id+emp; vols id+vol
     	Utilizadores utilizadores = new Utilizadores();
@@ -34,6 +35,7 @@ public class Controller {
        menuEscolha();
     }
     
+    /**Menu principal*/
     public void menuEscolha (){
         Viewer.menuPrincipal();
         int choice;
@@ -79,6 +81,7 @@ public class Controller {
         }
     }
     
+    /**Menu auxiliar que ajuda na determinação do valor total faturado de uma determinada empresa transportadora*/
     public void menuFaturacao() {
     	Viewer.prints("Digite o nome da transportadora que deseja ver. \n");
     	String transp = Viewer.choiceS();
@@ -98,6 +101,7 @@ public class Controller {
     	
     }
     
+    /**Menu de um utilizador, onde ele pode fazer logIn, registar-se, fazer encomendas, entre outras coisas*/
     public void menuUser() {
         Viewer.MenuRL();
         int choice;
@@ -142,6 +146,7 @@ public class Controller {
      
     }
     
+    /**Menu auxiliar do menu de utilizador quando um user faz logIn*/
     public void menuAppUser() {
     	Viewer.printMenuUser();
     	 int choice;
@@ -158,6 +163,7 @@ public class Controller {
          //Viewer.prints("Opção inválida \n");
     }
     
+    /**Menu auxiliar dos menus do user, que faz encomendas*/
     public void menuFazerEncomenda(){
     	Viewer.prints("Deseja escolher Loja por raio de distância? S/N \n");
     	String choice= Input.lerString();
@@ -189,17 +195,16 @@ public class Controller {
     	}
     	app.fazEncomenda(a);
   }
-    
+    /**Menu dos voluntários*/
     public void menuVol() {
-        Viewer.MenuRL();
         Viewer.MenuRL();
         int choice;
         do {choice = Viewer.choiceI();
         switch(choice) {
-        case 1: {
+        case 1: 
                 Viewer.prints("Digite um email \n");
                 String email=Viewer.choiceS();
-                if(app.getTransp().getVol(email)!=null) { //acho q esta linha aqui não respeita o encapsulamento, nem sei se valerá a pena ter esta linha visto q a função no model já verifica isso
+                if(app.getTransp().existeTtransportadora(email)) { //acho q esta linha aqui não respeita o encapsulamento, nem sei se valerá a pena ter esta linha visto q a função no model já verifica isso
                 	Viewer.prints("Email já usado \n");
                 	menuUser();
                 }
@@ -217,29 +222,30 @@ public class Controller {
                     Double raio=Viewer.choiceD();
                     app.RegistaVoluntario(new Voluntario(nickname,name,x,y,raio,email,pass));
                 }
-            }
-        case 2:{ 
+            
+        case 2:
             	Viewer.prints("Email: \n");
-                String email=Viewer.choiceS();
+                String email1=Viewer.choiceS();
                 Viewer.prints("Pass \n");
                 String pass=Viewer.choiceS();
-                app.logInVol(email, pass);
+                app.logInVol(email1, pass);
                 menuAppVol();
-                }
+                
         case 3: menuEscolha();
         }
         }
         while (choice!=0);
        // Viewer.prints("Opção inválida");
     }
-        
+    
+    /**Menu auxiliar do menu de voluntárioss, onde pode ver o seu histórico, aceitar encomendas, enviar encomendas, entre outras opções*/
     public void menuAppVol() {
     	Viewer.printMenuVolTransp();
     	 int choice;
     	 do {choice = Viewer.choiceI();
          switch(choice) {
          case 1: app.printEncs(app.getCurrentVol().getCodigo());// imprimir as encomendas
-         case 2: app.preparaAceitarEnc(); 
+         case 2: app.AceitarEnc(); 
          case 3: app.enviarEnc(0);
          case 4: app.logOut();
          case 5: menuEscolha();
@@ -248,6 +254,7 @@ public class Controller {
      //Viewer.prints("Opção inválida \n");
     }
     
+    /**Menu das empresas transportadoras*/
     public void menuTransp() {
         Viewer.MenuRL();
         int choice;
@@ -297,13 +304,14 @@ public class Controller {
         //Viewer.prints("Opção inválida \n");
     }
     
+    /**Menu auxiliar das empresas transportadoras onde podem ver o seu histórico, entre outras opções*/
     public void menuAppTransp() {
     	Viewer.printMenuVolTransp();
     	int choice;
     	do { choice= Viewer.choiceI();
     	switch (choice) {
     	case 1: app.printEncs(app.getCurrentEmp().getCodigo());//ver histórico de encomendas das transportadoras
-    	case 2: app.preparaAceitarEnc();//ver encomendas pendentes e aceita las se quiser
+    	case 2: app.AceitarEnc();//ver encomendas pendentes e aceita las se quiser
     	case 3: app.enviarEnc(1);
     	case 4: app.logOut();
     	case 5: menuEscolha();
@@ -312,6 +320,7 @@ public class Controller {
     	//Viewer.prints("Opção inválida \n");
     }
     
+    /**Menu de uma loja*/
     public void menuLoja() {
         Viewer.MenuRL();
         int choice;
@@ -353,6 +362,7 @@ public class Controller {
        // Viewer.prints("Opção inválida \n");
     }
     
+    /**Menu auxiliar do menu de lojas, onde podem ver o seu histórico, preparar encomendas, entre outros*/
     public void menuAppLoja() {
     	Viewer.printMenuLoja();
     	int choice;
@@ -360,17 +370,21 @@ public class Controller {
     	switch (choice) {
     	case 1: app.printEncs(app.getCurrentLoja().getCodigoL());;//ver histórico de encomendas das lojas
     	case 2: app.preparaEnc();;//ver encomendas pendentes e aceita las se quiser
-    	case 4: app.logOut();
-    	case 5: menuEscolha();
+    	case 3: app.logOut();
+    	case 4: menuEscolha();
     	}
     	} while(choice!=0);
-    	//Viewer.prints("Opção inválida \n");
+    	Viewer.prints("Opção inválida \n");
     }
     
+    /**Método que imprime as lojas mais perto de um utilizador
+     * @param raio Raio dado pelo useer 
+     * @param a Um utilizador*/
     public void lojasMP(double raio, Utilizador a ) {
     	app.getLojasMPerto(raio,app.getCurrentUser()).forEach(x-> Viewer.prints("Loja: " + x));
     }
     
+    /**Método que imprime todas as lojas disponiveis na app*/
     public void todasLojas() {
     	app.getTodasLojas().forEach(x-> Viewer.prints("Loja: " + x));
     }
@@ -393,19 +407,27 @@ public class Controller {
     	}
     }
     */
+    /**Método que imprime os 10 utilizadores que mais utilizaram a app*/
     public void printTopUsers() {
     	app.showUtMaisUtiliza().stream().forEach(x-> Viewer.prints("User: " + x));
     }
     
+    /**Método que imprime as 10 empresas transportadoras que mais kms fizeram*/
     public void printTopTransp() {
     	app.showEmpMaisKms().stream().forEach(x-> Viewer.prints("Transportadora: " + x));
     }
     
+    /**Método que imprime o total faturado por uma determinada empresa transportadora
+     * @param CodEmo Um código de empresa
+     * @param dStrt Uma data inicial 
+     * @param dEnd Uma data final*/
     public void printTFat(String CodEmp, Date dStrt, Date dEnd) {
     	Viewer.prints("Total faturado: " + app.faturadoEnc(CodEmp, dStrt, dEnd));
     	
     }
     
+    /**Método que guarda o estado atual da app num ficheiro
+     * @param file Nome do ficheiro*/
     public void saveToFile (String file) throws IOException
     {
            FileOutputStream f = new FileOutputStream(new File(file));
@@ -417,7 +439,8 @@ public class Controller {
         o.close();
     }
         
-        
+    /**Método que faz load do estado atual da app
+     * @param file Nome do ficheiro*/     
     public Model loadFromFile (String file) throws IOException, ClassNotFoundException, ClassCastException
     {
         FileInputStream fi = new FileInputStream(new File(file));

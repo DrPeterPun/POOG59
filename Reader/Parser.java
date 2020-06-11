@@ -164,6 +164,7 @@ public class Parser implements Serializable{
 		{
 			ratings.add(rand.nextInt()*5);
 		}
+		//boolean encMed=boolean.(campos[8]);
 		return new EmpresaT(codigoEmpresa,nomeEmpresa,nif,raio,precokm,gpsx,gpsy,(codigoEmpresa+"emp") , "123", ratings);
 	}
 	

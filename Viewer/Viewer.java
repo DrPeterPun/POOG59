@@ -18,7 +18,7 @@ public class Viewer {
     public static void MenuRL() {
         System.out.println("1)Registar-me");
         System.out.println("2)Login");
-        System.out.println("4)Voltar ao menu");
+        System.out.println("3)Voltar ao menu");
         
     }
     
