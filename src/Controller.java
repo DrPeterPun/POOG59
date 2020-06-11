@@ -46,8 +46,14 @@ public class Controller {
             case 3: menuTransp();
             case 4: menuLoja();
             case 5: printTopUsers();
+                    voltarMenu();
+                    break;
             case 6: printTopTransp();
+                    voltarMenu();
+                    break;
             case 7: menuFaturacao();
+                    voltarMenu();
+                    break;
             case 8:
                 try {
                     saveToFile("logs.txt");
@@ -70,7 +76,7 @@ public class Controller {
             case 10:Viewer.prints("Volte sempre \n");
             menuEscolha();
             break;
-            default:
+            default: Viewer.prints("Opção inválida \n"); 
            }
         }
         while (choice!=0); 
@@ -78,6 +84,19 @@ public class Controller {
         try{ Runtime.getRuntime().exec("taskkill /F /IM process.exe");}
         catch (IOException e) {
             Viewer.prints("");
+        }
+    }
+    
+    /**Método, que escolhido pelo utilizador, volta ao menu principal*/
+    public void voltarMenu(){
+        Viewer.prints("Y) Voltar para o menu principal.\n");
+        String a = Viewer.choiceS();
+        if (a.equals("y") || a.equals("Y")){
+            menuEscolha();
+        }
+        else {
+            Viewer.prints("Viewer.Input incorreto");
+            voltarMenu();
         }
     }
     
@@ -139,10 +158,11 @@ public class Controller {
                 menuAppUser();
                 }
             case 3:  menuEscolha();
+            default: Viewer.prints("Opção inválida \n"); 
             
          }
         } while (choice!=0);
-        //Viewer.prints("Opção inválida \n"); 
+         
      
     }
     
@@ -157,6 +177,7 @@ public class Controller {
         case 3: app.rateTransp();
         case 4: app.logOut();
         case 5: menuEscolha();
+        default: Viewer.prints("Opção inválida \n"); 
          }
     }
     	 while (choice!=3) ;
@@ -170,9 +191,9 @@ public class Controller {
     	if(choice.equals('S')) {
     	Viewer.prints("Qual é o raio que deseja? \n");
     	double raio= Viewer.choiceD();
-    	lojasMP(raio,app.getCurrentUser());//mostra a lista das lojas mais perto
+    	lojasMP(raio,app.getCurrentUser());
     	}
-    	else {todasLojas();} //mostra a lista de lojas todas
+    	else {todasLojas();} 
     	Viewer.prints("Escolha a loja que deseja(nome) \n");
     	String loja= Viewer.choiceS();
     	Encomenda a = new Encomenda(app.getCurrentUser().getIdUser(),app.getLojaPN(loja).getCodigoL());
@@ -232,10 +253,10 @@ public class Controller {
                 menuAppVol();
                 
         case 3: menuEscolha();
+        default: Viewer.prints("Opção inválida \n"); 
         }
         }
         while (choice!=0);
-       // Viewer.prints("Opção inválida");
     }
     
     /**Menu auxiliar do menu de voluntárioss, onde pode ver o seu histórico, aceitar encomendas, enviar encomendas, entre outras opções*/
@@ -249,9 +270,9 @@ public class Controller {
          case 3: app.enviarEnc(0);
          case 4: app.logOut();
          case 5: menuEscolha();
+         default: Viewer.prints("Opção inválida \n"); 
          }
      }while (choice!=0);
-     //Viewer.prints("Opção inválida \n");
     }
     
     /**Menu das empresas transportadoras*/
@@ -297,11 +318,11 @@ public class Controller {
                 menuAppTransp();
                 }
         case 3: menuEscolha();
+        default: Viewer.prints("Opção inválida \n"); 
            
         }
       }
         while (choice!=0) ;
-        //Viewer.prints("Opção inválida \n");
     }
     
     /**Menu auxiliar das empresas transportadoras onde podem ver o seu histórico, entre outras opções*/
@@ -315,9 +336,9 @@ public class Controller {
     	case 3: app.enviarEnc(1);
     	case 4: app.logOut();
     	case 5: menuEscolha();
+    	default: Viewer.prints("Opção inválida \n"); 
     	}
     	} while(choice!=0);
-    	//Viewer.prints("Opção inválida \n");
     }
     
     /**Menu de uma loja*/
@@ -357,9 +378,9 @@ public class Controller {
             menuAppLoja();
             }
     case 3: menuEscolha();
+    default: Viewer.prints("Opção inválida \n"); 
     }
         } while(choice!=0);
-       // Viewer.prints("Opção inválida \n");
     }
     
     /**Menu auxiliar do menu de lojas, onde podem ver o seu histórico, preparar encomendas, entre outros*/
@@ -368,13 +389,13 @@ public class Controller {
     	int choice;
     	do { choice= Viewer.choiceI();
     	switch (choice) {
-    	case 1: app.printEncs(app.getCurrentLoja().getCodigoL());;//ver histórico de encomendas das lojas
-    	case 2: app.preparaEnc();;//ver encomendas pendentes e aceita las se quiser
+    	case 1: app.printEncs(app.getCurrentLoja().getCodigoL());
+    	case 2: app.preparaEnc();
     	case 3: app.logOut();
     	case 4: menuEscolha();
+    	default: Viewer.prints("Opção inválida \n"); 
     	}
     	} while(choice!=0);
-    	Viewer.prints("Opção inválida \n");
     }
     
     /**Método que imprime as lojas mais perto de um utilizador
