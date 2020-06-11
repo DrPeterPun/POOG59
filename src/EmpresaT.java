@@ -5,10 +5,6 @@ import java.util.Objects;
 
 public class EmpresaT implements TransporteInterface, Serializable {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7642785093124277585L;
 	private String codigoEmpresa;
     private String nomeEmpresa;
@@ -51,7 +47,6 @@ public class EmpresaT implements TransporteInterface, Serializable {
         this.email=email;
         this.pass=pass;
         this.ratings = new ArrayList<Integer>(ratings); 
-        //this.kms=kms;
     }
            
  	public Encomendas getEncT() {
@@ -212,36 +207,6 @@ public class EmpresaT implements TransporteInterface, Serializable {
 	public boolean inRaio(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
 		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
 	}
-	
-	/*public void addEnc(Encomenda a) {
-		this.regEnc.addEnc(a);
-	}
-	
-	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
-	public void encAceite(Encomenda a) {
-		this.regEnc.encAceite(a);
-	}
-	
-	// o voluntario recusou a encomenda
-	public void encRecusada(Encomenda a) {
-		this.regEnc.encRecusada(a);
-	}
-	
-	// a Loja diz que a encomenda esta cpronta
-	public void encPronta(Encomenda a){
-		this.regEnc.encPronta(a);
-	}
-	
-	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
-	public void encPorAvaliar(Encomenda a){
-		this.regEnc.encPorAvaliar(a);
-	}
-	
-	// encomenda foi completada
-	public void encCompleta(Encomenda a){
-		this.regEnc.encCompleta(a);
-	}
-	*/
 	
 	
 }

@@ -7,40 +7,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Encomendas implements Serializable {
-	//private List<Encomenda> encomendas;
-	/*
-	public Encomendas() {
-		this.encomendas= new ArrayList<>();
-	}
 	
-	/*public Encomendas(Encomenda enc) {
-		List<Encomenda> encm = new ArrayList<>();
-		encm.forEach(x->encm.add(enc));
-	}
-	
-	public List<Encomenda> getEncomendas() {
-		return encomendas;
-	}
-
-	public void setEncomendas(List<Encomenda> encomendas) {
-		this.encomendas = encomendas;
-	}
-	
-	
-	public void addEncomenda(Encomenda enc){
-		this.encomendas.add(enc.clone());
-	}
-    
-	public void removeEncomenda(Encomenda enc) {
-		this.encomendas.remove(enc.clone());
-	}*/
-	
-	
-	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8442531638986925753L;
 	private Map<String,Encomenda> encomendas;
 	

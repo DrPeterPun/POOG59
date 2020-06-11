@@ -22,7 +22,7 @@ public class Controller {
     
     /**Menu que inicializa a app*/
     public void menuInit() {
-    	// pass = 123 email = "userid"+user para todos os users, para lojas o email � o id+loja; empresas id+emp; vols id+vol
+    	
     	Utilizadores utilizadores = new Utilizadores();
     	Encomendas encomendas = new Encomendas();
     	Lojas lojas = new Lojas();
@@ -172,16 +172,15 @@ public class Controller {
     	 int choice;
     	 do {choice = Viewer.choiceI();
         switch(choice){
-        case 1: app.showEncUser(app.getCurrentUser());
-        case 2: menuFazerEncomenda();
-        case 3: app.rateTransp();
-        case 4: app.logOut();
-        case 5: menuEscolha();
+        case 1: app.showEncUser(app.getCurrentUser()); break;
+        case 2: menuFazerEncomenda(); break;
+        case 3: app.rateTransp(); break;
+        case 4: app.logOut(); menuEscolha(); break;
         default: Viewer.prints("Opção inválida \n"); 
          }
     }
-    	 while (choice!=3) ;
-         //Viewer.prints("Opção inválida \n");
+    	 while (choice!=0) ;
+        
     }
     
     /**Menu auxiliar dos menus do user, que faz encomendas*/
@@ -215,6 +214,7 @@ public class Controller {
         	else n=false;
     	}
     	app.fazEncomenda(a);
+    	menuUser();
   }
     /**Menu dos voluntários*/
     public void menuVol() {
@@ -225,7 +225,7 @@ public class Controller {
         case 1: 
                 Viewer.prints("Digite um email \n");
                 String email=Viewer.choiceS();
-                if(app.getTransp().existeTtransportadora(email)) { //acho q esta linha aqui não respeita o encapsulamento, nem sei se valerá a pena ter esta linha visto q a função no model já verifica isso
+                if(app.getTransp().existeTtransportadora(email)) { 
                 	Viewer.prints("Email já usado \n");
                 	menuUser();
                 }
@@ -241,7 +241,7 @@ public class Controller {
                     Double y=Viewer.choiceD();
                     Viewer.prints("Digite um raio \n");
                     Double raio=Viewer.choiceD();
-                    app.RegistaTransportadora(new Voluntario(nickname,name,x,y,raio,email,pass));
+                    app.RegistaTransportadora(new Voluntario(nickname,name,x,y,raio,email,pass, new ArrayList<>()));
                 }
             
         case 2:
@@ -266,11 +266,10 @@ public class Controller {
     	 int choice;
     	 do {choice = Viewer.choiceI();
          switch(choice) {
-         case 1: app.printEncs(app.getCurrentVol().getCodigo());// imprimir as encomendas
-         case 2: app.AceitarEnc(); 
-         case 3: app.enviarEnc(0);
-         case 4: app.logOut();
-         case 5: menuEscolha();
+         case 1: app.printEncs(app.getCurrentVol().getCodigo()); break;
+         case 2: app.AceitarEnc(); break;
+         case 3: app.enviarEnc(0); break;
+         case 4: app.logOut(); menuEscolha(); break;
          default: Viewer.prints("Opção inválida \n"); 
          }
      }while (choice!=0);
@@ -285,7 +284,7 @@ public class Controller {
         case 1: {
                 Viewer.prints("Digite um email \n");
                 String email=Viewer.choiceS();
-                if(app.getUsers().existeUser(email)) { //acho q esta linha aqui não respeita o encapsulamento
+                if(app.getUsers().existeUser(email)) { 
                 	Viewer.prints("Email já usado \n");
                 	menuTransp();
                 }
@@ -332,11 +331,10 @@ public class Controller {
     	int choice;
     	do { choice= Viewer.choiceI();
     	switch (choice) {
-    	case 1: app.printEncs(app.getCurrentEmp().getCodigo());//ver histórico de encomendas das transportadoras
-    	case 2: app.AceitarEnc();//ver encomendas pendentes e aceita las se quiser
-    	case 3: app.enviarEnc(1);
-    	case 4: app.logOut();
-    	case 5: menuEscolha();
+    	case 1: app.printEncs(app.getCurrentEmp().getCodigo()); break;
+    	case 2: app.AceitarEnc(); break;
+    	case 3: app.enviarEnc(1); break;
+    	case 4: app.logOut(); menuEscolha(); break;
     	default: Viewer.prints("Opção inválida \n"); 
     	}
     	} while(choice!=0);
@@ -351,7 +349,7 @@ public class Controller {
         case 1: {
                 Viewer.prints("Digite um email \n");
                 String email=Viewer.choiceS();
-                if(app.getUsers().existeUser(email)) { //acho q esta linha aqui não respeita o encapsulamento
+                if(app.getUsers().existeUser(email)) { 
                 	Viewer.prints("Email já usado \n");
                 	menuTransp();
                 }
@@ -390,10 +388,9 @@ public class Controller {
     	int choice;
     	do { choice= Viewer.choiceI();
     	switch (choice) {
-    	case 1: app.printEncs(app.getCurrentLoja().getCodigoL());
-    	case 2: app.preparaEnc();
-    	case 3: app.logOut();
-    	case 4: menuEscolha();
+    	case 1: app.printEncs(app.getCurrentLoja().getCodigoL()); break;
+    	case 2: app.preparaEnc(); break;
+    	case 3: app.logOut(); menuEscolha(); break;
     	default: Viewer.prints("Opção inválida \n"); 
     	}
     	} while(choice!=0);
@@ -434,10 +431,9 @@ public class Controller {
      * @param file Nome do ficheiro*/
     public void saveToFile (String file) throws IOException
     {
-           FileOutputStream f = new FileOutputStream(new File(file));
+        FileOutputStream f = new FileOutputStream(new File(file));
         ObjectOutputStream o = new ObjectOutputStream(f);
 
-        // Write objects to file
         o.writeObject(this);
         f.close();
         o.close();

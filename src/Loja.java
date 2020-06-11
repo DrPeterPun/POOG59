@@ -69,43 +69,6 @@ public class Loja implements Serializable{
         					this.gpsy);
     }
     
-    /*
-    public RegEncomendas getRegEnc()
-    {
-    	return this.regEnc.clone();
-    }
-
-    public void addEnc(Encomenda a) {
-		this.regEnc.addEnc(a);
-	}
-	
-	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
-	public void encAceite(Encomenda a) {
-		this.regEnc.encAceite(a);
-	}
-	
-	// o voluntario recusou a encomenda
-	public void encRecusada(Encomenda a) {
-		this.regEnc.encRecusada(a);
-	}
-	
-	// a Loja diz que a encomenda esta cpronta
-	public void encPronta(Encomenda a){
-		this.regEnc.encPronta(a);
-	}
-	
-	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
-	public void encPorAvaliar(Encomenda a){
-		this.regEnc.encPorAvaliar(a);
-	}
-	
-	// encomenda foi completada
-	public void encCompleta(Encomenda a){
-		this.regEnc.encCompleta(a);
-	}
-*/
-    
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

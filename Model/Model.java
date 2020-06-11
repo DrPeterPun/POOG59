@@ -28,13 +28,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	 */
 	private static final long serialVersionUID = -8208583672689808386L;
 	private Utilizadores users;
-
-	private Voluntarios volts;
-	private EmpresasT empresas;
 	private Transportadoras transportadoras;
 	private Lojas lojas;
 	private Encomendas encomendas;
-	
 	private Utilizador currentUser;
 	private EmpresaT currentEmp;
 	private Voluntario currentVol;
@@ -43,8 +39,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 
 	public Model() {
 		this.users= new Utilizadores();
-		//this.volts= new Voluntarios();
-		//this.empresas= new EmpresasT();
 		this.transportadoras = new Transportadoras();
 		this.lojas= new Lojas();
 		this.currentUser = new Utilizador();
@@ -55,8 +49,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	
 	public Model(Utilizadores utilizadores, Transportadoras transp, Lojas lojas2, Encomendas encomendas2) {
 		this.users= utilizadores;
-		//this.volts= new Voluntarios();
-		//this.empresas= new EmpresasT();
 		this.transportadoras = transp;
 		this.lojas= lojas2;
 		this.encomendas =encomendas2;
@@ -65,22 +57,12 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.currentVol = new Voluntario();
 		this.currentLoja = new Loja();
 		preencheEncs();
-	}
-	
-	
-	
-	//--------- Global --------- 
-	
-     
+	} 
 	
 	public void printutilizadores()
 	{
 		System.out.println(this.users.toString());
 	}
-	
-	/*public Utilizador getUti(String email) {
-		return this.users.getUti(email);
-	}*/
 	
 	public Utilizadores getUsers() {
 		return users.clone();
@@ -94,14 +76,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	{
 		return transportadoras.clone();
 	}
-
-	/*public Voluntarios getVolts() {
-		return volts;
-	}
-
-	public void setVolts(Voluntarios volts) {
-		this.volts = volts;
-	}*/
 
 	public Utilizador getCurrentUser() {
 		return currentUser;
@@ -139,30 +113,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	 * @param user Um Utilizador*/
 	public boolean RegistaUser(Utilizador user) {
 		if(this.users.addUtilizador(user))
-		{
-			//diz que foi concluido com sucesso
-			return true;
-		}
-		else {
-			//diz que nao deu
-			return false;
-		}
-	}
-	
-	public boolean RegistaVoluntario(Voluntario volt) {
-		if(this.transportadoras.addTransportadora(volt))
-		{ 
-			//diz que foi concluido com sucesso
-			return true;
-		}
-		else {
-			//diz que nao deu
-			return false;
-		}
-	}
-	
-	public boolean RegistaEmpresa(EmpresaT empresa) {
-		if(this.transportadoras.addTransportadora(empresa))
 		{
 			//diz que foi concluido com sucesso
 			return true;
@@ -243,7 +193,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}
 	
 	/**Função que imprime o histórico de encomendas da pessoa que está a utiliza a app
-	 * @param id Um código(seja de um user, de um voluntário, de uma empresa transportadora ou de uma loja)*/
+	 * @param id Um código(seja um voluntário, de uma empresa transportadora ou de uma loja)*/
 	public void printEncs(String id)
 	{
 		ArrayList<String> lista = new ArrayList<String>();
@@ -263,24 +213,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		this.encomendas.preencheEncs(this.transportadoras);
 	}
 	
-	//--------- User ---------
-	
-	/*
-	Processo ate uma encomenda estar completa
-	1� user faz uma encomenda a uma loja
-	-> � sugerido ao user um Transporte
-	2� 	a)o utilizador nao aceita o tranporte mas ainda quer fazer a encomenda
-		->  volta ao paco anterior
-		b) o utilizador nao aceita o tranporte e quer deisstir da encomenda
-		->  a encomenda � movida para as recusadas
-		c)o utilizador aceita o transporte e a encomenda move para "
-		->a encomenda � registada na loja como "pendente"
-	3� a loja diz que a encomenda esta pronta
-	->a encomenda � registada no transporte como"pendente"
-	4� o transporte faz a encomenda
-	-> a encomenda no transporte/loja/user passa de pendente para entregue
-	-> o user faz a avaliacao da encomenda	
-	*/
 	
 	/**Método que lista as lojas que se encontram a um determinado range do utilizador
 	 * @param range Um double que determina a que distância o user quer que estaja a loja 
@@ -308,8 +240,9 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	/**Método que procura uma empresa transportadora pelo nome e devolve o seu código
 	 * @param nome Nome da empresa*/
 	public String getTranspPN(String nome) {
+		List<TransporteInterface> l = this.transportadoras.filterEmpresaT();
 		String s = "";
-		for(EmpresaT a: this.empresas.getValues()) {
+		for(TransporteInterface a : l) {
 			if(a.getNome().equals(nome)) s= a.getCodigo();
 		}
 		return s;
@@ -360,17 +293,16 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 					done=!querOutra;}
 				}
 			}
-			else//ser o transpoerte for feito por um voluntario
+			else
 			{
 				this.encomendas.addEncomenda(enc);
 				this.encomendas.setToAberto(enc);
-				//this.encomendas.avancaEstado(enc); //como os  voluntarios tem de aceitar as encomendas esta fica so em aberto
 				done = true;
 			}
 		}
 		
 		
-		return done;// se done for 0 � pq nao acabou a encomenda
+		return done;
 	}
 	
 	/** Método que permite ao utilizador atual avaliar as suas encomendas por avaliar*/
@@ -389,7 +321,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 		}
 	}
-	
+	 /**Método que põe numa lista as encomendas de um utilizador*/
 	public List<Encomenda> showEncUser(Utilizador user)
 	{
 		TreeMap<Date,Encomenda> tree = new TreeMap<Date,Encomenda>();
@@ -412,25 +344,25 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		List<String> lu = new ArrayList<String>();
 		List<Integer> encs = new ArrayList<Integer>();
 		List<String> utf = new  ArrayList<String>();
-		for(Encomenda enc: encomendas.getEncomendas().values())// para todas as encomendas
+		for(Encomenda enc: encomendas.getEncomendas().values())
 		{
 			int i=0;
 			boolean encontrou = false;
-			for(String ut:lu)//para todos os utilizadores no "lu"
+			for(String ut:lu)
 			{
-				if(enc.getCodUt().compareTo(ut)==0)// se o utilizador foi o ut da encomenda
+				if(enc.getCodUt().compareTo(ut)==0)
 				{
 					encs.set(i, encs.get(i)+1);
 					encontrou=true;
 				}
 				i++;
 			}
-			if(!encontrou)//se nao encontrou o user
+			if(!encontrou)
 			{
 				lu.add(enc.getCodUt());
 				encs.add(1);
 			}
-		}// a este ponto ja temos um parelelo de nr encomendas e utilizadores( cada par ocupa o mesmo indice nas listas respetivas)
+		}
 		int n =10;
 		if(lu.size()<n)
 			n=lu.size();
@@ -451,11 +383,11 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		List<String> transp = new ArrayList<String>();
 		List<Integer> encs = new ArrayList<Integer>();
 		List<String> tmu = new  ArrayList<String>();
-		for(Encomenda enc: encomendas.getEncomendas().values())// para todas as encomendas
+		for(Encomenda enc: encomendas.getEncomendas().values())
 		{
 			int i=0;
 			boolean encontrou = false;
-			for(String emp:transp)//para todos os utilizadores no "lu"
+			for(String emp:transp)
 			{
 				if(enc.getCodT().compareTo(emp)==0 && (this.transportadoras.getTransp().get(enc.getCodT()) instanceof EmpresaT) )// se transportou uma enc e se � de facto uma empresa( e nao um voluntario)
 				{
@@ -464,12 +396,12 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 				}
 				i++;
 			}
-			if(!encontrou)//se nao encontrou o user
+			if(!encontrou)
 			{
 				transp.add(enc.getCodT());
 				encs.add(1);
 			}
-		}// a este poznto ja temos um parelelo de nr encomendas e utilizadores( cada par ocupa o mesmo indice nas listas respetivas)
+		} 
 		int n =10;
 		if(transp.size()<n)
 			n=transp.size();
@@ -483,7 +415,7 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 		return tmu;
 	}
-	// aux
+	/**Método auxiliar usado no método showEmpMaisKms()*/
 	public Integer getMax(List<Integer> lista)
 	{
 		int max=0;
@@ -502,7 +434,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	}
 	
 	
-	//--------- Voluntario---------
 	/**Método que faz com que um voluntário aceite a encomenda*/
 	public void AceitarEnc()
 	{
@@ -526,7 +457,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 	}
 	
-	//--------- Voluntario // EmpresaT---------
 	/**Método que faz com que um voluntário ou uma empresa transportadora envie uma encomenda
 	 * @param int Um inteiro, que se este for 0, estamos a trabalhar com voluntários, e se for 1, estamos a trabalhar com empresas transportadoras*/
 	public void enviarEnc(int c) {
@@ -581,7 +511,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return total;
 	}
 	
-	//--------- Loja ---------
 	/**Método que prepara uma encomenda para ser entrega por parte de uma loja*/
 	public void preparaEnc()
 	{
@@ -599,12 +528,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 			}
 		}
 	}
-	
-    public void aceitaEnc(String cod) {
-        
-    } 
-	
-	//--------- Encomendas ---------
 	
 	public void setToAberto(Encomenda e)
 	{
@@ -634,36 +557,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	public void recusarEnc(String e)
 	{
 		this.encomendas.recusarEnc(e);
-	}
-	
-	//--------- Estado ---------
-	
-	public void savestate()
-	{
-
-	    int i;
-	    File out = new File("SS");
-
-	    ObjectOutputStream output = null;
-
-	    try{
-	        output = new ObjectOutputStream(new FileOutputStream("SS"));
-	            output.writeObject(this);
-
-	    }catch (FileNotFoundException ex) {
-	        ex.printStackTrace();
-	    } catch (IOException ex) {
-	        ex.printStackTrace();
-	    } finally {
-	        try {
-	            if (output != null) {
-	                output.flush();
-	                output.close();
-	            }
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
-	    }
 	}
 	
 	

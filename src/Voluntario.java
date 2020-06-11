@@ -137,12 +137,6 @@ public class Voluntario implements TransporteInterface, Serializable{
     	 return false;
     }
     
-    /*public List<Encomenda> registosV(RegEncomendas a){
-    	List<Encomenda> enc = new ArrayList<>();
-    	a.getEncTerminadas().stream().filter(x->x.);
-    
-    }*/
-    
     @Override
     public String toString() {
         return "Voluntario{" +
@@ -188,15 +182,6 @@ public class Voluntario implements TransporteInterface, Serializable{
 		return (Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2))<=this.raio )  && (Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2))<=this.raio);
 	}
 
-
-
-	
-	/*public double detPreco(double gpsxu, double gpsyu, double gpsxl, double gpsyl) {
-		return 0;
-	}*/
-
-
-
 	@Override
 	/**Método que determina a distancia de um voluntário a um utilizador e a uma loja
 	 * @param gpsxu Coordenada x de um utilizador
@@ -207,38 +192,5 @@ public class Voluntario implements TransporteInterface, Serializable{
 		double dist = Math.sqrt(Math.pow((this.gpsx - gpsxl), 2) + Math.pow((this.gpsy - gpsyl), 2)) + Math.sqrt(Math.pow((gpsxu - gpsxl), 2) + Math.pow((gpsyu - gpsyl), 2));
 		return dist;
 	}
-	
-	// ---relativo as encomendas---
-	/*
-	public void addEnc(Encomenda a) {
-		this.regEnc.addEnc(a);
-	}
-	
-	// no caso de o transportes ser feito por uma empresa vem logo para aqui e nao para as abertas, se for por um voluntario ele precisa de aceitar
-	public void encAceite(Encomenda a) {
-		this.regEnc.encAceite(a);
-	}
-	
-	// o voluntario recusou a encomenda
-	public void encRecusada(Encomenda a) {
-		this.regEnc.encRecusada(a);
-	}
-	
-	// a Loja diz que a encomenda esta cpronta
-	public void encPronta(Encomenda a){
-		this.regEnc.encPronta(a);
-	}
-	
-	// a encomenda ja foi entrgue mas ainda nao foi avaliada pelo user
-	public void encPorAvaliar(Encomenda a){
-		this.regEnc.encPorAvaliar(a);
-	}
-	
-	// encomenda foi completada
-	public void encCompleta(Encomenda a){
-		this.regEnc.encCompleta(a);
-	}*/
-	
-
 	
 }

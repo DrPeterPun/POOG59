@@ -141,28 +141,6 @@ public class Transportadoras implements Serializable{
 		if(this.transportadoras.containsKey(cod))
 		this.transportadoras.get(cod).addRating(rt);		
 	}
-	
-
-	
-	/// teste functions
-		public void printMap()
-		{
-			Set<Map.Entry<String, TransporteInterface>> set = transportadoras.entrySet();
-			for(Entry<String, TransporteInterface> ti:set)
-			{
-				System.out.println(ti.getKey() + " " + ti.getValue().getCodigo());
-			}
-		}
-		
-		public boolean logIn(String Email, String pass) {
-			for(Entry<String, TransporteInterface> entry : this.transportadoras.entrySet()) {
-				if( entry.getValue().getEmail()==Email && entry.getValue().logIn(pass) )
-				{
-					return true;
-				}
-			}
-			return false;
-		}
 		
        /**Método que procura uma empresa transportadora no map transportadoras
         * @param codEmp Código de uma empresa*/
@@ -173,7 +151,7 @@ public class Transportadoras implements Serializable{
 		
 		public String getRT() {
 			int size = this.transportadoras.size();
-			int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+			int item = new Random().nextInt(size); 
 			int i = 0;
 			String cod = " ";
 			for(TransporteInterface ti : this.transportadoras.values())
@@ -192,6 +170,15 @@ public class Transportadoras implements Serializable{
             return r;
         }
 		
+		public boolean logIn(String Email, String pass) {
+            for(Entry<String, TransporteInterface> entry : this.transportadoras.entrySet()) {
+                if( entry.getValue().getEmail()==Email && entry.getValue().logIn(pass) )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 		
 		
 }

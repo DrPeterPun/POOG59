@@ -31,28 +31,19 @@ public class Viewer {
          System.out.println("2)Fazer encomenda");
          System.out.println("3)Avaliar transporte da encomenda");
          System.out.println("4)LogOut");
-         System.out.println("5)Voltar ao menu");
     	}
-    
-    public static void printMenuAceitar() {
-    	System.out.println("1)Ver histórico de transportadora");
-        System.out.println("2)Aceitar transporte");
-        System.out.println("3)Recusar transporte");
-    }
     
     public static void printMenuVolTransp(){
    	 System.out.println("1)Ver histórico de encomendas");
      System.out.println("2)Aceitar encomendas pendentes");
      System.out.println("3)Enviar encomendas");
      System.out.println("4)LogOut");
-     System.out.println("5)Voltar ao menu");
    	}
     
     public static void printMenuLoja() {
      System.out.println("1)Ver histórico de encomendas");
      System.out.println("2)Aceitar encomendas pendentes");
      System.out.println("3)LogOut");
-     System.out.println("4)Voltar ao menu");
     }
     
     
