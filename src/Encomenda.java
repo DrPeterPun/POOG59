@@ -23,7 +23,7 @@ public class Encomenda implements Serializable{
       this.codEnc=" ";
       this.codUt=" ";
       this.codL=" ";
-      this.codT=" ";
+      this.codT="";
       this.peso=0;
       this.encomendas=new ArrayList<LinhadeEncomenda>();
       this.estado = 0;
@@ -34,7 +34,7 @@ public class Encomenda implements Serializable{
 	      this.codEnc=" ";
 	      this.codUt=codUt;
 	      this.codL=codLoja;
-	      this.codT=" ";
+	      this.codT="";
 	      this.peso=0;
 	      this.encomendas=new ArrayList<LinhadeEncomenda>();
 	      this.estado = 0;
@@ -45,7 +45,7 @@ public class Encomenda implements Serializable{
       this.codEnc=codEnc;
       this.codUt=codUt;
       this.codL=codL;
-      this.codT=" ";
+      this.codT="";
       this.peso=peso;
       this.encomendas=new ArrayList<LinhadeEncomenda>(encomendas);
       this.estado=estado;
@@ -95,7 +95,7 @@ public class Encomenda implements Serializable{
    
    public boolean setCodT(String codT)
    {
-	   if(this.codT==" ")
+	   if(this.codT=="")
 	   {
 		   this.codT=codT;
 		   return true;

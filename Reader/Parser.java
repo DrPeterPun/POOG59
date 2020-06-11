@@ -40,7 +40,7 @@ public class Parser implements Serializable{
 		ui=vi=ei=li=enci=aceitei=0;
 		
 		//sortAll(".");
-		List<String> linhas = lerFicheiro("logSoUmaTransp.txt"); // path para o ficheiro
+		List<String> linhas = lerFicheiro("log.txt"); // path para o ficheiro
 		
 		System.out.println("foram lidas: " + linhas.size() + " linhas");
 		String[] linhaPartida;

@@ -50,7 +50,7 @@ public class Teste {
 		//System.out.println(modelo.faturadoEnc("t1"));
 		//System.out.println(modelo.showUtMaisUtiliza());
 		//System.out.println(modelo.showEmpMaisKms());
-		modelo.saveToFile("logfile");
+		//modelo.saveToFile("logfile");
 		
 		modelo.printEncs("");
 		modelo.avancaEstado(enc);
@@ -58,7 +58,7 @@ public class Teste {
 		modelo.fazEncomenda(enc2);
 		modelo.printEncs("");
 		//////////////////////////////////////////
-		modelo=modelo.loadFromFile("logfile");
+		//modelo=modelo.loadFromFile("logfile");
 		
 		modelo.printEncs("");
 	}
