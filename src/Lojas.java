@@ -81,7 +81,7 @@ public class Lojas implements Serializable{
     }
 
     /**Método que faz o login de uma loja*/
-	public boolean logIn(String codigo, String pass) {
+	public boolean logIn(String codigo, String pass) throws NoSuchElementException {
 		for(Map.Entry<String,Loja> entry : this.lojas.entrySet()) {
 			if(entry.getValue().logIn(pass))
 			{

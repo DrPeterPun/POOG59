@@ -103,7 +103,7 @@ public class Utilizador implements Serializable{
     }
 
 	public boolean logIn(String pass) {
-		return this.pass==pass;
+		return this.pass.equals(pass);
 	}
 	/*
 	public RegEncomendas getRegEnc()

@@ -20,7 +20,10 @@ public class EmpresaT implements TransporteInterface, Serializable {
     private Encomendas encT;
     private String email;
     private String pass;
+    /**List das classificações de uma empresa transportadora*/
     private ArrayList<Integer> ratings;
+    /**Kms percorridos por essa empresa*/
+    private double kms;
 
     public EmpresaT(){
         this.codigoEmpresa=" ";
@@ -34,6 +37,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         this.email="";
         this.pass="";
         this.ratings = new ArrayList<Integer>();
+        this.kms =0;
     }
 
     public EmpresaT(String codigoEmpresa, String nomeEmpresa, int nif, double raio,double precokm,double gpsx,double gpsy, String email, String pass, ArrayList<Integer> ratings){
@@ -47,6 +51,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         this.email=email;
         this.pass=pass;
         this.ratings = new ArrayList<Integer>(ratings); 
+        //this.kms=kms;
     }
            
  	public Encomendas getEncT() {
@@ -127,6 +132,7 @@ public class EmpresaT implements TransporteInterface, Serializable {
         						this.email,
         						this.pass,
         						this.ratings);
+        						//this.kms);
     }
     
     public void addEncT(Encomenda a) {

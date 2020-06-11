@@ -214,22 +214,8 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	 * @param email Um email 
 	 * @param pass Uma pass*/
 	public boolean logInUser(String email, String pass)
-	{
-		if(this.users.logIn(email, pass))
-		{
-			this.logOut();
-			try
-			{
-				this.currentUser = this.users.getUser(email).get();
-			}
-			catch(NoSuchElementException e)
-			{
-				Viewer.prints("Não existe nenhum registo com esse email.");
-			}
-			
-			return true;
-		}
-		return false;
+	{ return this.users.logIn(email, pass);
+		
 	}
 	
 	/**Método que faz o logIn de um voluntário
@@ -237,21 +223,8 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	 * @param pass Uma pass*/
 	public boolean logInVol(String email, String pass)
 	{
-		if(this.transportadoras.logIn(email, pass))
-		{
-			this.logOut();
-			try
-			{
-				this.currentVol = this.transportadoras.getVol(email).get();
-			}
-			catch(NoSuchElementException e)
-			{
-				Viewer.prints("Não existe nenhum registo com esse email.");
-			}
-			
-			return true;
-		}
-		return false;
+		return this.transportadoras.logIn(email, pass);
+
 	}
 	
 	/**Método que faz o logIn de uma empresa transportadora
@@ -259,42 +232,14 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 	 * @param pass Uma pass*/
 	public boolean logInEmp(String email, String pass)
 	{
-		if(this.transportadoras.logIn(email, pass))
-		{
-			this.logOut();
-			
-			try
-			{
-				this.currentEmp = this.transportadoras.getEmp(email).get();
-			}
-			catch(NoSuchElementException e)
-			{
-				Viewer.prints("Não existe nenhum registo com esse email.");
-			}
-			return true;
-		}
-		return false;
+		return this.transportadoras.logIn(email, pass);
 	}
 	
 	/**Método que faz o logIn de uma loja
 	 * @param Um email e uma pass*/
 	public boolean logInLoja(String email, String pass)
 	{
-		if(this.lojas.logIn(email, pass))
-		{
-			this.logOut();
-			
-			try
-			{
-				this.currentLoja = this.lojas.getLoja(email).get();
-			}
-			catch(NoSuchElementException e)
-			{
-				Viewer.prints("Não existe nenhum registo com esse email.");
-			}
-			return true;
-		}
-		return false;
+		return this.lojas.logIn(email, pass);
 	}
 	
 	/**Função que imprime o histórico de encomendas da pessoa que está a utiliza a app
@@ -359,43 +304,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		return this.lojas.procurarLojaNome(nome);
 	}
 	
-	
-	/*public Map<String,Double> getTranspMP(double limit, Loja a,Double peso){
-        Double ux= this.currentUser.getGpsx();
-        Double uy= this.currentUser.getGpsy();
-        Double lx= a.getGpsx();
-        Double ly= a.getGpsy();
-        Map<String,Double> b = new TreeMap<>();
-        this.transportadoras.filterEmpresaT().stream().filter(x->(x.detDist(ux, uy, lx, ly)<=limit)).forEach(x->b.put((x.getNome()),x.detPreco(ux, uy, lx, ly,peso)));
-        return b;
-        }
-	
-	public Map<String,Double> getTransp(Loja a,Double peso){
-        Map<String,Double> b = new TreeMap<>();
-        Double ux= this.currentUser.getGpsx();
-        Double uy= this.currentUser.getGpsy();
-        Double lx= a.getGpsx();
-        Double ly= a.getGpsy();
-        this.empresas.getValues().forEach(x-> b.put(x.getNome(),x.detPreco(ux, uy, lx, ly,peso)));
-        return b;
-    }
-	
-	public String getVoluntarioMP(Loja a) {
-		Double ux= this.currentUser.getGpsx();
-		Double uy= this.currentUser.getGpsy();
-		Double lx= a.getGpsx();
-		Double ly= a.getGpsy();
-		String s=" ";
-		Double menor=50.2;
-		for(Voluntario b: this.volts.getValues()) {
-			if(b.detDist(ux,uy,lx,ly)<menor) {
-				menor=b.detDist(ux,uy,lx,ly);
-				s=b.getNome();
-			}
-		}
-		return s;
-		
-	}*/
 	
 	/**Método que procura uma empresa transportadora pelo nome e devolve o seu código
 	 * @param nome Nome da empresa*/
@@ -692,14 +600,6 @@ public class Model implements Serializable { //Criei esta classe, não sei se va
 		}
 	}
 	
-	/*public void adicionarEnc(Encomenda enc) {
-        this.encomendas.addEncomenda(enc);
-    }
-    */
-    /*public List<Encomenda> filterEncPend(String cod){
-        return this.encomendas.encPend(cod);
-    }*/
-    
     public void aceitaEnc(String cod) {
         
     } 

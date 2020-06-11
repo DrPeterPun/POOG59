@@ -154,8 +154,8 @@ public class Controller {
                 String email=Viewer.choiceS();
                 Viewer.prints("Pass \n");
                 String pass=Viewer.choiceS();
-                app.logInUser(email, pass);
-                menuAppUser();
+                if(app.logInUser(email, pass)) menuAppUser();
+                else Viewer.prints("Não existe registo");
                 }
             case 3:  menuEscolha();
             default: Viewer.prints("Opção inválida \n"); 
@@ -241,7 +241,7 @@ public class Controller {
                     Double y=Viewer.choiceD();
                     Viewer.prints("Digite um raio \n");
                     Double raio=Viewer.choiceD();
-                    app.RegistaVoluntario(new Voluntario(nickname,name,x,y,raio,email,pass));
+                    app.RegistaTransportadora(new Voluntario(nickname,name,x,y,raio,email,pass));
                 }
             
         case 2:
@@ -249,8 +249,9 @@ public class Controller {
                 String email1=Viewer.choiceS();
                 Viewer.prints("Pass \n");
                 String pass=Viewer.choiceS();
-                app.logInVol(email1, pass);
-                menuAppVol();
+                if(app.logInVol(email1, pass)) menuAppUser();
+                else Viewer.prints("Não existe registo");
+                
                 
         case 3: menuEscolha();
         default: Viewer.prints("Opção inválida \n"); 
@@ -304,7 +305,7 @@ public class Controller {
                     Double raio=Viewer.choiceD();
                     Viewer.prints("Qual o preço que a sua empresa aplica às encomendas? \n");
                     Double preco=Viewer.choiceD();
-                    app.RegistaEmpresa(new EmpresaT(nickname,name,nif,raio,preco,x,y,email,pass,new ArrayList<>()));
+                    app.RegistaTransportadora(new EmpresaT(nickname,name,nif,raio,preco,x,y,email,pass,new ArrayList<>()));
                     Viewer.prints("Registado com sucesso \n");
                     menuTransp();
                 }
@@ -314,9 +315,9 @@ public class Controller {
                 String email=Viewer.choiceS();
                 Viewer.prints("Pass \n");
                 String pass=Viewer.choiceS();
-                app.logInEmp(email, pass);
-                menuAppTransp();
-                }
+                if(app.logInEmp(email, pass)) menuAppUser();
+                else Viewer.prints("Não existe registo");
+        }
         case 3: menuEscolha();
         default: Viewer.prints("Opção inválida \n"); 
            
@@ -366,7 +367,7 @@ public class Controller {
                     Double y=Viewer.choiceD();
                     app.RegistaLoja(new Loja(nickname,name,email,pass,x,y));
                     Viewer.prints("Registado com sucesso \n");
-                    menuTransp();
+                    menuLoja();
                 }
             }
         case 2:{ 
@@ -374,8 +375,8 @@ public class Controller {
             String email=Viewer.choiceS();
             Viewer.prints("Pass \n");
             String pass=Viewer.choiceS();
-            app.logInLoja(email, pass);
-            menuAppLoja();
+            if(app.logInLoja(email, pass)) menuAppUser();
+            else Viewer.prints("Não existe registo");
             }
     case 3: menuEscolha();
     default: Viewer.prints("Opção inválida \n"); 
@@ -410,24 +411,6 @@ public class Controller {
     	app.getTodasLojas().forEach(x-> Viewer.prints("Loja: " + x));
     }
     
-    /*public void transpMP(double limit, Loja a) {
-    	Map<String,Double> b = app.getTranspMP(limit, a);
-    	for(String s: b.keySet()) {
-    		for(Double d: b.values()) {
-    			Viewer.prints("Transportadora: " + s + "Preço: " + d);
-    		}
-    	}
-    }
-    
-    public void todasTransp(Loja a) {
-    	Map<String,Double> b = app.getTransp(a);
-    	for(String s: b.keySet()) {
-    		for(Double d: b.values()) {
-    			Viewer.prints("Transportadora: " + s + "Preço: " + d);
-    		}
-    	}
-    }
-    */
     /**Método que imprime os 10 utilizadores que mais utilizaram a app*/
     public void printTopUsers() {
     	app.showUtMaisUtiliza().stream().forEach(x-> Viewer.prints("User: " + x));
